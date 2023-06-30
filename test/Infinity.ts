@@ -55,7 +55,7 @@ describe('Infinity', () => {
     expect(await contract.uri(1)).to.equal('https://metadata.infinity.checks.art/{id}.json')
   })
 
-  describe(`Minting`, () => {
+  describe(`Generating`, () => {
 
     it(`Shouldn't allow minting for free`, async () => {
       await expect(contract.generate(addr1.address, 1, 1, ''))
@@ -144,6 +144,35 @@ describe('Infinity', () => {
     it(`Should send surplus ETH back when minting by depositing ETH`, async () => {
       expect(await owner.sendTransaction({ to: contract.address, value: PRICE.add(parseEther('0.009')) }))
         .to.changeEtherBalance(owner, PRICE.mul(-2))
+    })
+
+  })
+
+  describe(`DeGenerating`, () => {
+
+    it(`Should allow degenerating`, async () => {
+      const balance = await contract.balanceOf(addr2.address, 1)
+      await expect(contract.connect(addr2).degenerate(1, 1))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr2.address, addr2.address, constants.AddressZero, 1, 1)
+
+      expect(await contract.balanceOf(addr2.address, 1)).to.equal(balance.sub(1))
+    })
+
+    it(`Should allow withdrawing funds with specified token amount`, async () => {
+      await expect(contract.connect(addr2).degenerate(1, 50)).to.be.revertedWith(`Can't burn more infinities than owned.`)
+
+      expect(await contract.connect(addr2).degenerate(1, 5))
+        .to.changeEtherBalance(addr2, PRICE.mul(5))
+    })
+
+    it(`Should allow withdrawing funds for many tokens`, async () => {
+      await expect(contract.connect(addr4).degenerateMany([1, 2], [5, 5]))
+        .to.emit(contract, 'TransferBatch')
+        .withArgs(addr4.address, addr4.address, constants.AddressZero, [1, 2], [5, 5])
+
+      expect(await contract.connect(addr5).degenerateMany([1, 2], [5, 5]))
+        .to.changeEtherBalance(addr5, PRICE.mul(10))
     })
 
   })
