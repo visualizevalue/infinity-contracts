@@ -6,6 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { arrayify, parseEther } from 'ethers/lib/utils'
 
 const PRICE = parseEther('0.008')
+const TOKEN = 88888888
 
 export const deployContract = async () => {
   const Infinity = await ethers.getContractFactory('Infinity')
@@ -58,49 +59,49 @@ describe('Infinity', () => {
   describe(`Generating`, () => {
 
     it(`Shouldn't allow minting for free`, async () => {
-      await expect(contract.generate(addr1.address, 1, 1, ''))
+      await expect(contract.generate(addr1.address, TOKEN, 1, ''))
         .to.be.revertedWith(`Incorrect ether deposit.`)
     })
 
     it(`Should allow minting without a message`, async () => {
-      await expect(contract.generate(addr1.address, 1, 1, '', { value: PRICE }))
+      await expect(contract.generate(addr1.address, TOKEN, 1, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
-        .withArgs(owner.address, constants.AddressZero, addr1.address, 1, 1)
+        .withArgs(owner.address, constants.AddressZero, addr1.address, TOKEN, 1)
     })
 
     it(`Should allow minting with a message`, async () => {
-      await expect(contract.generate(addr1.address, 1, 1, 'The beginning of infinity', { value: PRICE }))
+      await expect(contract.generate(addr1.address, TOKEN, 1, 'The beginning of infinity', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
-        .withArgs(owner.address, constants.AddressZero, addr1.address, 1, 1)
+        .withArgs(owner.address, constants.AddressZero, addr1.address, TOKEN, 1)
         .to.emit(contract, 'Message')
-        .withArgs(owner.address, addr1.address, 1, 'The beginning of infinity')
+        .withArgs(owner.address, addr1.address, TOKEN, 'The beginning of infinity')
     })
 
     it(`Should allow minting many of the same token`, async () => {
       let amount = 1
 
       while (amount < 512) {
-        await expect(contract.generate(addr1.address, 1, amount, '', { value: PRICE.mul(amount) }))
+        await expect(contract.generate(addr1.address, TOKEN, amount, '', { value: PRICE.mul(amount) }))
           .to.emit(contract, 'TransferSingle')
-          .withArgs(owner.address, constants.AddressZero, addr1.address, 1, amount)
+          .withArgs(owner.address, constants.AddressZero, addr1.address, TOKEN, amount)
 
         amount *= 2
       }
     })
 
     it(`Should allow transferring assets`, async () => {
-      await expect(contract.connect(addr2).generate(addr2.address, 1, 10, '', { value: PRICE.mul(10) }))
+      await expect(contract.connect(addr2).generate(addr2.address, TOKEN, 10, '', { value: PRICE.mul(10) }))
         .to.emit(contract, 'TransferSingle')
-        .withArgs(addr2.address, constants.AddressZero, addr2.address, 1, 10)
+        .withArgs(addr2.address, constants.AddressZero, addr2.address, TOKEN, 10)
 
-      expect(await contract.balanceOf(addr2.address, 1)).to.equal(10)
+      expect(await contract.balanceOf(addr2.address, TOKEN)).to.equal(10)
 
-      await expect(contract.connect(addr2).safeTransferFrom(addr2.address, addr3.address, 1, 1, arrayify(0)))
+      await expect(contract.connect(addr2).safeTransferFrom(addr2.address, addr3.address, TOKEN, 1, arrayify(0)))
         .to.emit(contract, 'TransferSingle')
-        .withArgs(addr2.address, addr2.address, addr3.address, 1, 1)
+        .withArgs(addr2.address, addr2.address, addr3.address, TOKEN, 1)
 
-      expect(await contract.balanceOf(addr2.address, 1)).to.equal(9)
-      expect(await contract.balanceOf(addr3.address, 1)).to.equal(1)
+      expect(await contract.balanceOf(addr2.address, TOKEN)).to.equal(9)
+      expect(await contract.balanceOf(addr3.address, TOKEN)).to.equal(1)
     })
 
     it(`Shouldn't allow minting batches with an invalid deposit`, async () => {
@@ -110,24 +111,34 @@ describe('Infinity', () => {
 
     it(`Should allow minting and transferring batches`, async () => {
       await expect(
-        contract.generateMany([addr4.address, addr4.address, addr5.address], [1, 2, 2], [10, 10, 1], { value: PRICE.mul(21) })
+        contract.generateMany(
+          [addr4.address, addr4.address, addr5.address],
+          [TOKEN, TOKEN+1, TOKEN+1], [10, 10, 1],
+          { value: PRICE.mul(21) }
+        )
       )
         .to.emit(contract, 'TransferSingle')
-        .withArgs(owner.address, constants.AddressZero, addr4.address, 1, 10)
+        .withArgs(owner.address, constants.AddressZero, addr4.address, TOKEN, 10)
         .to.emit(contract, 'TransferSingle')
-        .withArgs(owner.address, constants.AddressZero, addr4.address, 2, 10)
+        .withArgs(owner.address, constants.AddressZero, addr4.address, TOKEN+1, 10)
         .to.emit(contract, 'TransferSingle')
-        .withArgs(owner.address, constants.AddressZero, addr5.address, 2, 1)
+        .withArgs(owner.address, constants.AddressZero, addr5.address, TOKEN+1, 1)
 
-      await expect(contract.connect(addr4).safeBatchTransferFrom(addr4.address, addr5.address, [1, 2], [5, 4], arrayify(0)))
+      await expect(contract.connect(addr4).safeBatchTransferFrom(
+        addr4.address,
+        addr5.address,
+        [TOKEN, TOKEN+1],
+        [5, 4],
+        arrayify(0)
+      ))
         .to.emit(contract, 'TransferBatch')
-        .withArgs(addr4.address, addr4.address, addr5.address, [1, 2], [5, 4])
+        .withArgs(addr4.address, addr4.address, addr5.address, [TOKEN, TOKEN+1], [5, 4])
 
       expect((await contract
         .connect(addr4.address)
         .balanceOfBatch(
           [addr4.address, addr4.address, addr5.address, addr5.address],
-          [1, 2, 1, 2]
+          [TOKEN, TOKEN+1, TOKEN, TOKEN+1]
         )).map((n: BigNumber) => n.toNumber())
       ).to.deep.equal([5, 6, 5, 5])
     })
@@ -142,7 +153,7 @@ describe('Infinity', () => {
     })
 
     it(`Should send surplus ETH back when minting by depositing ETH`, async () => {
-      expect(await owner.sendTransaction({ to: contract.address, value: PRICE.add(parseEther('0.009')) }))
+      expect(await owner.sendTransaction({ to: contract.address, value: PRICE.add(parseEther('0.015')) }))
         .to.changeEtherBalance(owner, PRICE.mul(-2))
     })
 
@@ -151,27 +162,27 @@ describe('Infinity', () => {
   describe(`DeGenerating`, () => {
 
     it(`Should allow degenerating`, async () => {
-      const balance = await contract.balanceOf(addr2.address, 1)
-      await expect(contract.connect(addr2).degenerate(1, 1))
+      const balance = await contract.balanceOf(addr2.address, TOKEN)
+      await expect(contract.connect(addr2).degenerate(TOKEN, 1))
         .to.emit(contract, 'TransferSingle')
-        .withArgs(addr2.address, addr2.address, constants.AddressZero, 1, 1)
+        .withArgs(addr2.address, addr2.address, constants.AddressZero, TOKEN, 1)
 
-      expect(await contract.balanceOf(addr2.address, 1)).to.equal(balance.sub(1))
+      expect(await contract.balanceOf(addr2.address, TOKEN)).to.equal(balance.sub(1))
     })
 
     it(`Should allow withdrawing funds with specified token amount`, async () => {
-      await expect(contract.connect(addr2).degenerate(1, 50)).to.be.revertedWith(`Can't burn more infinities than owned.`)
+      await expect(contract.connect(addr2).degenerate(TOKEN, 50)).to.be.revertedWith(`Can't burn more infinities than owned.`)
 
-      expect(await contract.connect(addr2).degenerate(1, 5))
+      expect(await contract.connect(addr2).degenerate(TOKEN, 5))
         .to.changeEtherBalance(addr2, PRICE.mul(5))
     })
 
     it(`Should allow withdrawing funds for many tokens`, async () => {
-      await expect(contract.connect(addr4).degenerateMany([1, 2], [5, 5]))
+      await expect(contract.connect(addr4).degenerateMany([TOKEN, TOKEN+1], [5, 5]))
         .to.emit(contract, 'TransferBatch')
-        .withArgs(addr4.address, addr4.address, constants.AddressZero, [1, 2], [5, 5])
+        .withArgs(addr4.address, addr4.address, constants.AddressZero, [TOKEN, TOKEN+1], [5, 5])
 
-      expect(await contract.connect(addr5).degenerateMany([1, 2], [5, 5]))
+      expect(await contract.connect(addr5).degenerateMany([TOKEN, TOKEN+1], [5, 5]))
         .to.changeEtherBalance(addr5, PRICE.mul(10))
     })
 

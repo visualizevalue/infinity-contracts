@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./ERC1155.sol";
-import "hardhat/console.sol";
+import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
+import "./standards/ERC1155.sol";
 
 /// @title Infinity token contract v1
 /// @author Visualize Value
 contract Infinity is ERC1155 {
+    using BitMaps for BitMaps.BitMap;
 
     /// @notice The name of the collection
     string public name = "Infinity";
@@ -17,11 +18,17 @@ contract Infinity is ERC1155 {
     /// @notice The price of an infinity
     uint public price = 0.008 ether;
 
+    /// @dev Generative mints start from this token ID
+    uint private constant GENERATIVE = 88888888;
+
+    /// @dev Keep track of minted genesis / VV pieces
+    BitMaps.BitMap private vv;
+
     constructor() ERC1155() {}
 
     /// @notice Deposit ETH, get random infinities
     receive() external payable {
-        uint tokenId = block.prevrandao;
+        uint tokenId = _validateId(block.prevrandao);
 
         uint surplus = msg.value % price;
         uint amount  = msg.value / price;
@@ -45,13 +52,15 @@ contract Infinity is ERC1155 {
         _checkDeposit(_totalAmount(amounts));
 
         for (uint i = 0; i < recipients.length; i++) {
-            _mint(recipients[i], tokenIds[i], amounts[i], "");
+            _mint(recipients[i], _validateId(tokenIds[i]), amounts[i], "");
         }
     }
 
     /// @notice Create an infinity check and deposit 0.008 ETH for each token.
     function generate(address recipient, uint tokenId, uint amount, string calldata message) public payable {
         _checkDeposit(amount);
+
+        tokenId = _validateId(tokenId);
 
         _mint(recipient, tokenId, amount, "");
 
@@ -97,6 +106,18 @@ contract Infinity is ERC1155 {
     /// @notice Supply is (in)finite: (2^256 - 1)^2
     function totalSupply(uint) public pure returns (uint) {
         return type(uint).max;
+    }
+
+    /// @dev Make sure only VV can create pieces below {GENERATIVE}
+    function _validateId(uint id) internal view returns (uint) {
+        address VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
+        bool guard = id < GENERATIVE;
+
+        // If we're generative, or an already minted piece, or VV, continue
+        if (! guard || vv.get(id) || msg.sender == VV) return id;
+
+        // Otherwise create a generative piece instead
+        return id += GENERATIVE;
     }
 
     /// @dev Check whether the {msg.sender} owns at least {amount} of token {id}
