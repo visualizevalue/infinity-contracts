@@ -1,0 +1,26 @@
+node_modules
+.DS_Store
+.env
+coverage
+coverage.json
+typechain
+metadata-test/dist/*/**.svg
+metadata-test/dist/*/**.png
+metadata-test/dist/*/**.mp4
+metadata-test/bidders/infinities/configs/*.json
+metadata-test/bidders/infinities/configs/**/*.json
+!metadata-test/bidders/infinities/configs/test-*.json
+metadata-test/bidders/infinities/rendered/**/*.png
+metadata-test/bidders/infinities/rendered/**/*.svg
+metadata-test/bidders/infinities/rendered/*.png
+metadata-test/bidders/infinities/rendered/*.svg
+metadata-test/bidders/infinities/rendered-pngs/**/*.png
+metadata-test/bidders/dist
+
+#Hardhat files
+cache
+artifacts
+
+# OpenZeppelin
+.openzeppelin/dev-*.json
+.openzeppelin/.session
