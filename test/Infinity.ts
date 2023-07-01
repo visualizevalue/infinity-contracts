@@ -1,9 +1,11 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
+import hre, { ethers } from 'hardhat'
 import { loadFixture } from 'ethereum-waffle'
 import { BigNumber, Contract, ContractReceipt, constants } from 'ethers'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { arrayify, parseEther } from 'ethers/lib/utils'
+import { impersonate } from './../helpers/impersonate'
+import { VV } from '../helpers/constants'
 
 const PRICE = parseEther('0.008')
 const TOKEN = 88888888
@@ -15,8 +17,9 @@ export const deployContract = async () => {
   await contract.deployed()
 
   const [ owner, addr1, addr2, addr3, addr4, addr5 ] = await ethers.getSigners()
+  const vv = await impersonate(VV, hre)
 
-  return { contract, owner, addr1, addr2, addr3, addr4, addr5 }
+  return { contract, owner, addr1, addr2, addr3, addr4, addr5, vv }
 }
 
 // Helper function to get Transfer event logs from the transaction receipt
@@ -33,10 +36,11 @@ describe('Infinity', () => {
       addr2: SignerWithAddress,
       addr3: SignerWithAddress,
       addr4: SignerWithAddress,
-      addr5: SignerWithAddress
+      addr5: SignerWithAddress,
+      vv: SignerWithAddress
 
   const deploy = async () => {
-    ({ contract, owner, addr1, addr2, addr3, addr4, addr5 } = await loadFixture(deployContract))
+    ({ contract, owner, addr1, addr2, addr3, addr4, addr5, vv } = await loadFixture(deployContract))
   }
 
   beforeEach(async () => {
@@ -155,6 +159,42 @@ describe('Infinity', () => {
     it(`Should send surplus ETH back when minting by depositing ETH`, async () => {
       expect(await owner.sendTransaction({ to: contract.address, value: PRICE.add(parseEther('0.015')) }))
         .to.changeEtherBalance(owner, PRICE.mul(-2))
+    })
+
+    it(`Shouldn't allow people to create genesis tokens`, async () => {
+      await expect(contract.generate(vv.address, 1, 1, '', { value: PRICE }))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(owner.address, constants.AddressZero, vv.address, 88888889, 1)
+    })
+
+    it(`Should mark genesis tokens as minted when VV mints them`, async () => {
+      await expect(contract.connect(vv).generate(owner.address, 1, 1, '', { value: PRICE }))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, owner.address, 1, 1)
+
+      await expect(contract.connect(vv).generate(owner.address, 2, 1, '', { value: PRICE }))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, owner.address, 2, 1)
+
+      await expect(contract.connect(vv).generateMany(
+        [owner.address, addr1.address, addr2.address, addr3.address],
+        [1, 2, 3, 4],
+        [1, 1, 1, 1],
+        { value: PRICE.mul(4) }
+      ))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, owner.address, 1, 1)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, addr1.address, 2, 1)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, addr2.address, 3, 1)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, addr3.address, 4, 1)
+
+      // It should then allow others to mint these as well
+      await expect(contract.generate(vv.address, 1, 1, '', { value: PRICE }))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(owner.address, constants.AddressZero, vv.address, 1, 1)
     })
 
   })
