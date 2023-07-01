@@ -275,7 +275,7 @@ describe('Infinity', () => {
 
       expect(metadata.attributes).to.deep.equal([
         { trait_type: 'Light', value: 'Off' },
-        { trait_type: 'Grid', value: '8x8' },
+        { trait_type: 'Grid', value: '4x4' },
       ])
 
       fs.writeFileSync('test/dist/88888889.json', JSON.stringify(metadata, null, 4))

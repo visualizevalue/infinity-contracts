@@ -22,19 +22,19 @@ library InfiniteArt {
     // }
 
     /// @dev Collect relevant rendering data for easy access across functions.
-    function collectRenderData(uint256 tokenId) public pure returns (RenderData memory data) {
+    function collectRenderData(uint tokenId) public pure returns (RenderData memory data) {
         data.seed        = tokenId;
         data.light       = tokenId <= 88888888 ? true : false;
         data.background  = data.light == true ? 'FBFBFB' : '111111';
         data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
-        data.grid        = 8;
+        data.grid        = getGrid(tokenId);
         data.stroke      = data.grid < 8 ? '0.04' : '0.03';
 
         // data.isBlack = check.stored.divisorIndex == 7;
         // data.count = data.isBlack ? 1 : DIVISORS()[check.stored.divisorIndex];
 
         // // Compute colors and indexes.
-        // (string[] memory colors_, uint256[] memory colorIndexes_) = colors(check, checks);
+        // (string[] memory colors_, uint[] memory colorIndexes_) = colors(check, checks);
         // data.gridColor = data.isBlack ? '#F2F2F2' : '#191919';
         // data.canvasColor = data.isBlack ? '#FFF' : '#111';
         // data.colorIndexes = colorIndexes_;
@@ -50,10 +50,19 @@ library InfiniteArt {
         // data.rowY = rowY(data.count);
     }
 
+    function getGrid(uint tokenId) public pure returns (uint8) {
+        uint number = Utilities.random(tokenId, 'grid', 100);
+
+        return number ==  1 ? 1
+             : number <=  8 ? 2
+             : number <= 24 ? 4
+             : 8;
+    }
+
     /// @dev Generate the SVG code for rows in the 8x8 grid.
     function generateGridRow() public pure returns (bytes memory) {
         bytes memory row;
-        for (uint256 i; i < 8; i++) {
+        for (uint i; i < 8; i++) {
             row = abi.encodePacked(
                 row,
                 '<use transform="translate(', Utilities.uint2str(i), ')" href="#box" />'
@@ -65,7 +74,7 @@ library InfiniteArt {
     /// @dev Generate the SVG code for the entire 8x8 grid.
     function generateGrid() public pure returns (bytes memory) {
         bytes memory grid;
-        for (uint256 i; i < 8; i++) {
+        for (uint i; i < 8; i++) {
             grid = abi.encodePacked(
                 grid,
                 '<use href="#row" transform="translate(0,', Utilities.uint2str(i), ')" />'
@@ -138,11 +147,11 @@ struct RenderData {
     string background;
     string gridColor;
     string stroke;
-    uint256 seed;
+    uint seed;
     uint8 grid;
     bool light;
     // IChecks.Check check;
-    // uint256[] colorIndexes;
+    // uint[] colorIndexes;
     // string[] colors;
     // string canvasColor;
     // string gridColor;
