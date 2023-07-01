@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { expect } from 'chai'
 import hre, { ethers } from 'hardhat'
 import { loadFixture } from 'ethereum-waffle'
@@ -5,16 +6,15 @@ import { BigNumber, Contract, ContractReceipt, constants } from 'ethers'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { arrayify, parseEther } from 'ethers/lib/utils'
 import { impersonate } from './../helpers/impersonate'
+import { deployInfinityWithLibraries } from '../helpers/deploy'
+import { decodeBase64URI } from '../helpers/decode-uri'
 import { VV } from '../helpers/constants'
 
 const PRICE = parseEther('0.008')
 const TOKEN = 88888888
 
 export const deployContract = async () => {
-  const Infinity = await ethers.getContractFactory('Infinity')
-  const contract = await Infinity.deploy()
-
-  await contract.deployed()
+  const { infinity: contract } = await deployInfinityWithLibraries(ethers)
 
   const [ owner, addr1, addr2, addr3, addr4, addr5 ] = await ethers.getSigners()
   const vv = await impersonate(VV, hre)
@@ -261,6 +261,25 @@ describe('Infinity', () => {
         .to.changeEtherBalance(addr5, PRICE.mul(10))
     })
 
+  })
+
+  describe(`Rendering`, () => {
+    it(`Renders token SVGs`, async () => {
+      const svg = await contract.svg(88888889)
+
+      fs.writeFileSync('test/dist/88888889.svg', svg)
+    })
+
+    it(`Renders token metadata`, async () => {
+      const metadata = decodeBase64URI(await contract.uri(88888889))
+
+      expect(metadata.attributes).to.deep.equal([
+        { trait_type: 'Light', value: 'Off' },
+        { trait_type: 'Grid', value: '8x8' },
+      ])
+
+      fs.writeFileSync('test/dist/88888889.json', JSON.stringify(metadata, null, 4))
+    })
   })
 
 })

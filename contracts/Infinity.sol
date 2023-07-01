@@ -2,6 +2,8 @@
 pragma solidity ^0.8.20;
 
 import "./standards/ERC1155.sol";
+import "./libraries/InfiniteArt.sol";
+import "./libraries/InfiniteMetadata.sol";
 
 /// @title Infinity token contract v1
 /// @author Visualize Value
@@ -75,7 +77,7 @@ contract Infinity is ERC1155 {
     function degenerate(
         uint id,
         uint amount
-    ) public virtual {
+    ) public {
         // Check whether we own at least {amount} of token {id}
         _checkOwnership(id, amount);
 
@@ -90,7 +92,7 @@ contract Infinity is ERC1155 {
     function degenerateMany(
         uint[] memory ids,
         uint[] memory amounts
-    ) public virtual {
+    ) public {
         require(ids.length == amounts.length, "Invalid input.");
 
         // Check ownership for each token
@@ -103,6 +105,20 @@ contract Infinity is ERC1155 {
 
         // Withdraw funds
         _send(msg.sender, _totalAmount(amounts) * price);
+    }
+
+    function svg(uint tokenId) public pure returns (string memory) {
+        return string(
+            InfiniteArt.generateSVG(
+                InfiniteArt.collectRenderData(tokenId)
+            )
+        );
+    }
+
+    function uri(uint tokenId) public pure override returns (string memory) {
+        return tokenId < GENERATIVE
+            ? "https://metadata.infinity.checks.art/{id}.json"
+            : InfiniteMetadata.tokenURI(InfiniteArt.collectRenderData(tokenId));
     }
 
     /// @notice Supply is (in)finite: (2^256 - 1)^2
