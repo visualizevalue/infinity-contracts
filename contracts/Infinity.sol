@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
 import "./standards/ERC1155.sol";
 
 /// @title Infinity token contract v1
 /// @author Visualize Value
 contract Infinity is ERC1155 {
-    using BitMaps for BitMaps.BitMap;
-
     /// @notice The name of the collection
     string public name = "Infinity";
 
@@ -21,30 +18,48 @@ contract Infinity is ERC1155 {
     /// @dev Generative mints start from this token ID
     uint private constant GENERATIVE = 88888888;
 
-    /// @dev Keep track of minted genesis / VV pieces
-    BitMaps.BitMap private vv;
+    /// @dev VV creator account
+    address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
 
     constructor() ERC1155() {}
 
-    /// @notice Deposit ETH, get random infinities
+    /// @notice Deposit ether, receive random infinities
     receive() external payable {
-        uint tokenId = _validateId(block.prevrandao);
-
-        uint surplus = msg.value % price;
         uint amount  = msg.value / price;
+        uint surplus = msg.value % price;
 
-        _mint(msg.sender, tokenId, amount, "");
+        _mint(msg.sender, _randomId(), amount, "");
         _send(msg.sender, surplus);
+    }
+
+    /// @notice Create an infinity check and deposit 0.008 ETH for each token.
+    function generate(
+        address source,
+        address recipient,
+        uint tokenIdOrOffset,
+        uint amount,
+        string calldata message
+    ) public payable {
+        _checkDeposit(amount);
+
+        uint tokenId = _validateId(tokenIdOrOffset, source);
+
+        _mint(recipient, tokenId, amount, "");
+
+        if (bytes(message).length > 0) {
+            emit Message(msg.sender, recipient, tokenId, message);
+        }
     }
 
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
     function generateMany(
+        address source,
         address[] calldata recipients,
-        uint[] calldata tokenIds,
+        uint[] calldata tokenIdsOrOffsets,
         uint[] calldata amounts
     ) public payable {
         require(
-            recipients.length == tokenIds.length &&
+            recipients.length == tokenIdsOrOffsets.length &&
             recipients.length == amounts.length,
             "Invalid input"
         );
@@ -52,20 +67,7 @@ contract Infinity is ERC1155 {
         _checkDeposit(_totalAmount(amounts));
 
         for (uint i = 0; i < recipients.length; i++) {
-            _mint(recipients[i], _validateId(tokenIds[i]), amounts[i], "");
-        }
-    }
-
-    /// @notice Create an infinity check and deposit 0.008 ETH for each token.
-    function generate(address recipient, uint tokenId, uint amount, string calldata message) public payable {
-        _checkDeposit(amount);
-
-        tokenId = _validateId(tokenId);
-
-        _mint(recipient, tokenId, amount, "");
-
-        if (bytes(message).length > 0) {
-            emit Message(msg.sender, recipient, tokenId, message);
+            _mint(recipients[i], _validateId(tokenIdsOrOffsets[i], source), amounts[i], "");
         }
     }
 
@@ -108,22 +110,31 @@ contract Infinity is ERC1155 {
         return type(uint).max;
     }
 
-    /// @dev Make sure only VV can create pieces below {GENERATIVE}
-    function _validateId(uint id) internal returns (uint) {
-        address VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
-        bool guard = id < GENERATIVE;
+    /// @dev Make sure only VV can create pieces below {GENERATIVE}, and IDs are randomized for initial mints
+    function _validateId(uint id, address existing) internal view returns (uint) {
+        bool minted = existing != address(0) && balanceOf(existing, id) > 0;
 
-        // If we're generative, or an already minted piece, continue
-        if (! guard || vv.get(id)) return id;
+        // If it's an already minted piece, or we are VV, continue
+        if (minted || msg.sender == VV) return id;
 
-        // If we're VV, we mark the token as minted and continue
-        if (msg.sender == VV) {
-            vv.set(id);
-            return id;
+        return _randomId(id);
+    }
+
+    /// @dev Make a random generative token ID
+    function _randomId(uint offset) internal view returns (uint id) {
+        id = block.prevrandao + offset;
+
+        // Force into {GENERATIVE} range
+        if (id < GENERATIVE) {
+            id += GENERATIVE;
         }
 
-        // Otherwise, we create a generative piece instead
-        return id += GENERATIVE;
+        return id;
+    }
+
+    /// @dev Make a random generative token ID
+    function _randomId() internal view returns (uint) {
+        return _randomId(0);
     }
 
     /// @dev Check whether the {msg.sender} owns at least {amount} of token {id}

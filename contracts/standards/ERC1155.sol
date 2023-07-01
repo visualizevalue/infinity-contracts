@@ -55,7 +55,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
      * - `account` cannot be the zero address.
      */
     function balanceOf(address account, uint256 id) public view virtual override returns (uint256) {
-        require(account != address(0), "ERC1155: address zero is not a valid owner");
+        if (account == address(0)) return 0;
         return _balances[id][account];
     }
 

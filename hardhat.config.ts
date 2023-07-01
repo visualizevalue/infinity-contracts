@@ -18,6 +18,7 @@ const HARDHAT_NETWORK_CONFIG = {
     url: process.env.MAINNET_URL || '',
     blockNumber: 17593000,
   },
+  allowUnlimitedContractSize: true,
 }
 
 const config: HardhatUserConfig = {
