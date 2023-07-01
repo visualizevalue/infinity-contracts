@@ -109,14 +109,20 @@ contract Infinity is ERC1155 {
     }
 
     /// @dev Make sure only VV can create pieces below {GENERATIVE}
-    function _validateId(uint id) internal view returns (uint) {
+    function _validateId(uint id) internal returns (uint) {
         address VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
         bool guard = id < GENERATIVE;
 
-        // If we're generative, or an already minted piece, or VV, continue
-        if (! guard || vv.get(id) || msg.sender == VV) return id;
+        // If we're generative, or an already minted piece, continue
+        if (! guard || vv.get(id)) return id;
 
-        // Otherwise create a generative piece instead
+        // If we're VV, we mark the token as minted and continue
+        if (msg.sender == VV) {
+            vv.set(id);
+            return id;
+        }
+
+        // Otherwise, we create a generative piece instead
         return id += GENERATIVE;
     }
 
