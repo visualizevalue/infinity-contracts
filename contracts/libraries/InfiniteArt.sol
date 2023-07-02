@@ -91,44 +91,36 @@ library InfiniteArt {
 
     /// @dev Generate SVG code for the drops.
     function renderDrops(RenderData memory data) public view returns (bytes memory) {
-        // // TODO: Refactor up or down?
-        // string memory center = data.grid == 1 ? '2'
-        //                      : data.grid == 2 ? '1'
-        //                      : data.grid == 4 ? '0.5'
-        //                                       : '0.25';
-
-        bytes memory drops;
-        for (uint i = 0; i < data.count; i++) {
-            drops = abi.encodePacked(drops, renderDropGroup(i, data));
-        }
-
-        return drops;
-    }
-
-    function renderDropGroup(uint i, RenderData memory data) public view returns (bytes memory) {
         uint baseStroke = data.grid < 8 ? STROKE : STROKE * 3 / 4;
 
         uint space  = 800 / data.grid;
         uint center = space / 4;
         uint width  = space / 2;
-        uint scale  = width * 1000 / data.drops[i].formWidth;
-        uint stroke = baseStroke * data.grid / 2;
 
-        if (data.drops[i].isInfinity) {
-            stroke = stroke * 2;
-            scale = scale / 2;
+        bytes memory drops;
+        for (uint i = 0; i < data.count; i++) {
+            Drop memory drop = data.drops[i];
+
+            uint stroke = baseStroke * data.grid / 2;
+            uint scale  = width * 1000 / drop.formWidth;
+
+            if (drop.isInfinity) {
+                stroke = stroke * 2;
+                scale = scale / 2;
+            }
+
+            drop.stroke = Utilities.uint2str(stroke);
+            drop.width  = Utilities.uint2str(width);
+            drop.center = Utilities.uint2str(center);
+            drop.x      = Utilities.uint2str(i % data.grid * space + center);
+            drop.y      = Utilities.uint2str(i / data.grid * space + center);
+            drop.scale  = scale < 1000
+                ? string(abi.encodePacked('0.', Utilities.uint2str(scale)))
+                : Utilities.uint2str(scale / 1000);
+
+            drops = abi.encodePacked(drops, renderDrop(drop));
         }
-
-        data.drops[i].stroke = Utilities.uint2str(stroke);
-        data.drops[i].width  = Utilities.uint2str(width);
-        data.drops[i].center = Utilities.uint2str(center);
-        data.drops[i].x      = Utilities.uint2str(i % data.grid * space + center);
-        data.drops[i].y      = Utilities.uint2str(i / data.grid * space + center);
-        data.drops[i].scale  = scale < 1000
-            ? string(abi.encodePacked('0.', Utilities.uint2str(scale)))
-            : Utilities.uint2str(scale / 1000);
-
-        return renderDrop(data.drops[i]);
+        return drops;
     }
 
     function renderDrop(Drop memory drop) public view returns (bytes memory) {
