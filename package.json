@@ -41,6 +41,7 @@
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "crypto": "^1.0.1",
     "glob": "^10.2.6",
+    "hardhat-contract-sizer": "^2.10.0",
     "puppeteer": "^20.1.2",
     "puppeteer-screen-recorder": "^2.1.2",
     "rand-seed": "^1.0.2",
