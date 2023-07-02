@@ -17,8 +17,8 @@ library InfiniteMetadata {
     /// @param data The render data for our token
     function tokenURI(
         RenderData memory data
-    ) public pure returns (string memory) {
-        bytes memory svg = InfiniteArt.generateSVG(data);
+    ) public view returns (string memory) {
+        bytes memory svg = InfiniteArt.renderSVG(data);
 
         bytes memory metadata = abi.encodePacked(
             '{',

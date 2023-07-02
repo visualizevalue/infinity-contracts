@@ -107,15 +107,15 @@ contract Infinity is ERC1155 {
         _send(msg.sender, _totalAmount(amounts) * price);
     }
 
-    function svg(uint tokenId) public pure returns (string memory) {
+    function svg(uint tokenId) public view returns (string memory) {
         return string(
-            InfiniteArt.generateSVG(
+            InfiniteArt.renderSVG(
                 InfiniteArt.collectRenderData(tokenId)
             )
         );
     }
 
-    function uri(uint tokenId) public pure override returns (string memory) {
+    function uri(uint tokenId) public view override returns (string memory) {
         return tokenId < GENERATIVE
             ? "https://metadata.infinity.checks.art/{id}.json"
             : InfiniteMetadata.tokenURI(InfiniteArt.collectRenderData(tokenId));

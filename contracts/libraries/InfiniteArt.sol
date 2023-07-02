@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 // import "./EightyColors.sol";
 import "./Utilities.sol";
+import "hardhat/console.sol";
 
 /**
 @title  InfiniteArt
@@ -11,22 +12,140 @@ import "./Utilities.sol";
 */
 library InfiniteArt {
 
+    /// @dev Generate the SVG code for an Infinity token.
+    /// @param data The token to render.
+    function renderSVG(RenderData memory data) public view returns (bytes memory) {
+        return abi.encodePacked(
+            '<svg viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">',
+                renderStyle(data),
+                renderDefs(),
+                '<rect width="8" height="8" fill="var(--bg)" />',
+                '<g transform="scale(0.95)" transform-origin="center">',
+                    renderGrid(),
+                    renderDrops(data),
+                '</g>',
+                '<rect mask="url(#mask)" width="8" height="8" fill="black" filter="url(#noise)" style="mix-blend-mode: overlay;"/>',
+            '</svg>'
+        );
+    }
+
+    function renderStyle(RenderData memory data) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<style>',
+                ':root {',
+                    '--bg: #', data.background, ';',
+                    '--gr: #', data.gridColor, ';',
+                '}',
+            '</style>'
+        );
+    }
+
+    function renderDefs() public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<defs>',
+                '<rect id="box" width="1" height="1" stroke="var(--gr)" stroke-width="0.04" style="paint-order: stroke;" />'
+                '<g id="row">', renderGridRow(), '</g>',
+                '<mask id="mask"><rect width="8" height="8" fill="white"/></mask>',
+                '<path id="drop" d="M 1 0 A 1 1, 0, 1, 1, 0 1 L 0 0 Z"/>',
+                '<g id="infinity">',
+                    '<use href="#drop" />',
+                    '<use href="#drop" transform="scale(-1,-1)" />',
+                '</g>',
+                '<filter id="noise">',
+                    '<feTurbulence type="fractalNoise" baseFrequency="80" stitchTiles="stitch" numOctaves="1" seed="1"/>',
+                    '<feColorMatrix type="matrix" values="2  0  0 -1 -1',
+                                                            '2  0  0 -1 -1',
+                                                            '2  0  0 -1 -1',
+                                                          '0.8  0  0 -1  0.2" />',
+                '</filter>',
+            '</defs>'
+        );
+    }
+
+    /// @dev Generate the SVG code for rows in the 8x8 grid.
+    function renderGridRow() public pure returns (bytes memory) {
+        bytes memory row;
+        for (uint256 i; i < 8; i++) {
+            row = abi.encodePacked(
+                row,
+                '<use transform="translate(', Utilities.uint2str(i), ')" href="#box" />'
+            );
+        }
+        return row;
+    }
+
+    /// @dev Generate the SVG code for the entire 8x8 grid.
+    function renderGrid() public pure returns (bytes memory) {
+        bytes memory grid;
+        for (uint256 i; i < 8; i++) {
+            grid = abi.encodePacked(
+                grid,
+                '<use href="#row" transform="translate(0,', Utilities.uint2str(i), ')" />'
+            );
+        }
+
+        return grid;
+    }
+
+    /// @dev Generate SVG code for the drops.
+    function renderDrops(RenderData memory data) public view returns (bytes memory) {
+        // TODO: Refactor up or down?
+        string memory center = data.grid == 1 ? '2'
+                             : data.grid == 2 ? '1'
+                             : data.grid == 4 ? '0.5'
+                                              : '0.25';
+
+        bytes memory drops;
+        for (uint i = 0; i < data.count; i++) {
+            drops = abi.encodePacked(drops, renderDropGroup(i, data, center));
+        }
+
+        return drops;
+    }
+
+    function renderDropGroup(uint i, RenderData memory data, string memory center) public view returns (bytes memory) {
+        string memory stroke = data.grid == 8 ? '0.06'
+                             : data.grid == 4 ? '0.08'
+                             : data.grid == 2 ? '0.08'
+                                              : '0.08';
+
+        uint8 space = 8 / data.grid;
+        string memory x = Utilities.uint2str(i % data.grid * space);
+        string memory y = Utilities.uint2str(i / data.grid * space);
+
+        return abi.encodePacked(
+            '<g transform="translate(',x,',',y,') rotate(',data.drops[i].rotation,')" ',
+                'transform-origin="',center,' ',center,'" stroke-width="', stroke, '">',
+                renderDrop(i, data, center),
+            '</g>'
+        );
+    }
+
+    function renderDrop(uint i, RenderData memory data, string memory center) public view returns (bytes memory) {
+        return abi.encodePacked(
+            '<use href="#drop" transform="scale(', center, ')" stroke="#', data.drops[i].color, '" />'
+        );
+    }
+
     /// @dev Collect relevant rendering data for easy access across functions.
-    function collectRenderData(uint256 tokenId) public pure returns (RenderData memory data) {
+    function collectRenderData(uint256 tokenId) public view returns (RenderData memory data) {
         data.seed        = tokenId;
         data.light       = tokenId <= 88888888 ? true : false;
         data.background  = data.light == true ? 'FBFBFB' : '111111';
-        data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
+        // data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
+        data.gridColor   = data.light == true ? 'F5F5F5' : '505050';
         data.grid        = getGrid(tokenId);
         data.count       = data.grid ** 2;
-        data.stroke      = data.grid < 8 ? '0.04' : '0.03';
 
         data.band        = getBand(tokenId);
         data.palette     = getPalette(tokenId);
         if (data.palette == 1) {
             data.elementType = getElementType(tokenId);
         }
+        console.log('data.elementType', data.elementType);
         data.gradient    = getGradient(data);
+
+        console.log('gradient', data.gradient, getGradient(data));
 
         data.drops       = getDrops(data);
     }
@@ -70,7 +189,7 @@ library InfiniteArt {
 
     }
 
-    function getGradient(RenderData memory data) public pure returns (uint8) {
+    function getGradient(RenderData memory data) public view returns (uint8) {
         if (data.grid == 1) return 0;
 
         uint8 options = data.grid == 2 ? 2 : 6;
@@ -91,104 +210,24 @@ library InfiniteArt {
         return 0;
     }
 
-    function getDrops(RenderData memory data) public pure returns (Drop[] memory drops) {
-        return drops;
-    }
-
-    /// @dev Generate the SVG code for rows in the 8x8 grid.
-    function generateGridRow() public pure returns (bytes memory) {
-        bytes memory row;
-        for (uint256 i; i < 8; i++) {
-            row = abi.encodePacked(
-                row,
-                '<use transform="translate(', Utilities.uint2str(i), ')" href="#box" />'
-            );
+    function getDrops(RenderData memory data) public view returns (Drop[64] memory drops) {
+        console.log('data.count', data.count);
+        for (uint i = 0; i < data.count; i++) {
+            drops[i] = Drop(1, 'fff', '0');
         }
-        return row;
-    }
-
-    /// @dev Generate the SVG code for the entire 8x8 grid.
-    function generateGrid() public pure returns (bytes memory) {
-        bytes memory grid;
-        for (uint256 i; i < 8; i++) {
-            grid = abi.encodePacked(
-                grid,
-                '<use href="#row" transform="translate(0,', Utilities.uint2str(i), ')" />'
-            );
-        }
-
-        return grid;
-    }
-
-    /// @dev Generate SVG code for the drops.
-    function generateDrops(RenderData memory data) public pure returns (bytes memory) {
-        bytes memory drops;
-
-        return drops;
-    }
-
-    function generateStyle(RenderData memory data) public pure returns (bytes memory) {
-        return abi.encodePacked(
-            '<style>',
-                ':root {',
-                    '--bg: #', data.background, ';',
-                    '--gr: #', data.gridColor, ';',
-                '}',
-            '</style>'
-        );
-    }
-
-    function generateDefs() public pure returns (bytes memory) {
-        return abi.encodePacked(
-            '<defs>',
-                '<rect id="box" width="1" height="1" fill="var(--bg)" stroke="var(--gr)" stroke-width="0.04" style="paint-order: stroke;" />'
-                '<g id="row">', generateGridRow(), '</g>',
-                '<mask id="mask"><rect width="8" height="8" fill="white"/></mask>',
-                '<path id="drop" d="M 1 0 A 1 1, 0, 1, 1, 0 1 L 0 0 Z"/>',
-                '<g id="infinity">',
-                    '<use href="#drop" />',
-                    '<use href="#drop" transform="scale(-1,-1)" />',
-                '</g>',
-                '<filter id="noise">',
-                    '<feTurbulence type="fractalNoise" baseFrequency="80" stitchTiles="stitch" numOctaves="1" seed="1"/>',
-                    '<feColorMatrix type="matrix" values="2  0  0 -1 -1',
-                                                            '2  0  0 -1 -1',
-                                                            '2  0  0 -1 -1',
-                                                        '0.8  0  0 -1  0.2" />',
-                '</filter>',
-            '</defs>'
-        );
-    }
-
-    /// @dev Generate the SVG code for an Infinity token.
-    /// @param data The token to render.
-    function generateSVG(RenderData memory data) public pure returns (bytes memory) {
-        return abi.encodePacked(
-            '<svg viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">',
-                generateStyle(data),
-                generateDefs(),
-                '<rect width="8" height="8" fill="var(--bg)" />',
-                '<g transform="scale(0.95)" transform-origin="center">',
-                    generateGrid(),
-                    generateDrops(data),
-                '</g>',
-                '<rect mask="url(#mask)" width="8" height="8" fill="black" filter="url(#noise)" style="mix-blend-mode: overlay;"/>',
-            '</svg>'
-        );
     }
 }
 
 struct Drop {
     uint8 form;
-    uint8 color;
-    uint8 rotation;
+    string color;
+    string rotation;
 }
 
 /// @dev Bag holding all data relevant for rendering.
 struct RenderData {
     string background;
     string gridColor;
-    string stroke;
     uint256 seed;
     uint8 palette;
     uint8 elementType;
@@ -197,7 +236,7 @@ struct RenderData {
     uint8 band;
     uint8 gradient;
     bool light;
-    Drop[] drops;
+    Drop[64] drops;
 
     // IChecks.Check check;
     // uint[] colorIndexes;

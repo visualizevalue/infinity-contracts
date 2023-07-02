@@ -263,7 +263,7 @@ describe('Infinity', () => {
 
   })
 
-  describe(`Rendering`, () => {
+  describe.only(`Rendering`, () => {
     it(`Renders token SVGs`, async () => {
       const svg = await contract.svg(88888889)
 
