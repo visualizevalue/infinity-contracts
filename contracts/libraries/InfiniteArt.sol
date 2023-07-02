@@ -108,23 +108,25 @@ library InfiniteArt {
     function renderDropGroup(uint i, RenderData memory data) public view returns (bytes memory) {
         uint baseStroke = data.grid < 8 ? STROKE : STROKE * 3 / 4;
 
-        uint space = 800 / data.grid;
+        uint space  = 800 / data.grid;
         uint center = space / 4;
-        uint width = space / 2;
-        uint scale = width * 100 / data.drops[i].formWidth;
+        uint width  = space / 2;
+        uint scale  = width * 1000 / data.drops[i].formWidth;
+        uint stroke = baseStroke * data.grid / 2;
 
-        if (i == 0) {
-            console.log(data.seed, width, data.drops[i].formWidth);
+        if (data.drops[i].isInfinity) {
+            stroke = stroke * 2;
+            scale = scale / 2;
         }
 
-        data.drops[i].stroke = Utilities.uint2str(baseStroke * data.grid / 2);
+        data.drops[i].stroke = Utilities.uint2str(stroke);
         data.drops[i].width  = Utilities.uint2str(width);
         data.drops[i].center = Utilities.uint2str(center);
         data.drops[i].x      = Utilities.uint2str(i % data.grid * space + center);
         data.drops[i].y      = Utilities.uint2str(i / data.grid * space + center);
-        data.drops[i].scale  = data.drops[i].formWidth > width
+        data.drops[i].scale  = scale < 1000
             ? string(abi.encodePacked('0.', Utilities.uint2str(scale)))
-            : Utilities.uint2str(scale / 100);
+            : Utilities.uint2str(scale / 1000);
 
         return renderDrop(data.drops[i]);
     }
@@ -159,7 +161,11 @@ library InfiniteArt {
 
     function renderDropForm2(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<g transform="translate(200,200)">'
+                    '<use href="#infinity" />',
+                '</g>'
+            '</g>'
         );
     }
 
@@ -174,7 +180,12 @@ library InfiniteArt {
 
     function renderDropForm4(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<g transform="translate(200,200)">'
+                    '<use href="#infinity" />',
+                    '<use href="#infinity" transform="rotate(90)" />',
+                '</g>'
+            '</g>'
         );
     }
 
@@ -189,7 +200,14 @@ library InfiniteArt {
 
     function renderDropForm8(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<g transform="translate(200,200)">'
+                    '<use href="#infinity" />',
+                    '<use href="#infinity" transform="rotate(45)" />',
+                    '<use href="#infinity" transform="rotate(90)" />',
+                    '<use href="#infinity" transform="rotate(135)" />',
+                '</g>'
+            '</g>'
         );
     }
 
@@ -297,8 +315,8 @@ library InfiniteArt {
             // 2 4 8 (infinity)
             uint formIdx = Utilities.random(data.seed, string(abi.encodePacked('form', Utilities.uint2str(i))), 7);
             drops[i].form = forms[formIdx];
-            bool isInfinity = drops[i].form % 2 == 0;
-            uint rotationIncrement = isInfinity ? 45 : 90;
+            drops[i].isInfinity = drops[i].form % 2 == 0;
+            uint rotationIncrement = drops[i].isInfinity ? 45 : 90;
             uint rotations = rotationCounts[formIdx] > 0
                 ? Utilities.random(
                     data.seed,
@@ -315,6 +333,7 @@ library InfiniteArt {
 
 struct Drop {
     uint form;
+    bool isInfinity;
     uint8 formWidth;
     string color;
     string scale;
