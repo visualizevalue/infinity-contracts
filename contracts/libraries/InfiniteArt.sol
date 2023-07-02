@@ -130,9 +130,17 @@ library InfiniteArt {
     }
 
     function renderDrop(Drop memory drop) public view returns (bytes memory) {
+        bytes memory symbol = drop.form == 1 ? renderDropForm1(drop)
+                            : drop.form == 2 ? renderDropForm2(drop)
+                            : drop.form == 3 ? renderDropForm3(drop)
+                            : drop.form == 4 ? renderDropForm4(drop)
+                            : drop.form == 5 ? renderDropForm5(drop)
+                            : drop.form == 8 ? renderDropForm8(drop)
+                                             : renderDropForm9(drop);
+
         return abi.encodePacked(
             '<g ',renderDropTransforms(drop),' stroke-width="', drop.stroke, '">',
-                '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+                symbol,
             '</g>'
         );
     }
@@ -140,6 +148,59 @@ library InfiniteArt {
     function renderDropTransforms(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
             'transform="translate(',drop.x,',',drop.y,') rotate(',drop.rotation,')" transform-origin="',drop.center,' ',drop.center,'"'
+        );
+    }
+
+    function renderDropForm1(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+        );
+    }
+
+    function renderDropForm2(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+        );
+    }
+
+    function renderDropForm3(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<use href="#drop" />',
+                '<use href="#drop" transform="translate(200,0) scale(-1,1)" />',
+            '</g>'
+        );
+    }
+
+    function renderDropForm4(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+        );
+    }
+
+    function renderDropForm5(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<use href="#drop" />',
+                '<use href="#drop" transform="translate(200,200) scale(-1,-1)" />',
+            '</g>'
+        );
+    }
+
+    function renderDropForm8(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+        );
+    }
+
+    function renderDropForm9(Drop memory drop) public pure returns (bytes memory) {
+        return abi.encodePacked(
+            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+                '<use href="#drop" />',
+                '<use href="#drop" transform="translate(200,0) scale(-1,1)" />',
+                '<use href="#drop" transform="translate(0,200) scale(1,-1)" />',
+                '<use href="#drop" transform="translate(200,200) scale(-1,-1)" />',
+            '</g>'
         );
     }
 
@@ -226,18 +287,34 @@ library InfiniteArt {
     }
 
     function getDrops(RenderData memory data) public view returns (Drop[64] memory drops) {
-        console.log('data.count', data.count);
+        uint8[7] memory forms          = [ 1, 2, 3, 4, 5, 8, 9];
+        uint8[7] memory rotationCounts = [ 2, 4, 4, 2, 2, 0, 0]; // How often we rotate
+
         for (uint i = 0; i < data.count; i++) {
-            drops[i].form = 1;
+            // TYPES
+            // 1 (drop)
+            // 3 5 9 (counter)
+            // 2 4 8 (infinity)
+            uint formIdx = Utilities.random(data.seed, string(abi.encodePacked('form', Utilities.uint2str(i))), 7);
+            drops[i].form = forms[formIdx];
+            bool isInfinity = drops[i].form % 2 == 0;
+            uint rotationIncrement = isInfinity ? 45 : 90;
+            uint rotations = rotationCounts[formIdx] > 0
+                ? Utilities.random(
+                    data.seed,
+                    string(abi.encodePacked('rotation', Utilities.uint2str(i))),
+                    rotationCounts[formIdx]
+                )
+                : 0;
+            drops[i].rotation = Utilities.uint2str(rotations * rotationIncrement);
             drops[i].formWidth = 200;
             drops[i].color = 'fff';
-            drops[i].rotation = '90';
         }
     }
 }
 
 struct Drop {
-    uint8 form;
+    uint form;
     uint8 formWidth;
     string color;
     string scale;
