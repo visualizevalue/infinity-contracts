@@ -371,7 +371,25 @@ library InfiniteArt {
     }
 
     function getElementCompoundColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getElementCompleteColors(data);
+        uint firstIdx = Utilities.random(data.seed, 'compound_1', 16) / 4;
+        uint secondIdx = Utilities.random(data.seed, 'compound_2', 16) / 4;
+
+        uint tries = 3;
+        while (firstIdx == secondIdx) {
+            secondIdx = Utilities.random(
+                data.seed, string(abi.encodePacked('compound_', Utilities.uint2str(tries))), 16
+            ) / 4;
+            tries++;
+        }
+
+        for (uint i = 0; i < data.count; i++) {
+            uint random = Utilities.random(data.seed, string(abi.encodePacked('compound_r_', Utilities.uint2str(i))), 8);
+
+            uint idx = random < 4 ? 4 * firstIdx + random
+                                  : 4 * secondIdx + random - 4;
+
+            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+        }
     }
 
     function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
