@@ -221,7 +221,6 @@ library InfiniteArt {
         data.light       = tokenId <= 88888888 ? true : false;
         data.background  = data.light == true ? 'FBFBFB' : '111111';
         data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
-        // data.gridColor   = data.light == true ? 'F5F5F5' : '505050';
         data.grid        = getGrid(tokenId);
         data.count       = data.grid ** 2;
         data.band        = getBand(tokenId);
@@ -291,8 +290,8 @@ library InfiniteArt {
         }
 
         // Elements
-        if (data.elementType == 6) return 1;
         if (data.elementType == 5) return GRADIENTS[Utilities.random(data.seed, 'gradient_select', options)];
+        if (data.elementType == 6) return 1;
         return 0;
     }
 
@@ -335,7 +334,7 @@ library InfiniteArt {
         string[80] memory allColors = EightyColors.COLORS();
         uint initialIdx = Utilities.random(data.seed, 'initial', 80);
 
-        bool randomBand = Utilities.random(data.seed, 'random_band', 1) == 1 && data.band < 5;
+        bool randomBand = Utilities.random(data.seed, 'random_band', 2) == 1 && data.band < 5;
         if (randomBand) {
             for (uint i = initialIdx; i < initialIdx + 5; i++) {
                 uint randomIdx = Utilities.random(data.seed, string(abi.encodePacked('random_band_', Utilities.uint2str(i))), 80);
@@ -393,19 +392,52 @@ library InfiniteArt {
     }
 
     function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getElementCompleteColors(data);
+        uint elementIdx = Utilities.random(data.seed, 'composite', 16) / 4;
+
+        for (uint i = 0; i < data.count; i++) {
+            uint random = Utilities.random(data.seed, string(abi.encodePacked('composite_', Utilities.uint2str(i))), 4);
+
+            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[4 * elementIdx + random];
+        }
     }
 
     function getElementIsolateColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getElementCompleteColors(data);
+        uint idx = Utilities.random(data.seed, 'isolate', 16);
+
+        for (uint i = 0; i < data.count; i++) {
+            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+        }
     }
 
     function getElementOrderColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getElementCompleteColors(data);
+        bool reverse = Utilities.random(data.seed, 'order_rev', 2) > 0;
+        uint element = Utilities.random(data.seed, 'order_el', 4);
+
+        uint[64] memory options;
+        for (uint i = 0; i < data.count; i++) {
+            options[i] = 4 * element + (4 * i) / data.count;
+        }
+
+        for (uint i = 0; i < data.count; i++) {
+            uint initial = data.gradient > 2
+                ? data.gradient % 2 == 1
+                    ? data.count - 1
+                    : 0
+                : 0;
+            uint oIdx = (initial + i * data.gradient) % data.count;
+            if (reverse) {
+                oIdx = data.count - 1 - oIdx;
+            }
+            uint idx = options[oIdx];
+
+            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+        }
     }
 
     function getElementAlphaColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getElementCompleteColors(data);
+        data.gradient = 1;
+
+        colors = getElementOrderColors(data);
     }
 }
 
