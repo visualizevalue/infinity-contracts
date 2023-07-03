@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-// import "./EightyColors.sol";
+import "./EightyColors.sol";
+// import "./SixteenElementsColors.sol";
 import "./Utilities.sol";
 import "hardhat/console.sol";
 
@@ -219,8 +220,8 @@ library InfiniteArt {
         data.seed        = tokenId;
         data.light       = tokenId <= 88888888 ? true : false;
         data.background  = data.light == true ? 'FBFBFB' : '111111';
-        // data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
-        data.gridColor   = data.light == true ? 'F5F5F5' : '505050';
+        data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
+        // data.gridColor   = data.light == true ? 'F5F5F5' : '505050';
         data.grid        = getGrid(tokenId);
         data.count       = data.grid ** 2;
         data.band        = getBand(tokenId);
@@ -235,14 +236,14 @@ library InfiniteArt {
     function getGrid(uint256 seed) public pure returns (uint8) {
         uint256 n = Utilities.random(seed, 'grid', 100);
 
-        // return n <  1 ? 1
-        //      : n <  8 ? 2
-        //      : n < 24 ? 4
-        //      : 8;
-        return n <  25 ? 1
-             : n <  50 ? 2
-             : n <  75 ? 4
+        return n <  1 ? 1
+             : n <  8 ? 2
+             : n < 24 ? 4
              : 8;
+        // return n <  25 ? 1
+        //      : n <  50 ? 2
+        //      : n <  75 ? 4
+        //      : 8;
     }
 
     function getBand(uint256 seed) public pure returns (uint8) {
@@ -272,7 +273,6 @@ library InfiniteArt {
              : n > 16 ? 4 // Isolate
              : n >  4 ? 5 // Order
              : 6; // Alpha
-
     }
 
     function getGradient(RenderData memory data) public view returns (uint8) {
@@ -297,15 +297,13 @@ library InfiniteArt {
     }
 
     function getDrops(RenderData memory data) public view returns (Drop[64] memory drops) {
-        uint8[7] memory forms          = [ 1, 2, 3, 4, 5, 8, 9];
-        uint8[7] memory rotationCounts = [ 2, 4, 4, 2, 2, 0, 0]; // How often we rotate
+        uint8[7] memory forms          = [1, 2, 3, 4, 5, 8, 9];
+        uint8[7] memory rotationCounts = [2, 4, 4, 2, 2, 0, 0]; // How often we rotate
+
+        string[64] memory colors = data.palette == 1 ? getElementColors(data) : getOriginalColors(data);
 
         for (uint i = 0; i < data.count; i++) {
-            // TYPES
-            // 1 (drop)
-            // 3 5 9 (counter)
-            // 2 4 8 (infinity)
-            uint formIdx = Utilities.random(data.seed, string(abi.encodePacked('form', Utilities.uint2str(i))), 7);
+            uint formIdx = getFormIdx(data, i);
             drops[i].form = forms[formIdx];
             drops[i].isInfinity = drops[i].form % 2 == 0;
             uint rotationIncrement = drops[i].isInfinity ? 45 : 90;
@@ -318,7 +316,45 @@ library InfiniteArt {
                 : 0;
             drops[i].rotation = Utilities.uint2str(rotations * rotationIncrement);
             drops[i].formWidth = 200;
-            drops[i].color = 'fff';
+            drops[i].color = colors[i];
+        }
+    }
+
+    function getFormIdx(RenderData memory data, uint i) public view returns (uint) {
+        uint random = Utilities.random(data.seed, string(abi.encodePacked('form', Utilities.uint2str(i))), 10);
+        if (random < 1) return 0; // 10% drops
+
+        uint8[3] memory common = [1, 3, 5];
+        uint8[3] memory uncommon = [2, 4, 6];
+
+        uint idx = Utilities.random(data.seed, string(abi.encodePacked('form-idx', Utilities.uint2str(i))), 3);
+        return random < 8 ? common[idx] : uncommon[idx];
+    }
+
+    function getElementColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getOriginalColors(data);
+    }
+
+    function getOriginalColors(RenderData memory data) public view returns (string[64] memory colors) {
+        string[80] memory allColors = EightyColors.COLORS();
+        uint initialIdx = Utilities.random(data.seed, 'initial', 80);
+
+        bool randomBand = Utilities.random(data.seed, 'random_band', 1) == 1 && data.band < 5;
+        if (randomBand) {
+            for (uint i = initialIdx; i < initialIdx + 5; i++) {
+                uint randomIdx = Utilities.random(data.seed, string(abi.encodePacked('random_band_', Utilities.uint2str(i))), 80);
+                allColors[i % 80] = allColors[randomIdx];
+            }
+        }
+
+        for (uint i = 0; i < data.count; i++) {
+            colors[i] = allColors[0];
+
+            uint colorOffset = data.gradient > 0
+                ? (i * data.gradient * data.band / data.count) % data.band
+                : Utilities.random(data.seed, string(abi.encodePacked('random_color_', Utilities.uint2str(i))), data.band);
+
+            colors[i] = allColors[(initialIdx + colorOffset) % 80];
         }
     }
 }

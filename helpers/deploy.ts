@@ -1,11 +1,21 @@
 export const deployInfinityWithLibraries = async (ethers) => {
   // const eightyColors = await ethers.getContractAt('EightyColors', process.env.EIGHTY_COLORS_ADDRESS)
+  const SixteenElementsColors = await ethers.getContractFactory('SixteenElementsColors')
+  const elementsColors = await SixteenElementsColors.deploy()
+  await elementsColors.deployed()
+
+  const EightyColors = await ethers.getContractFactory('EightyColors')
+  const eightyColors = await EightyColors.deploy()
+  await eightyColors.deployed()
+
 
   const InfiniteArt = await ethers.getContractFactory('InfiniteArt', {
-    // libraries: {
-    //   // Utilities: utils.address,
-    //   EightyColors: process.env.EIGHTY_COLORS_ADDRESS,
-    // }
+    libraries: {
+      // Utilities: utils.address,
+      // EightyColors: process.env.EIGHTY_COLORS_ADDRESS,
+      EightyColors: eightyColors.address,
+      // SixteenElementsColors: elementsColors.address,
+    }
   })
   const infiniteArt = await InfiniteArt.deploy()
   await infiniteArt.deployed()
