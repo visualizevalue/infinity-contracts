@@ -45,10 +45,10 @@ library SixteenElementsColors {
     }
 
     function ELEMENTS_COLORS() public pure returns (string[16] memory colors) {
-        for (uint i =  0; i <  4; i++) { colors[i] = AIR_COLORS()[i]; }
-        for (uint i =  4; i <  8; i++) { colors[i] = FIRE_COLORS()[i]; }
-        for (uint i =  8; i < 12; i++) { colors[i] = EARTH_COLORS()[i]; }
-        for (uint i = 12; i < 16; i++) { colors[i] = WATER_COLORS()[i]; }
+        for (uint i =  0; i < 4; i++) { colors[i] = AIR_COLORS()[i]; }
+        for (uint i =  0; i < 4; i++) { colors[4 + i] = FIRE_COLORS()[i]; }
+        for (uint i =  0; i < 4; i++) { colors[8 + i] = EARTH_COLORS()[i]; }
+        for (uint i =  0; i < 4; i++) { colors[12 + i] = WATER_COLORS()[i]; }
     }
 
 }

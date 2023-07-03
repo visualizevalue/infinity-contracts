@@ -14,7 +14,7 @@ export const deployInfinityWithLibraries = async (ethers) => {
       // Utilities: utils.address,
       // EightyColors: process.env.EIGHTY_COLORS_ADDRESS,
       EightyColors: eightyColors.address,
-      // SixteenElementsColors: elementsColors.address,
+      SixteenElementsColors: elementsColors.address,
     }
   })
   const infiniteArt = await InfiniteArt.deploy()

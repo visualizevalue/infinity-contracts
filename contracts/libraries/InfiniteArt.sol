@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "./EightyColors.sol";
-// import "./SixteenElementsColors.sol";
+import "./SixteenElementsColors.sol";
 import "./Utilities.sol";
 import "hardhat/console.sol";
 
@@ -331,10 +331,6 @@ library InfiniteArt {
         return random < 8 ? common[idx] : uncommon[idx];
     }
 
-    function getElementColors(RenderData memory data) public view returns (string[64] memory colors) {
-        colors = getOriginalColors(data);
-    }
-
     function getOriginalColors(RenderData memory data) public view returns (string[64] memory colors) {
         string[80] memory allColors = EightyColors.COLORS();
         uint initialIdx = Utilities.random(data.seed, 'initial', 80);
@@ -356,6 +352,42 @@ library InfiniteArt {
 
             colors[i] = allColors[(initialIdx + colorOffset) % 80];
         }
+    }
+
+    function getElementColors(RenderData memory data) public view returns (string[64] memory colors) {
+        return data.elementType == 1 ? getElementCompleteColors(data)
+             : data.elementType == 2 ? getElementCompoundColors(data)
+             : data.elementType == 3 ? getElementCompositeColors(data)
+             : data.elementType == 4 ? getElementIsolateColors(data)
+             : data.elementType == 5 ? getElementOrderColors(data)
+                                     : getElementAlphaColors(data);
+    }
+
+    function getElementCompleteColors(RenderData memory data) public view returns (string[64] memory colors) {
+        for (uint i = 0; i < data.count; i++) {
+            uint idx = Utilities.random(data.seed, string(abi.encodePacked('complete', Utilities.uint2str(i))), 16);
+            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+        }
+    }
+
+    function getElementCompoundColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getElementCompleteColors(data);
+    }
+
+    function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getElementCompleteColors(data);
+    }
+
+    function getElementIsolateColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getElementCompleteColors(data);
+    }
+
+    function getElementOrderColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getElementCompleteColors(data);
+    }
+
+    function getElementAlphaColors(RenderData memory data) public view returns (string[64] memory colors) {
+        colors = getElementCompleteColors(data);
     }
 }
 
