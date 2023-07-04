@@ -264,31 +264,18 @@ describe('Infinity', () => {
   })
 
   describe(`Rendering`, () => {
-    const IDs = [
-      88888889,
-      88888890,
-      88888891,
-      88888892,
-      88888893,
-      88888894,
-      88888895,
-      88888896,
-      88888897,
-      88888898,
-      88888899,
-      88888900,
-      88888901,
-      88888902,
-      88888903,
-      88888904,
-      88888905,
-    ]
-
     it.only(`Renders token SVGs`, async () => {
-      for (const id of IDs) {
+      const count = 50;
+      let id = 88888888;
+
+      while (id < 88888888 + count) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
+
+        console.log(`Rendered ${id}`)
+
+        id++
       }
     })
 

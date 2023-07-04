@@ -13,8 +13,6 @@ import "hardhat/console.sol";
 */
 library InfiniteArt {
 
-    uint constant private STROKE = 4;
-
     /// @dev Generate the SVG code for an Infinity token.
     /// @param data The token to render.
     function renderSVG(RenderData memory data) public view returns (bytes memory) {
@@ -27,7 +25,7 @@ library InfiniteArt {
                     renderGrid(),
                     renderDrops(data),
                 '</g>',
-                '<rect mask="url(#mask)" width="800" height="800" fill="black" filter="url(#noise)" style="mix-blend-mode: overlay;"/>',
+                // '<rect mask="url(#mask)" width="800" height="800" fill="black" filter="url(#noise)" style="mix-blend-mode: overlay;"/>',
             '</svg>'
         );
     }
@@ -92,8 +90,6 @@ library InfiniteArt {
 
     /// @dev Generate SVG code for the drops.
     function renderDrops(RenderData memory data) public view returns (bytes memory) {
-        uint baseStroke = data.grid < 8 ? STROKE : STROKE * 3 / 4;
-
         uint space  = 800 / data.grid;
         uint center = space / 4;
         uint width  = space / 2;
@@ -102,13 +98,9 @@ library InfiniteArt {
         for (uint i = 0; i < data.count; i++) {
             Drop memory drop = data.drops[i];
 
-            uint stroke = baseStroke * data.grid / 2;
+            uint baseStroke = drop.isInfinity ? 8 : 4;
+            uint stroke = (data.grid < 8 ? baseStroke : baseStroke * 3 / 4) * data.grid / 2;
             uint scale  = width * 1000 / drop.formWidth;
-
-            if (drop.isInfinity) {
-                stroke = stroke * 2;
-                scale = scale / 2;
-            }
 
             drop.stroke = Utilities.uint2str(stroke);
             drop.width  = Utilities.uint2str(width);
@@ -305,6 +297,8 @@ library InfiniteArt {
             uint formIdx = getFormIdx(data, i);
             drops[i].form = forms[formIdx];
             drops[i].isInfinity = drops[i].form % 2 == 0;
+            drops[i].formWidth = drops[i].isInfinity ? 400 : 200;
+
             uint rotationIncrement = drops[i].isInfinity ? 45 : 90;
             uint rotations = rotationCounts[formIdx] > 0
                 ? Utilities.random(
@@ -314,7 +308,6 @@ library InfiniteArt {
                 )
                 : 0;
             drops[i].rotation = Utilities.uint2str(rotations * rotationIncrement);
-            drops[i].formWidth = 200;
             drops[i].color = colors[i];
         }
     }
@@ -444,7 +437,7 @@ library InfiniteArt {
 struct Drop {
     uint form;
     bool isInfinity;
-    uint8 formWidth;
+    uint16 formWidth;
     string color;
     string scale;
     string rotation;

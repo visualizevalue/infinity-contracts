@@ -6,7 +6,7 @@ coverage.json
 typechain
 
 test/dist/*.svg
-test/dist/*.png
+test/dist/pngs/*.png
 test/dist/*.json
 
 #Hardhat files
