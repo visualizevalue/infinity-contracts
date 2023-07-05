@@ -140,13 +140,13 @@ library InfiniteArt {
 
     function renderDropForm1(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="#', drop.color, '" />'
+            '<use href="#drop" transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '" />'
         );
     }
 
     function renderDropForm2(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<g transform="translate(200,200)">'
                     '<use href="#infinity" />',
                 '</g>'
@@ -156,7 +156,7 @@ library InfiniteArt {
 
     function renderDropForm3(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<use href="#drop" />',
                 '<use href="#drop" transform="translate(200,0) scale(-1,1)" />',
             '</g>'
@@ -165,7 +165,7 @@ library InfiniteArt {
 
     function renderDropForm4(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<g transform="translate(200,200)">'
                     '<use href="#infinity" />',
                     '<use href="#infinity" transform="rotate(90)" />',
@@ -176,7 +176,7 @@ library InfiniteArt {
 
     function renderDropForm5(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<use href="#drop" />',
                 '<use href="#drop" transform="translate(200,200) scale(-1,-1)" />',
             '</g>'
@@ -185,7 +185,7 @@ library InfiniteArt {
 
     function renderDropForm8(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<g transform="translate(200,200)">'
                     '<use href="#infinity" />',
                     '<use href="#infinity" transform="rotate(45)" />',
@@ -198,7 +198,7 @@ library InfiniteArt {
 
     function renderDropForm9(Drop memory drop) public pure returns (bytes memory) {
         return abi.encodePacked(
-            '<g transform="scale(', drop.scale, ')" stroke="#', drop.color, '">',
+            '<g transform="scale(', drop.scale, ')" stroke="', drop.color.rendered, '">',
                 '<use href="#drop" />',
                 '<use href="#drop" transform="translate(200,0) scale(-1,1)" />',
                 '<use href="#drop" transform="translate(0,200) scale(1,-1)" />',
@@ -215,7 +215,8 @@ library InfiniteArt {
         data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
         data.grid        = getGrid(tokenId);
         data.count       = data.grid ** 2;
-        data.band        = getBand(tokenId);
+        // data.band        = getBand(tokenId);
+        data.band        = 16;
         data.palette     = getPalette(tokenId);
         if (data.palette == 1) {
             data.elementType = getElementType(tokenId);
@@ -274,27 +275,36 @@ library InfiniteArt {
                                   : data.grid == 4 ? [1, 2, 4, 8, 10, 12]
                                                    : [1, 2, 4, 7,  8,  9];
 
-        // Originals
-        if (data.palette == 0) {
-            return Utilities.random(data.seed, 'gradient', 10) < 2
-                   ? GRADIENTS[Utilities.random(data.seed, 'gradient_select', options)]
-                   : 0;
-        }
+        return 9;
 
-        // Elements
-        if (data.elementType == 5) return GRADIENTS[Utilities.random(data.seed, 'gradient_select', options)];
-        if (data.elementType == 6) return 1;
-        return 0;
+        // // Originals
+        // if (data.palette == 0) {
+        //     return Utilities.random(data.seed, 'gradient', 10) < 2
+        //            ? GRADIENTS[Utilities.random(data.seed, 'gradient_select', options)]
+        //            : 0;
+        // }
+
+        // // Elements
+        // if (data.elementType == 5) return GRADIENTS[Utilities.random(data.seed, 'gradient_select', options)];
+        // if (data.elementType == 6) return 1;
+        // return 0;
     }
 
     function getDrops(RenderData memory data) public view returns (Drop[64] memory drops) {
         uint8[7] memory forms          = [1, 2, 3, 4, 5, 8, 9];
         uint8[7] memory rotationCounts = [2, 4, 4, 2, 2, 0, 0]; // How often we rotate
 
-        string[64] memory colors = data.palette == 1 ? getElementColors(data) : getOriginalColors(data);
+        (uint[64] memory colorIndexes, Color[64] memory colors) = getColors(data);
 
         for (uint i = 0; i < data.count; i++) {
             uint formIdx = getFormIdx(data, i);
+
+            // if (! data.colorFormMap[colors[i]]) {
+            //     data.colorFormMap[colors[i]] = forms[formIdx];
+            // }
+            // drops[i].form = data.colorFormMap[colors[i]];
+            drops[i].form = forms[formIdx];
+
             drops[i].form = forms[formIdx];
             drops[i].isInfinity = drops[i].form % 2 == 0;
             drops[i].formWidth = drops[i].isInfinity ? 400 : 200;
@@ -308,6 +318,7 @@ library InfiniteArt {
                 )
                 : 0;
             drops[i].rotation = Utilities.uint2str(rotations * rotationIncrement);
+            drops[i].colorIdx = colorIndexes[i];
             drops[i].color = colors[i];
         }
     }
@@ -323,122 +334,178 @@ library InfiniteArt {
         return random < 8 ? common[idx] : uncommon[idx];
     }
 
-    function getOriginalColors(RenderData memory data) public view returns (string[64] memory colors) {
-        string[80] memory allColors = EightyColors.COLORS();
-        uint initialIdx = Utilities.random(data.seed, 'initial', 80);
+    // function getOriginalColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     string[80] memory allColors = EightyColors.COLORS();
+    //     uint initialIdx = Utilities.random(data.seed, 'initial', 80);
 
-        bool randomBand = Utilities.random(data.seed, 'random_band', 2) == 1 && data.band < 5;
-        if (randomBand) {
-            for (uint i = initialIdx; i < initialIdx + 5; i++) {
-                uint randomIdx = Utilities.random(data.seed, string(abi.encodePacked('random_band_', Utilities.uint2str(i))), 80);
-                allColors[i % 80] = allColors[randomIdx];
+    //     bool randomBand = Utilities.random(data.seed, 'random_band', 2) == 1 && data.band < 5;
+    //     if (randomBand) {
+    //         for (uint i = initialIdx; i < initialIdx + 5; i++) {
+    //             uint randomIdx = Utilities.random(data.seed, string(abi.encodePacked('random_band_', Utilities.uint2str(i))), 80);
+    //             allColors[i % 80] = allColors[randomIdx];
+    //         }
+    //     }
+
+    //     for (uint i = 0; i < data.count; i++) {
+    //         colors[i] = allColors[0];
+
+    //         uint colorOffset = data.gradient > 0
+    //             ? (i * data.gradient * data.band / data.count) % data.band
+    //             : Utilities.random(data.seed, string(abi.encodePacked('random_color_', Utilities.uint2str(i))), data.band);
+
+    //         colors[i] = allColors[(initialIdx + colorOffset) % 80];
+    //     }
+    // }
+
+    function allColors () public view returns (Color[68] memory colors) {
+        // Void
+        uint8[4] memory voidLums = [16, 32, 80, 96];
+        for (uint i = 0; i < 4; i++) {
+            colors[i].h = 270;
+            colors[i].s = 8;
+            colors[i].l = voidLums[i];
+            colors[i].rendered = renderColor(colors[i]);
+        }
+
+        // Colors
+        uint8 count = 4*4;
+        uint16 h = 256;
+        uint8[4] memory lums = [56, 60, 64, 72];
+        for (uint8 i = 0; i < 16; i++) {
+            for(uint8 e = 0; e < 4; e++) {
+                uint8 idx = 4+i*4+e;
+                colors[idx].h = h;
+                colors[idx].s = 88;
+                colors[idx].l = lums[e];
+                colors[idx].rendered = renderColor(colors[idx]);
             }
+
+            h = 360 * i / count;
         }
+    }
+
+    function renderColor(Color memory color) public pure returns (string memory) {
+        return string.concat('hsl(', str(color.h), ' ', str(color.s), '% ', str(color.l), '%)');
+    }
+
+    function getColors(RenderData memory data) public view returns (uint[64] memory colorIndexes, Color[64] memory colors) {
+        Color[68] memory all = allColors();
+        uint initialIdx = Utilities.random(data.seed, 'initial', 68);
 
         for (uint i = 0; i < data.count; i++) {
-            colors[i] = allColors[0];
+            // uint idx = Utilities.random(data.seed, string.concat('complete', Utilities.uint2str(i)), 68);
+            uint idx = (i * data.gradient * data.band / data.count) % data.band;
 
-            uint colorOffset = data.gradient > 0
-                ? (i * data.gradient * data.band / data.count) % data.band
-                : Utilities.random(data.seed, string(abi.encodePacked('random_color_', Utilities.uint2str(i))), data.band);
+            // We store 1-based index to differenciate between set and unset values later.
+            colorIndexes[i] = ((initialIdx + idx) % 68) + 1;
 
-            colors[i] = allColors[(initialIdx + colorOffset) % 80];
-        }
-    }
-
-    function getElementColors(RenderData memory data) public view returns (string[64] memory colors) {
-        return data.elementType == 1 ? getElementCompleteColors(data)
-             : data.elementType == 2 ? getElementCompoundColors(data)
-             : data.elementType == 3 ? getElementCompositeColors(data)
-             : data.elementType == 4 ? getElementIsolateColors(data)
-             : data.elementType == 5 ? getElementOrderColors(data)
-                                     : getElementAlphaColors(data);
-    }
-
-    function getElementCompleteColors(RenderData memory data) public view returns (string[64] memory colors) {
-        for (uint i = 0; i < data.count; i++) {
-            uint idx = Utilities.random(data.seed, string(abi.encodePacked('complete', Utilities.uint2str(i))), 16);
-            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-        }
-    }
-
-    function getElementCompoundColors(RenderData memory data) public view returns (string[64] memory colors) {
-        uint firstIdx = Utilities.random(data.seed, 'compound_1', 16) / 4;
-        uint secondIdx = Utilities.random(data.seed, 'compound_2', 16) / 4;
-
-        uint tries = 3;
-        while (firstIdx == secondIdx) {
-            secondIdx = Utilities.random(
-                data.seed, string(abi.encodePacked('compound_', Utilities.uint2str(tries))), 16
-            ) / 4;
-            tries++;
+            colors[i] = all[colorIndexes[i] - 1];
         }
 
-        for (uint i = 0; i < data.count; i++) {
-            uint random = Utilities.random(data.seed, string(abi.encodePacked('compound_r_', Utilities.uint2str(i))), 8);
 
-            uint idx = random < 4 ? 4 * firstIdx + random
-                                  : 4 * secondIdx + random - 4;
-
-            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-        }
+        // return data.elementType == 1 ? getElementCompleteColors(data)
+        //      : data.elementType == 2 ? getElementCompoundColors(data)
+        //      : data.elementType == 3 ? getElementCompositeColors(data)
+        //      : data.elementType == 4 ? getElementIsolateColors(data)
+        //      : data.elementType == 5 ? getElementOrderColors(data)
+        //                              : getElementAlphaColors(data);
     }
 
-    function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
-        uint elementIdx = Utilities.random(data.seed, 'composite', 16) / 4;
+    // function getElementCompleteColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     for (uint i = 0; i < data.count; i++) {
+    //         uint idx = Utilities.random(data.seed, string(abi.encodePacked('complete', Utilities.uint2str(i))), 16);
+    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+    //     }
+    // }
 
-        for (uint i = 0; i < data.count; i++) {
-            uint random = Utilities.random(data.seed, string(abi.encodePacked('composite_', Utilities.uint2str(i))), 4);
+    // function getElementCompoundColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     uint firstIdx = Utilities.random(data.seed, 'compound_1', 16) / 4;
+    //     uint secondIdx = Utilities.random(data.seed, 'compound_2', 16) / 4;
 
-            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[4 * elementIdx + random];
-        }
+    //     uint tries = 3;
+    //     while (firstIdx == secondIdx) {
+    //         secondIdx = Utilities.random(
+    //             data.seed, string(abi.encodePacked('compound_', Utilities.uint2str(tries))), 16
+    //         ) / 4;
+    //         tries++;
+    //     }
+
+    //     for (uint i = 0; i < data.count; i++) {
+    //         uint random = Utilities.random(data.seed, string(abi.encodePacked('compound_r_', Utilities.uint2str(i))), 8);
+
+    //         uint idx = random < 4 ? 4 * firstIdx + random
+    //                               : 4 * secondIdx + random - 4;
+
+    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+    //     }
+    // }
+
+    // function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     uint elementIdx = Utilities.random(data.seed, 'composite', 16) / 4;
+
+    //     for (uint i = 0; i < data.count; i++) {
+    //         uint random = Utilities.random(data.seed, string(abi.encodePacked('composite_', Utilities.uint2str(i))), 4);
+
+    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[4 * elementIdx + random];
+    //     }
+    // }
+
+    // function getElementIsolateColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     uint idx = Utilities.random(data.seed, 'isolate', 16);
+
+    //     for (uint i = 0; i < data.count; i++) {
+    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+    //     }
+    // }
+
+    // function getElementOrderColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     bool reverse = Utilities.random(data.seed, 'order_rev', 2) > 0;
+    //     uint element = Utilities.random(data.seed, 'order_el', 4);
+
+    //     uint[64] memory options;
+    //     for (uint i = 0; i < data.count; i++) {
+    //         options[i] = 4 * element + (4 * i) / data.count;
+    //     }
+
+    //     for (uint i = 0; i < data.count; i++) {
+    //         uint initial = data.gradient > 2
+    //             ? data.gradient % 2 == 1
+    //                 ? data.count - 1
+    //                 : 0
+    //             : 0;
+    //         uint oIdx = (initial + i * data.gradient) % data.count;
+    //         if (reverse) {
+    //             oIdx = data.count - 1 - oIdx;
+    //         }
+    //         uint idx = options[oIdx];
+
+    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
+    //     }
+    // }
+
+    // function getElementAlphaColors(RenderData memory data) public view returns (string[64] memory colors) {
+    //     data.gradient = 1;
+
+    //     colors = getElementOrderColors(data);
+    // }
+
+    function str(uint n) public pure returns (string memory) {
+        return Utilities.uint2str(n);
     }
+}
 
-    function getElementIsolateColors(RenderData memory data) public view returns (string[64] memory colors) {
-        uint idx = Utilities.random(data.seed, 'isolate', 16);
-
-        for (uint i = 0; i < data.count; i++) {
-            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-        }
-    }
-
-    function getElementOrderColors(RenderData memory data) public view returns (string[64] memory colors) {
-        bool reverse = Utilities.random(data.seed, 'order_rev', 2) > 0;
-        uint element = Utilities.random(data.seed, 'order_el', 4);
-
-        uint[64] memory options;
-        for (uint i = 0; i < data.count; i++) {
-            options[i] = 4 * element + (4 * i) / data.count;
-        }
-
-        for (uint i = 0; i < data.count; i++) {
-            uint initial = data.gradient > 2
-                ? data.gradient % 2 == 1
-                    ? data.count - 1
-                    : 0
-                : 0;
-            uint oIdx = (initial + i * data.gradient) % data.count;
-            if (reverse) {
-                oIdx = data.count - 1 - oIdx;
-            }
-            uint idx = options[oIdx];
-
-            colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-        }
-    }
-
-    function getElementAlphaColors(RenderData memory data) public view returns (string[64] memory colors) {
-        data.gradient = 1;
-
-        colors = getElementOrderColors(data);
-    }
+struct Color {
+    uint16 h;
+    uint16 s;
+    uint16 l;
+    uint208 id;
+    string rendered;
 }
 
 struct Drop {
     uint form;
     bool isInfinity;
     uint16 formWidth;
-    string color;
     string scale;
     string rotation;
     string stroke;
@@ -446,6 +513,8 @@ struct Drop {
     string width;
     string x;
     string y;
+    uint colorIdx;
+    Color color;
 }
 
 /// @dev Bag holding all data relevant for rendering.
@@ -460,25 +529,6 @@ struct RenderData {
     uint8 band;
     uint8 gradient;
     bool light;
+    uint[64] formMap;
     Drop[64] drops;
-
-    // IChecks.Check check;
-    // uint[] colorIndexes;
-    // string[] colors;
-    // string canvasColor;
-    // string gridColor;
-    // string duration;
-    // string scale;
-    // uint32 seed;
-    // uint16 rowX;
-    // uint16 rowY;
-    // uint8 count;
-    // uint8 spaceX;
-    // uint8 spaceY;
-    // uint8 perRow;
-    // uint8 indexInRow;
-    // uint8 isIndented;
-    // bool isNewRow;
-    // bool isBlack;
-    // bool indent;
 }
