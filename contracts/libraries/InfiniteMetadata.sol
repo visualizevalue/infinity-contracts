@@ -18,15 +18,13 @@ library InfiniteMetadata {
     function tokenURI(
         RenderData memory data
     ) public view returns (string memory) {
-        bytes memory svg = InfiniteArt.renderSVG(data);
-
         bytes memory metadata = abi.encodePacked(
             '{',
                 '"name": "Infinity",',
                 unicode'"description": "∞",',
                 '"image": ',
                     '"data:image/svg+xml;base64,',
-                    Base64.encode(svg),
+                    Base64.encode(abi.encodePacked(InfiniteArt.renderSVG(data))),
                     '",',
                 '"attributes": [', attributes(data), ']',
             '}'

@@ -8,8 +8,8 @@ const setupPNGRenderer = async () => {
   browser = await puppeteer.launch({ headless: 'new' })
   page = await browser.newPage()
   await page.setViewport({
-    width: 800,
-    height: 800,
+    width: 1400,
+    height: 1400,
     deviceScaleFactor: 1,
   })
 }
