@@ -266,9 +266,10 @@ describe('Infinity', () => {
   describe(`Rendering`, () => {
     it.only(`Renders token SVGs`, async () => {
       const count = 50;
-      let id = 88888888;
+      let id = 88888893;
 
-      while (id < 88888888 + count) {
+      // while (id < 88888888 + count) {
+      while (id < 88888893 + 10) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
