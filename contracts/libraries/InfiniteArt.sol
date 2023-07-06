@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./EightyColors.sol";
-import "./SixteenElementsColors.sol";
 import "./Utilities.sol";
 import "hardhat/console.sol";
 
@@ -12,6 +10,9 @@ import "hardhat/console.sol";
 @notice Renders the Infinity visuals.
 */
 library InfiniteArt {
+
+    uint8 public constant ELEMENTS = 17;
+    uint8 public constant SHADES = 4;
 
     /// @dev Generate the SVG code for an Infinity token.
     /// @param data The token to render.
@@ -42,8 +43,8 @@ library InfiniteArt {
         return string.concat(
             '<style>',
                 ':root {',
-                    '--bg: #', data.background, ';',
-                    '--gr: #', data.gridColor, ';',
+                    '--bg: ', data.background, ';',
+                    '--gr: ', data.gridColor, ';',
                 '}',
             '</style>'
         );
@@ -74,7 +75,7 @@ library InfiniteArt {
         for (uint256 i; i < 8; i++) {
             row = string.concat(
                 row,
-                '<use transform="translate(', Utilities.uint2str(i*100), ')" href="#box" />'
+                '<use transform="translate(', str(i*100), ')" href="#box" />'
             );
         }
         return row;
@@ -86,7 +87,7 @@ library InfiniteArt {
         for (uint256 i; i < 8; i++) {
             grid = string.concat(
                 grid,
-                '<use href="#row" transform="translate(0,', Utilities.uint2str(i*100), ')" />'
+                '<use href="#row" transform="translate(0,', str(i*100), ')" />'
             );
         }
 
@@ -216,46 +217,55 @@ library InfiniteArt {
     function collectRenderData(uint256 tokenId) public view returns (RenderData memory data) {
         data.seed        = tokenId;
         data.light       = tokenId % 4096 == 0 ? true : false;
-        data.background  = data.light == true ? 'FBFBFB' : '111111';
-        data.gridColor   = data.light == true ? 'F5F5F5' : '1D1D1D';
-        data.grid        = getGrid(tokenId);
+        data.background  = data.light == true ? '#FFFFFF' : '#111111';
+        data.gridColor   = data.light == true ? '#F5F5F5' : '#19181B';
+        data.grid        = getGrid(data);
         data.count       = data.grid ** 2;
-        data.alloy       = getAlloy(tokenId);
-        data.band        = Utilities.max(1, data.alloy * 4);
+        data.alloy       = getAlloy(data);
+        data.band        = getBand(data);
+        data.continuous  = getContinuous(data);
         data.mapColors   = getColorMap(data);
         data.gradient    = getGradient(data);
         data.drops       = getDrops(data);
     }
 
-    function getGrid(uint256 seed) public pure returns (uint8) {
-        uint256 n = Utilities.random(seed, 'grid', 100);
+    function getGrid(RenderData memory data) public pure returns (uint8) {
+        if (data.seed == 0) return 1; // Genesis is 1x1
+
+        uint256 n = Utilities.random(data.seed, 'grid', 160);
 
         return n <  1 ? 1
              : n <  8 ? 2
-             : n < 24 ? 4
-             : 8;
-        // return n <  25 ? 1
-        //      : n <  50 ? 2
-        //      : n <  75 ? 4
-        //      : 8;
+             : n < 40 ? 4
+                      : 8;
+    }
+
+    function getBand(RenderData memory data) public pure returns (uint8) {
+        return Utilities.max(1, data.alloy * SHADES);
     }
 
     function getColorMap(RenderData memory data) public pure returns (bool) {
-        return data.light || Utilities.random(data.seed, 'color_map', 100) < 8;
+        return Utilities.random(data.seed, 'color_map', 100) < 8;
+    }
+
+    function getContinuous(RenderData memory data) public pure returns (bool) {
+        return Utilities.random(data.seed, 'continuous', 2) < 1;
     }
 
     // How many different elements we use...
-    function getAlloy(uint256 tokenId) public pure returns (uint8) {
-        uint8 n = uint8(Utilities.random(tokenId, 'alloy', 100));
+    function getAlloy(RenderData memory data) public view returns (uint8) {
+        if (data.grid == 1) return 0;
 
-        return n > 56 ? (4 + n) % 17 // Complete
-             : n > 16 ? 2            // Compound
-             : n >  0 ? 1            // Composite
-                      : 0;           // Isolate
+        uint8 n = uint8(Utilities.random(data.seed, 'alloy', 100));
+
+        return n >= 56 ? 4 + n % (ELEMENTS - 4) // Complete
+             : n >= 24 ? 2                     // Compound
+             : n >=  4 ? 1                    // Composite
+                       : 0;                  // Isolate
     }
 
     function getGradient(RenderData memory data) public view returns (uint8) {
-        if (data.grid == 1) return 0;
+        if (data.grid == 1 || data.alloy == 0) return 0;
         if (Utilities.random(data.seed, 'gradient', 10) < 8) return 0;
 
         uint8 options = data.grid == 2 ? 2 : 7;
@@ -310,6 +320,8 @@ library InfiniteArt {
     }
 
     function getFormIdx(RenderData memory data, uint i) public view returns (uint) {
+        if (data.seed == 0) return 5; // The genesis piece is an infinity flower
+
         uint random = Utilities.random(data.seed, string.concat('form', str(i)), 10);
         if (random == 0) return 0; // 10% drops
 
@@ -320,10 +332,10 @@ library InfiniteArt {
         return random < 8 ? common[idx] : uncommon[idx];
     }
 
-    function allColors (RenderData memory data) public pure returns (Color[68] memory colors) {
+    function allColors (RenderData memory data) public view returns (Color[68] memory colors) {
         // Void
         uint8[4] memory voidLums = [16, 32, 80, 96];
-        for (uint i = 0; i < 4; i++) {
+        for (uint i = 0; i < SHADES; i++) {
             colors[i].h = 270;
             colors[i].s = 8;
             colors[i].l = voidLums[i];
@@ -332,18 +344,18 @@ library InfiniteArt {
 
         // Colors
         uint8 count = 4*4;
-        uint16 h = 256;
+        uint16 startHue = 256;
         uint8[4] memory lums = [56, 60, 64, 72];
         for (uint8 i = 0; i < 16; i++) {
+            uint16 hue = (startHue + 360 * i / count) % 360;
+
             for(uint8 e = 0; e < 4; e++) {
                 uint8 idx = 4+i*4+e;
-                colors[idx].h = h;
+                colors[idx].h = hue;
                 colors[idx].s = 88;
                 colors[idx].l = lums[e];
                 colors[idx].rendered = data.light ? '#080808' : renderColor(colors[idx]);
             }
-
-            h = 360 * i / count;
         }
     }
 
@@ -354,6 +366,7 @@ library InfiniteArt {
     function getColors(RenderData memory data) public view returns (uint[64] memory colorIndexes, Color[64] memory colors) {
         console.log('=============');
         console.log('token', data.seed);
+        console.log('data.continuous', data.continuous);
         console.log('data.gradient', data.gradient);
         console.log('data.alloy', data.alloy);
         console.log('data.band', data.band);
@@ -371,18 +384,23 @@ library InfiniteArt {
                     : getRandomColor(data, options, i)
             ) % 68;
 
+            // console.log('colorIndexes[i]', colorIndexes[i]);
+
             colors[i] = all[options[colorIndexes[i]]];
         }
     }
 
     function getColorOptions(RenderData memory data) public view returns (uint[68] memory options) {
-        for (uint element = 0; element < data.alloy; element++) {
-            uint idx = element * 4;
+        uint count = Utilities.max(1, data.alloy);
+        for (uint element = 0; element < count; element++) {
+            uint idx = element * SHADES;
 
-            uint chosen = Utilities.random(data.seed, string.concat('element', str(element)), 17);
-            uint chosenIdx = chosen * 4;
+            uint chosen = data.continuous && element > 0
+                ? (options[idx - 1] / SHADES + 1) % ELEMENTS // Increment previous by one
+                : Utilities.random(data.seed, string.concat('element', str(element)), ELEMENTS);
+            uint chosenIdx = chosen * SHADES;
 
-            for (uint shade = 0; shade < 4; shade++) {
+            for (uint shade = 0; shade < SHADES; shade++) {
                 options[idx + shade] = chosenIdx + shade;
                 console.log(data.seed, idx + shade, options[idx + shade]);
             }
@@ -399,92 +417,10 @@ library InfiniteArt {
     }
 
     function getRandomColor(RenderData memory data, uint[68] memory options, uint i) public view returns (uint) {
-        return Utilities.random(data.seed, string.concat('random_color_', str(i)), data.band);
+        uint8 max = Utilities.max(SHADES, data.band);
+        string memory key = data.alloy == 0 ? '0' : str(i);
+        return Utilities.random(data.seed, string.concat('random_color_', key), max);
     }
-
-    // function getElementOrderColors(RenderData memory data) public view returns (string[64] memory colors) {
-    //     bool reverse = Utilities.random(data.seed, 'order_rev', 2) > 0;
-    //     uint element = Utilities.random(data.seed, 'order_el', 4);
-
-    //     uint[64] memory options;
-    //     for (uint i = 0; i < data.count; i++) {
-    //         options[i] = 4 * element + (4 * i) / data.count;
-    //     }
-
-    //     for (uint i = 0; i < data.count; i++) {
-    //         uint initial = data.gradient > 2
-    //             ? data.gradient % 2 == 1
-    //                 ? data.count - 1
-    //                 : 0
-    //             : 0;
-    //         uint oIdx = (initial + i * data.gradient) % data.count;
-    //         if (reverse) {
-    //             oIdx = data.count - 1 - oIdx;
-    //         }
-    //         uint idx = options[oIdx];
-
-    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-    //     }
-    // }
-
-    // function getCompoundColors(RenderData memory data) public view returns (uint[64] memory colorIndexes) {
-    //     uint firstIdx = Utilities.random(data.seed, 'compound_1', 17);
-    //     uint secondIdx = Utilities.random(data.seed, 'compound_2', 17);
-
-    //     uint tries = 3;
-    //     while (firstIdx == secondIdx) {
-    //         secondIdx = Utilities.random(
-    //             data.seed, string.concat('compound_', Utilities.uint2str(tries))), 16
-    //         ) / 4;
-    //         tries++;
-    //     }
-
-    //     for (uint i = 0; i < data.count; i++) {
-    //         uint random = Utilities.random(data.seed, string.concat('compound_r_', Utilities.uint2str(i))), 8);
-
-    //         uint idx = random < 4 ? 4 * firstIdx + random
-    //                               : 4 * secondIdx + random - 4;
-
-    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-    //     }
-    // }
-
-    // function getElementCompositeColors(RenderData memory data) public view returns (string[64] memory colors) {
-    //     uint elementIdx = Utilities.random(data.seed, 'composite', 16) / 4;
-
-    //     for (uint i = 0; i < data.count; i++) {
-    //         uint random = Utilities.random(data.seed, string.concat('composite_', Utilities.uint2str(i))), 4);
-
-    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[4 * elementIdx + random];
-    //     }
-    // }
-
-    // function getElementIsolateColors(RenderData memory data) public view returns (string[64] memory colors) {
-    //     uint idx = Utilities.random(data.seed, 'isolate', 16);
-
-    //     for (uint i = 0; i < data.count; i++) {
-    //         colors[i] = SixteenElementsColors.ELEMENTS_COLORS()[idx];
-    //     }
-    // }
-
-    // function getElementAlphaColors(RenderData memory data) public view returns (string[64] memory colors) {
-    //     data.gradient = 1;
-
-    //     colors = getElementOrderColors(data);
-    // }
-
-    // // GRADIENT
-    // function getCompleteColors(RenderData memory data) public view returns (uint[64] memory colorIndexes) {
-    //     uint initialIdx = Utilities.random(data.seed, 'initial', 68);
-
-    //     for (uint i = 0; i < data.count; i++) {
-    //         // uint idx = Utilities.random(data.seed, string.concat('complete', Utilities.uint2str(i)), 68);
-    //         uint idx = (i * data.gradient * data.band / data.count) % data.band;
-
-    //         // ~~We store 1-based index to differenciate between set and unset values later.~~
-    //         colorIndexes[i] = ((initialIdx + idx) % 68);
-    //     }
-    // }
 
     function str(uint n) public pure returns (string memory) {
         return Utilities.uint2str(n);
