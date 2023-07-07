@@ -3,21 +3,22 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/Base64.sol";
 
+import "./InfiniteBags.sol";
 import "./InfiniteArt.sol";
 import "./Utilities.sol";
 
 /**
 @title  InfiniteMetadata
 @author VisualizeValue
-@notice Renders ERC721 compatible metadata for Checks.
+@notice Renders ERC1155 compatible metadata for Infinity tokens.
 */
 library InfiniteMetadata {
 
     /// @dev Render the JSON Metadata for a given Infinity token.
     /// @param data The render data for our token
     function tokenURI(
-        RenderData memory data
-    ) public view returns (string memory) {
+        Token memory data
+    ) public pure returns (string memory) {
         bytes memory metadata = abi.encodePacked(
             '{',
                 '"name": "Infinity",',
@@ -30,48 +31,59 @@ library InfiniteMetadata {
             '}'
         );
 
-        return string(
-            abi.encodePacked(
-                "data:application/json;base64,",
-                Base64.encode(metadata)
-            )
+        return string.concat(
+            "data:application/json;base64,",
+            Base64.encode(metadata)
         );
     }
 
     /// @dev Render the JSON atributes for a given Infinity token.
     /// @param data The check to render.
-    function attributes(RenderData memory data) public pure returns (bytes memory) {
-        return abi.encodePacked(
-            trait('Light', light(data.light), ','),
-            trait('Grid', grid(data), '')
-            // trait('Color Band', colorBand(data.colorBand), ','),
+    function attributes(Token memory data) public pure returns (string memory) {
+        return string.concat(
+            trait('Light',    light(data.light), ','),
+            trait('Grid',     grid(data), ','),
+            trait('Colors',   colors(data), ','),
+            trait('Band',     band(data), ','),
+            trait('Gradient', gradient(data), ','),
+            trait('Symbols',  symbols(data), '')
         );
     }
 
+    /// @dev Get the value for the 'Light' attribute.
     function light(bool on) public pure returns (string memory) {
         return on ? 'On' : 'Off';
     }
 
-    function grid(RenderData memory data) public pure returns (string memory) {
+    /// @dev Get the value for the 'Grid' attribute.
+    function grid(Token memory data) public pure returns (string memory) {
         string memory g = Utilities.uint2str(data.grid);
 
-        return string(abi.encodePacked(g, 'x', g));
+        return string.concat(g, 'x', g);
     }
 
-    /// @dev Get the names for different gradients. Compare ChecksArt.GRADIENTS.
-    /// @param gradientIndex The index of the gradient.
-    function gradients(uint8 gradientIndex) public pure returns (string memory) {
-        return [
-            'None', 'Linear', 'Double Linear', 'Reflected', 'Double Angled', 'Angled', 'Linear Z'
-        ][gradientIndex];
+    /// @dev Get the value for the 'Colors' attribute.
+    function colors(Token memory data) public pure returns (string memory) {
+        return Utilities.uint2str(Utilities.max(data.alloy, 1));
     }
 
-    /// @dev Get the percentage values for different color bands. Compare ChecksArt.COLOR_BANDS.
-    /// @param bandIndex The index of the color band.
-    function colorBand(uint8 bandIndex) public pure returns (string memory) {
+    /// @dev Get the value for the 'Band' attribute.
+    function band(Token memory data) public pure returns (string memory) {
+        return data.continuous ? 'Continuous' : 'Cut';
+    }
+
+    /// @dev Get the value for the 'Gradient' attribute.
+    function gradient(Token memory data) public pure returns (string memory) {
         return [
-            'Eighty', 'Sixty', 'Forty', 'Twenty', 'Ten', 'Five', 'One'
-        ][bandIndex];
+            // [0, 1, 2, 3, 4, 5, _, 7, 8, 9, 10, _, _, _, _, _, 16]
+            'None', 'Linear', 'Double Linear', 'Angled Down', 'Packed', 'Angled Up', '', 'Angled Down', 'Linear Z',
+            'Angled', 'Angled Up', '', '', '', '', '', 'Double Linear Z'
+        ][data.gradient];
+    }
+
+    /// @dev Get the value for the 'Symbols' attribute.
+    function symbols(Token memory data) public pure returns (string memory) {
+        return data.mapColors ? 'Mapped' : 'Random';
     }
 
     /// @dev Generate the SVG snipped for a single attribute.

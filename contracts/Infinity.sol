@@ -1,23 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./standards/ERC1155.sol";
+import "./libraries/InfiniteBags.sol";
+import "./libraries/InfiniteGenerator.sol";
 import "./libraries/InfiniteArt.sol";
 import "./libraries/InfiniteMetadata.sol";
 
-/// @title Infinity token contract v1
+import "./standards/ERC1155.sol";
+
+/// @title Infinity token contract.
+/// @notice Imo notable.
 /// @author Visualize Value
 contract Infinity is ERC1155 {
-    /// @notice The name of the collection
+
+    /// @notice The name of the collection.
     string public name = "Infinity";
 
-    /// @notice The symbol of the collection
+    /// @notice The symbol of the collection.
     string public symbol = unicode"∞";
 
-    /// @notice The price of an infinity
+    /// @notice The price of an infinity token.
     uint public price = 0.008 ether;
 
-    /// @dev Generative mints start from this token ID
+    /// @dev Generative mints start from this token ID.
     uint private constant GENERATIVE = 88888888;
 
     /// @dev VV creator account
@@ -107,34 +112,35 @@ contract Infinity is ERC1155 {
         _send(msg.sender, _totalAmount(amounts) * price);
     }
 
-    function svg(uint tokenId) public view returns (string memory) {
-        return InfiniteArt.renderSVG(InfiniteArt.collectRenderData(tokenId));
+    /// @notice Render SVG of the token.
+    function svg(uint tokenId) public pure returns (string memory) {
+        return InfiniteArt.renderSVG(InfiniteGenerator.tokenData(tokenId));
     }
 
-    function uri(uint tokenId) public view override returns (string memory) {
-        return tokenId < GENERATIVE
-            ? "https://metadata.infinity.checks.art/{id}.json"
-            : InfiniteMetadata.tokenURI(InfiniteArt.collectRenderData(tokenId));
+    /// @notice Render the encoded token metadata-URI.
+    function uri(uint tokenId) public pure override returns (string memory) {
+        return InfiniteMetadata.tokenURI(InfiniteGenerator.tokenData(tokenId));
     }
 
-    /// @notice Supply is (in)finite: (2^256 - 1)^2
+    /// @notice Supply is (in)finite: (2^256 - 1)^2.
     function totalSupply(uint) public pure returns (uint) {
         return type(uint).max;
     }
 
-    /// @dev Make sure only VV can create pieces below {GENERATIVE}, and IDs are randomized for initial mints
+    /// @dev Validate IDs to minted tokens or randomize for initial mints. Exception for VV mints.
     function _validateId(uint id, address existing) internal view returns (uint) {
         bool minted = existing != address(0) && balanceOf(existing, id) > 0;
 
-        // If it's an already minted piece, or we are VV, continue
+        // If it's an already minted piece, or we are VV, continue.
         if (minted || msg.sender == VV) return id;
 
+        // Use ID as offset to prevent in-block duplication.
         return _randomId(id);
     }
 
-    /// @dev Make a random generative token ID
+    /// @dev Make a random generative token ID.
     function _randomId(uint offset) internal view returns (uint id) {
-        id = block.prevrandao + offset;
+        id = block.prevrandao + offset; // Use ID as offset to prevent in-block duplication.
 
         // Force into {GENERATIVE} range
         if (id < GENERATIVE) {
@@ -144,7 +150,7 @@ contract Infinity is ERC1155 {
         return id;
     }
 
-    /// @dev Make a random generative token ID
+    /// @dev Make a random generative token ID.
     function _randomId() internal view returns (uint) {
         return _randomId(0);
     }

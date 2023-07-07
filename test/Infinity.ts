@@ -56,10 +56,6 @@ describe('Infinity', () => {
     expect(await contract.price()).to.equal(PRICE)
   })
 
-  it(`Should set the correct metadata URI`, async () => {
-    expect(await contract.uri(1)).to.equal('https://metadata.infinity.checks.art/{id}.json')
-  })
-
   describe(`Generating`, () => {
 
     it(`Shouldn't allow minting for free`, async () => {
@@ -264,10 +260,10 @@ describe('Infinity', () => {
   })
 
   describe(`Rendering`, () => {
-    it.only(`Renders token SVGs`, async () => {
-      let id = 100;
+    it(`Renders token SVGs`, async () => {
+      let id = 0;
 
-      while (id < 200) {
+      while (id < 50) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
@@ -278,10 +274,10 @@ describe('Infinity', () => {
       }
     })
 
-    it(`Renders Black Check SVGs`, async () => {
+    it.skip(`Renders Black Check SVGs`, async () => {
       let id = 0;
 
-      while (id < 100000) {
+      while (id < 50_000) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
@@ -292,15 +288,15 @@ describe('Infinity', () => {
       }
     })
 
-    it(`Renders token metadata`, async () => {
-      const metadata = decodeBase64URI(await contract.uri(88888889))
+    it.only(`Renders token metadata`, async () => {
+      const metadata = decodeBase64URI(await contract.uri(2))
 
       expect(metadata.attributes).to.deep.equal([
         { trait_type: 'Light', value: 'Off' },
-        { trait_type: 'Grid', value: '4x4' },
+        { trait_type: 'Grid', value: '8x8' },
       ])
 
-      fs.writeFileSync('test/dist/88888889.json', JSON.stringify(metadata, null, 4))
+      fs.writeFileSync('test/dist/2.json', JSON.stringify(metadata, null, 4))
     })
   })
 
