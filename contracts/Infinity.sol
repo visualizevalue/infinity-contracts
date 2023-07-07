@@ -23,7 +23,7 @@ contract Infinity is ERC1155 {
     uint public price = 0.008 ether;
 
     /// @dev Generative mints start from this token ID.
-    uint private constant GENERATIVE = 88888888;
+    uint private constant GENERATIVE = 8888;
 
     /// @dev VV creator account
     address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
