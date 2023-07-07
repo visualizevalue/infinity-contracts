@@ -20,9 +20,11 @@ library InfiniteArt {
                 '<rect width="800" height="800" fill="var(--bg)" />',
                 '<g transform="scale(0.95)" transform-origin="center">',
                     renderGrid(),
-                    renderSymbols(data),
                 '</g>',
                 renderNoise(data),
+                '<g transform="scale(0.95)" transform-origin="center">',
+                    renderSymbols(data),
+                '</g>',
             '</svg>'
         );
     }
@@ -52,7 +54,7 @@ library InfiniteArt {
                     '<use href="#loop" transform="scale(-1,-1)" />',
                 '</g>',
                 '<filter id="noise">',
-                    '<feTurbulence type="fractalNoise" baseFrequency="1" stitchTiles="stitch" numOctaves="1" seed="1"/>',
+                    '<feTurbulence type="fractalNoise" baseFrequency="0.8" stitchTiles="stitch" numOctaves="1" seed="8"/>',
                     '<feColorMatrix type="saturate" values="0"/>',
                 '</filter>',
             '</defs>'
@@ -88,7 +90,7 @@ library InfiniteArt {
     function renderNoise(Token memory data) public pure returns (string memory) {
         return string.concat(
             '<rect mask="url(#mask)" width="800" height="800" fill="black" filter="url(#noise)" ',
-                'style="mix-blend-mode: ', data.light ? 'multiply;" opacity="0.248"' : 'overlay;"',
+                'style="mix-blend-mode: multiply;" opacity="', data.light ? '0.248"' : '0.8"',
             '/>'
         );
     }

@@ -41,11 +41,11 @@ library InfiniteMetadata {
     /// @param data The check to render.
     function attributes(Token memory data) public pure returns (string memory) {
         return string.concat(
-            trait('Light',     light(data.light), ','),
-            trait('Grid',      grid(data), ','),
-            trait('Elements',  elements(data), ','),
-            trait('Band',      band(data), ','),
-            trait('Gradient',  gradient(data), ','),
+            trait('Light', light(data.light), ','),
+            trait('Grid', grid(data), ','),
+            data.light  ? '' : trait('Elements',  elements(data), ','),
+            data.light  ? '' : trait('Gradient',  gradient(data), ','),
+            data.light  ? '' : trait('Band',      band(data), ','),
             trait('Symbols',   symbols(data), '')
         );
     }

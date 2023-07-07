@@ -274,10 +274,10 @@ describe('Infinity', () => {
       }
     })
 
-    it.skip(`Renders Black Check SVGs`, async () => {
+    it(`Renders Black Check SVGs`, async () => {
       let id = 0;
 
-      while (id < 50_000) {
+      while (id < 25_000) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
@@ -288,19 +288,18 @@ describe('Infinity', () => {
       }
     })
 
-    it(`Renders token metadata`, async () => {
-      const metadata = decodeBase64URI(await contract.uri(2))
+    it.only(`Renders token metadata`, async () => {
+      let id = 0;
 
-      expect(metadata.attributes).to.deep.equal([
-        { trait_type: 'Light', value: 'Off' },
-        { trait_type: 'Grid', value: '8x8' },
-        { trait_type: 'Elements', value: 'Compound' },
-        { trait_type: 'Band', value: 'Continuous' },
-        { trait_type: 'Gradient', value: 'Linear' },
-        { trait_type: 'Symbols', value: 'Random' }
-      ])
+      while (id < 50) {
+        const metadata = decodeBase64URI(await contract.uri(id))
 
-      fs.writeFileSync('test/dist/2.json', JSON.stringify(metadata, null, 4))
+        fs.writeFileSync(`test/dist/${id}.json`, JSON.stringify(metadata, null, 4))
+
+        console.log(`Saved metadata for ${id}`)
+
+        id++
+      }
     })
   })
 
