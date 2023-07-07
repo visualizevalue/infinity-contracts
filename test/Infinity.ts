@@ -288,12 +288,16 @@ describe('Infinity', () => {
       }
     })
 
-    it.only(`Renders token metadata`, async () => {
+    it(`Renders token metadata`, async () => {
       const metadata = decodeBase64URI(await contract.uri(2))
 
       expect(metadata.attributes).to.deep.equal([
         { trait_type: 'Light', value: 'Off' },
         { trait_type: 'Grid', value: '8x8' },
+        { trait_type: 'Elements', value: 'Compound' },
+        { trait_type: 'Band', value: 'Continuous' },
+        { trait_type: 'Gradient', value: 'Linear' },
+        { trait_type: 'Symbols', value: 'Random' }
       ])
 
       fs.writeFileSync('test/dist/2.json', JSON.stringify(metadata, null, 4))
