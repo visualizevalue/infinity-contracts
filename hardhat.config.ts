@@ -10,6 +10,7 @@ import 'hardhat-contract-sizer'
 import 'solidity-coverage'
 
 import './tasks/accounts'
+import './tasks/deploy'
 
 dotenv.config()
 
