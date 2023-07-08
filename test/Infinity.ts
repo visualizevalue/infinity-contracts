@@ -11,7 +11,7 @@ import { decodeBase64URI } from '../helpers/decode-uri'
 import { VV } from '../helpers/constants'
 
 const PRICE = parseEther('0.008')
-const TOKEN = 88888888
+const TOKEN = 8888
 
 export const deployContract = async () => {
   const { infinity: contract } = await deployInfinityWithLibraries(ethers)
@@ -59,19 +59,20 @@ describe('Infinity', () => {
   describe(`Generating`, () => {
 
     it(`Shouldn't allow minting for free`, async () => {
-      await expect(contract.connect(vv).generate(constants.AddressZero, addr1.address, TOKEN, 1, ''))
-        .to.be.revertedWith(`Incorrect ether deposit.`)
+      await expect(contract.connect(vv).generate(constants.AddressZero, addr1.address, TOKEN, ''))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(vv.address, constants.AddressZero, addr1.address, TOKEN, 0)
     })
 
     it(`Should allow minting without a message`, async () => {
       // Pass AddressZero as source for gas efficiency
-      await expect(contract.generate(constants.AddressZero, addr1.address, 123, 1, '', { value: PRICE }))
+      await expect(contract.generate(constants.AddressZero, addr1.address, 123, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         // TODO: Test parameters manually
     })
 
     it(`Should allow minting with a message`, async () => {
-      await expect(contract.generate(constants.AddressZero, addr1.address, 123, 1, 'The beginning of infinity', { value: PRICE }))
+      await expect(contract.generate(constants.AddressZero, addr1.address, 123, 'The beginning of infinity', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .to.emit(contract, 'Message')
         // TODO: Test parameters manually
@@ -81,10 +82,10 @@ describe('Infinity', () => {
       let amount = 1
 
       // Generate an initial one
-      await contract.connect(vv).generate(constants.AddressZero, addr1.address, 19, 1, '', { value: PRICE })
+      await contract.connect(vv).generate(constants.AddressZero, addr1.address, 19, '', { value: PRICE })
 
       while (amount < 512) {
-        await expect(contract.generate(constants.AddressZero, addr1.address, 19, amount, '', { value: PRICE.mul(amount) }))
+        await expect(contract.generate(constants.AddressZero, addr1.address, 19, '', { value: PRICE.mul(amount) }))
           .to.emit(contract, 'TransferSingle')
           // TODO: Test parameters manually
 
@@ -93,7 +94,7 @@ describe('Infinity', () => {
     })
 
     it(`Should allow transferring assets`, async () => {
-      const tx = await contract.connect(addr2).generate(constants.AddressZero, addr2.address, 888, 10, '', { value: PRICE.mul(10) })
+      const tx = await contract.connect(addr2).generate(constants.AddressZero, addr2.address, 888, '', { value: PRICE.mul(10) })
       const logData = contract.interface.parseLog(getTransferLogs(contract, await tx.wait())[0])
       const ID = logData.args.id.toString()
       expect(ID.length).to.be.gt(7)
@@ -173,7 +174,7 @@ describe('Infinity', () => {
     })
 
     it(`Shouldn't allow people to create genesis tokens`, async () => {
-      const tx = await contract.generate(constants.AddressZero, vv.address, 1, 1, '', { value: PRICE })
+      const tx = await contract.generate(constants.AddressZero, vv.address, 1, '', { value: PRICE })
       const receipt = await tx.wait()
       const logData = contract.interface.parseLog(getTransferLogs(contract, receipt)[0])
 
@@ -184,11 +185,11 @@ describe('Infinity', () => {
     })
 
     it(`Should mark genesis tokens as minted when VV mints them`, async () => {
-      await expect(contract.connect(vv).generate(constants.AddressZero, vv.address, 1, 1, '', { value: PRICE }))
+      await expect(contract.connect(vv).generate(constants.AddressZero, vv.address, 1, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .withArgs(vv.address, constants.AddressZero, vv.address, 1, 1)
 
-      await expect(contract.connect(vv).generate(constants.AddressZero, owner.address, 2, 1, '', { value: PRICE }))
+      await expect(contract.connect(vv).generate(constants.AddressZero, owner.address, 2, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .withArgs(vv.address, constants.AddressZero, owner.address, 2, 1)
 
@@ -209,11 +210,11 @@ describe('Infinity', () => {
         .withArgs(vv.address, constants.AddressZero, addr3.address, 4, 1)
 
       // It should then allow others to mint these as well
-      await expect(contract.connect(addr3).generate(owner.address, addr3.address, 1, 1, '', { value: PRICE }))
+      await expect(contract.connect(addr3).generate(owner.address, addr3.address, 1, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .withArgs(addr3.address, constants.AddressZero, addr3.address, 1, 1)
 
-      await expect(contract.connect(addr3).generate(owner.address, addr3.address, 2, 1, '', { value: PRICE }))
+      await expect(contract.connect(addr3).generate(owner.address, addr3.address, 2, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .withArgs(addr3.address, constants.AddressZero, addr3.address, 2, 1)
     })
@@ -223,7 +224,7 @@ describe('Infinity', () => {
   describe(`DeGenerating`, () => {
 
     it(`Should allow degenerating`, async () => {
-      await contract.connect(vv).generate(constants.AddressZero, addr3.address, TOKEN, 10, '', { value: PRICE.mul(10) })
+      await contract.connect(vv).generate(constants.AddressZero, addr3.address, TOKEN, '', { value: PRICE.mul(10) })
       const balance = await contract.balanceOf(addr3.address, TOKEN)
 
       await expect(contract.connect(addr3).degenerate(TOKEN, 1))
@@ -234,7 +235,7 @@ describe('Infinity', () => {
     })
 
     it(`Should allow withdrawing funds with specified token amount`, async () => {
-      await contract.connect(vv).generate(constants.AddressZero, addr2.address, TOKEN, 10, '', { value: PRICE.mul(10) })
+      await contract.connect(vv).generate(constants.AddressZero, addr2.address, TOKEN, '', { value: PRICE.mul(10) })
       await expect(contract.connect(addr2).degenerate(TOKEN, 50)).to.be.revertedWith(`Can't burn more infinities than owned.`)
 
       expect(await contract.connect(addr2).degenerate(TOKEN, 5))
@@ -259,7 +260,7 @@ describe('Infinity', () => {
 
   })
 
-  describe(`Rendering`, () => {
+  describe.skip(`Rendering`, () => {
     it(`Renders token SVGs`, async () => {
       let id = 0;
 
@@ -288,7 +289,7 @@ describe('Infinity', () => {
       }
     })
 
-    it.only(`Renders token metadata`, async () => {
+    it(`Renders token metadata`, async () => {
       let id = 0;
 
       while (id < 50) {

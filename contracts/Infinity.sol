@@ -25,33 +25,31 @@ contract Infinity is ERC1155 {
     /// @dev Generative mints start from this token ID.
     uint private constant GENERATIVE = 8888;
 
-    /// @dev VV creator account
+    /// @dev VV creator account.
     address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
 
+    /// @dev Instanciate the contract...
     constructor() ERC1155() {}
 
     /// @notice Deposit ether, receive random infinities
     receive() external payable {
-        uint amount  = msg.value / price;
-        uint surplus = msg.value % price;
-
-        _mint(msg.sender, _randomId(), amount, "");
-        _send(msg.sender, surplus);
+        _generateViaDeposit(msg.sender, _randomId());
     }
 
     /// @notice Create an infinity check and deposit 0.008 ETH for each token.
+    /// @param source The address of an existing owner of the token. 0x0 for new mints.
+    /// @param recipient The address that should receive the token.
+    /// @param tokenIdOrOffset The tokenID to mint, or a random offset to prevent in-block duplicates.
+    /// @param message Mint the token with an optional message.
     function generate(
         address source,
         address recipient,
         uint tokenIdOrOffset,
-        uint amount,
         string calldata message
     ) public payable {
-        _checkDeposit(amount);
-
         uint tokenId = _validateId(tokenIdOrOffset, source);
 
-        _mint(recipient, tokenId, amount, "");
+        _generateViaDeposit(recipient, tokenId);
 
         if (bytes(message).length > 0) {
             emit Message(msg.sender, recipient, tokenId, message);
@@ -59,6 +57,10 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
+    /// @param source The address of an existing owner of the token. 0x0 for new mints.
+    /// @param recipients The addresses that should receive the token.
+    /// @param tokenIdsOrOffsets The tokenIDs to mint, or random offsets to prevent in-block duplicates.
+    /// @param amounts The number of tokens to send to each recipient.
     function generateMany(
         address source,
         address[] calldata recipients,
@@ -79,6 +81,8 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Destroy the token to withdraw its desposited ETH.
+    /// @param id The tokenID to destroy.
+    /// @param amount The amount to degenerate (withdraws 0.008 ETH per item).
     function degenerate(
         uint id,
         uint amount
@@ -94,6 +98,8 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice {degenerate} multiple tokens at once.
+    /// @param ids The tokenIDs to destroy.
+    /// @param amounts The amounts to degenerate (withdraws 0.008 ETH per item).
     function degenerateMany(
         uint[] memory ids,
         uint[] memory amounts
@@ -113,18 +119,28 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Render SVG of the token.
+    /// @param tokenId The token ID to render.
     function svg(uint tokenId) public pure returns (string memory) {
         return InfiniteArt.renderSVG(InfiniteGenerator.tokenData(tokenId));
     }
 
     /// @notice Render the encoded token metadata-URI.
+    /// @param tokenId The token ID to get metadata for.
     function uri(uint tokenId) public pure override returns (string memory) {
         return InfiniteMetadata.tokenURI(InfiniteGenerator.tokenData(tokenId));
     }
 
     /// @notice Supply is (in)finite: (2^256 - 1)^2.
-    function totalSupply(uint) public pure returns (uint) {
-        return type(uint).max;
+    function totalSupply() public pure returns (uint) { return type(uint).max; }
+    function totalSupply(uint) public pure returns (uint) { return type(uint).max; }
+
+    /// @dev Mint a token n times, based on the amount of ETH sent.
+    function _generateViaDeposit(address recipient, uint tokenId) internal {
+        uint amount  = msg.value / price;
+        uint surplus = msg.value % price;
+
+        _mint(recipient, tokenId, amount, "");
+        _send(recipient, surplus);
     }
 
     /// @dev Validate IDs to minted tokens or randomize for initial mints. Exception for VV mints.
