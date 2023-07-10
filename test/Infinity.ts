@@ -173,6 +173,23 @@ describe('Infinity', () => {
         .to.changeEtherBalance(owner, PRICE.mul(-2))
     })
 
+    it(`Should allow regenerating tokens`, async () => {
+      await contract.connect(vv).generate(constants.AddressZero, vv.address, 0, "", { value: PRICE })
+      await contract.connect(vv).generate(
+        constants.AddressZero,
+        addr5.address,
+        8,
+        "",
+        { value: PRICE.mul(2) }
+      )
+
+      await expect(await contract.connect(addr5).regenerate(8, 2, vv.address, 0))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, addr5.address, constants.AddressZero, 8, 2)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, constants.AddressZero, addr5.address, 0, 2)
+    })
+
     it(`Shouldn't allow people to create genesis tokens`, async () => {
       const tx = await contract.generate(constants.AddressZero, vv.address, 1, '', { value: PRICE })
       const receipt = await tx.wait()
