@@ -39,7 +39,7 @@ contract Infinity is ERC1155 {
     /// @notice Create an infinity check and deposit 0.008 ETH for each token.
     /// @param source The address of an existing owner of the token. 0x0 for new mints.
     /// @param recipient The address that should receive the token.
-    /// @param tokenIdOrOffset The tokenID to mint, or a random offset to prevent in-block duplicates.
+    /// @param tokenIdOrOffset The token ID to mint, or a random offset to prevent in-block duplicates.
     /// @param message Mint the token with an optional message.
     function generate(
         address source,
@@ -80,8 +80,24 @@ contract Infinity is ERC1155 {
         }
     }
 
+    /// @notice Swap an inifinity token for a new one.
+    /// @param id The token ID to burn.
+    /// @param amount The token amount to burn / recreate.
+    /// @param source The address of an existing owner of the new token. 0x0 for new generations.
+    /// @param tokenIdOrOffset The token ID to mint, or a random offset to prevent in-block duplicates.
+    function regenerate(uint id, uint amount, address source, uint tokenIdOrOffset) public {
+        // Check whether we own at least {amount} of token {id}
+        _checkOwnership(id, amount);
+
+        // Execute burn
+        _burn(msg.sender, id, amount);
+
+        // Mint a new token
+        _mint(msg.sender, _validateId(tokenIdOrOffset, source), amount, "");
+    }
+
     /// @notice Destroy the token to withdraw its desposited ETH.
-    /// @param id The tokenID to destroy.
+    /// @param id The token ID to destroy.
     /// @param amount The amount to degenerate (withdraws 0.008 ETH per item).
     function degenerate(
         uint id,
