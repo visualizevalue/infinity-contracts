@@ -170,6 +170,7 @@ library InfiniteGenerator {
     ) {
         Color[68] memory all = allColors();
         uint[68] memory options = getColorOptions(data);
+        bool reverse = Utilities.random(data.seed, 'reverse', 2) > 0;
 
         for (uint i = 0; i < data.count; i++) {
             colorIndexes[i] = (
@@ -178,10 +179,12 @@ library InfiniteGenerator {
                     : getRandomColor(data, i)
             ) % 68;
 
-            colors[i] = all[options[colorIndexes[i]]];
+            uint idx = reverse ? data.count - 1 - i : i;
+
+            colors[idx] = all[options[colorIndexes[i]]];
 
             // Paradoxical, i know. Opepen your eyes. All one. Common fate.
-            if (data.light) colors[i].rendered = '#080808';
+            if (data.light) colors[idx].rendered = '#080808';
         }
     }
 

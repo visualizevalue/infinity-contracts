@@ -28,20 +28,18 @@ const renderPNG = async (svg: string, path: string) => {
   console.log(`Rendered ${path}`)
 }
 
-const render = async () => {
+export const render = async (path: string) => {
   await setupPNGRenderer()
-  try { fs.rmdirSync(`./pngs`, { recursive: true }) } catch (e) {}
-  try { fs.mkdirSync(`./pngs`, { recursive: true }) } catch (e) {}
+  try { fs.rmdirSync(`${path}/pngs`, { recursive: true }) } catch (e) {}
+  try { fs.mkdirSync(`${path}/pngs`, { recursive: true }) } catch (e) {}
 
-  const files = fs.readdirSync(`./`).filter(f => f.indexOf('.svg') > -1)
+  const files = fs.readdirSync(`${path}/`).filter(f => f.indexOf('.svg') > -1)
 
   for (const file of files) {
-    const svg = fs.readFileSync(`./${file}`).toString()
+    const svg = fs.readFileSync(`${path}/${file}`).toString()
 
-    await renderPNG(svg, `./pngs/${file.replace('svg', 'png')}`)
+    await renderPNG(svg, `${path}/pngs/${file.replace('svg', 'png')}`)
   }
 
   await shutdownPNGRenderer()
 }
-
-render()
