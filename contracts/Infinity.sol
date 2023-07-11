@@ -56,6 +56,33 @@ contract Infinity is ERC1155 {
         }
     }
 
+    /// @notice Swap an inifinity token for a new one.
+    /// @param id The token ID to burn.
+    /// @param amount The token amount to burn / recreate.
+    /// @param source The address of an existing owner of the new token. 0x0 for new generations.
+    /// @param tokenIdOrOffset The token ID to mint, or a random offset to prevent in-block duplicates.
+    function regenerate(uint id, uint amount, address source, uint tokenIdOrOffset) public {
+        // Execute burn
+        _burn(msg.sender, id, amount);
+
+        // Mint a new token
+        _mint(msg.sender, _validateId(tokenIdOrOffset, source), amount, "");
+    }
+
+    /// @notice Destroy the token to withdraw its desposited ETH.
+    /// @param id The token ID to destroy.
+    /// @param amount The amount to degenerate (withdraws 0.008 ETH per item).
+    function degenerate(
+        uint id,
+        uint amount
+    ) public {
+        // Execute burn
+        _burn(msg.sender, id, amount);
+
+        // Withdraw funds
+        _send(msg.sender, amount * price);
+    }
+
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
     /// @param sources The address of an existing owner of all tokens. 0x0 for new mints.
     /// @param recipients The addresses that should receive the token.
@@ -81,59 +108,34 @@ contract Infinity is ERC1155 {
         }
     }
 
-    /// @notice Swap an inifinity token for a new one.
-    /// @param id The token ID to burn.
-    /// @param amount The token amount to burn / recreate.
-    /// @param source The address of an existing owner of the new token. 0x0 for new generations.
-    /// @param tokenIdOrOffset The token ID to mint, or a random offset to prevent in-block duplicates.
-    function regenerate(uint id, uint amount, address source, uint tokenIdOrOffset) public {
-        // Execute burn
-        _burn(msg.sender, id, amount);
-
-        // Mint a new token
-        _mint(msg.sender, _validateId(tokenIdOrOffset, source), amount, "");
-    }
-
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
     /// @param ids The existing token IDs that should be destroyed in the process.
-    /// @param amounts The number of tokens per id to burn / recreate.
+    /// @param degenerateAmounts The number of tokens per id to burn.
     /// @param sources The addresses of existing owners of new tokens. 0x0 for new mints.
-    /// @param recipients The addresses that should receive the new tokens.
     /// @param tokenIdsOrOffsets The tokenIDs to mint, or random offsets to prevent in-block duplicates.
+    /// @param amounts The number of tokens per id recreate.
     function regenerateMany(
         uint[] calldata ids,
-        uint[] calldata amounts,
+        uint[] calldata degenerateAmounts,
         address[] calldata sources,
-        address[] calldata recipients,
-        uint[] calldata tokenIdsOrOffsets
+        uint[] calldata tokenIdsOrOffsets,
+        uint[] calldata amounts
     ) public payable {
         require(
-            ids.length == amounts.length &&
-            ids.length == sources.length &&
-            ids.length == recipients.length &&
-            ids.length == tokenIdsOrOffsets.length,
+            ids.length == degenerateAmounts.length &&
+            sources.length == tokenIdsOrOffsets.length &&
+            sources.length == amounts.length &&
+            _totalAmount(degenerateAmounts) == _totalAmount(amounts),
             "Invalid input"
         );
 
-        for (uint i = 0; i < recipients.length; i++) {
-            _burn(msg.sender, ids[i], amounts[i]);
-
-            _mint(recipients[i], _validateId(tokenIdsOrOffsets[i], sources[i]), amounts[i], "");
+        for (uint i = 0; i < ids.length; i++) {
+            _burn(msg.sender, ids[i], degenerateAmounts[i]);
         }
-    }
 
-    /// @notice Destroy the token to withdraw its desposited ETH.
-    /// @param id The token ID to destroy.
-    /// @param amount The amount to degenerate (withdraws 0.008 ETH per item).
-    function degenerate(
-        uint id,
-        uint amount
-    ) public {
-        // Execute burn
-        _burn(msg.sender, id, amount);
-
-        // Withdraw funds
-        _send(msg.sender, amount * price);
+        for (uint i = 0; i < tokenIdsOrOffsets.length; i++) {
+            _mint(msg.sender, _validateId(tokenIdsOrOffsets[i], sources[i]), amounts[i], "");
+        }
     }
 
     /// @notice {degenerate} multiple tokens at once.

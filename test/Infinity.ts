@@ -173,26 +173,6 @@ describe('Infinity', () => {
         .to.changeEtherBalance(owner, PRICE.mul(-2))
     })
 
-    it(`Should allow regenerating tokens`, async () => {
-      await contract.connect(vv).generate(constants.AddressZero, vv.address, 0, "", { value: PRICE })
-      await contract.connect(vv).generate(
-        constants.AddressZero,
-        addr5.address,
-        8,
-        "",
-        { value: PRICE.mul(2) }
-      )
-
-      await expect(await contract.connect(addr5).regenerate(8, 2, vv.address, 0))
-        .to.emit(contract, 'TransferSingle')
-        .withArgs(addr5.address, addr5.address, constants.AddressZero, 8, 2)
-        .to.emit(contract, 'TransferSingle')
-        .withArgs(addr5.address, constants.AddressZero, addr5.address, 0, 2)
-
-      expect(await contract.balanceOf(addr5.address, 8)).to.equal(0)
-      expect(await contract.balanceOf(addr5.address, 0)).to.equal(2)
-    })
-
     it(`Shouldn't allow people to create genesis tokens`, async () => {
       const tx = await contract.generate(constants.AddressZero, vv.address, 1, '', { value: PRICE })
       const receipt = await tx.wait()
@@ -237,6 +217,101 @@ describe('Infinity', () => {
       await expect(contract.connect(addr3).generate(owner.address, addr3.address, 2, '', { value: PRICE }))
         .to.emit(contract, 'TransferSingle')
         .withArgs(addr3.address, constants.AddressZero, addr3.address, 2, 1)
+    })
+
+  })
+
+  describe(`ReGenerating`, () => {
+
+    it(`Should not allow regenerating tokens we don't own`, async () => {
+      await contract.connect(vv).generate(constants.AddressZero, vv.address, 0, "", { value: PRICE })
+      await contract.connect(vv).generate(
+        constants.AddressZero,
+        addr5.address,
+        7,
+        "",
+        { value: PRICE.mul(2) }
+      )
+
+      await expect(contract.connect(addr5).regenerate(7, 5, vv.address, 0))
+        .to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
+
+      expect(await contract.balanceOf(addr5.address, 7)).to.equal(2)
+      expect(await contract.balanceOf(addr5.address, 0)).to.equal(0)
+    })
+
+    it(`Should allow regenerating tokens`, async () => {
+      await contract.connect(vv).generate(constants.AddressZero, vv.address, 0, "", { value: PRICE })
+      await contract.connect(vv).generate(
+        constants.AddressZero,
+        addr5.address,
+        8,
+        "",
+        { value: PRICE.mul(2) }
+      )
+
+      await expect(await contract.connect(addr5).regenerate(8, 2, vv.address, 0))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, addr5.address, constants.AddressZero, 8, 2)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, constants.AddressZero, addr5.address, 0, 2)
+
+      expect(await contract.balanceOf(addr5.address, 8)).to.equal(0)
+      expect(await contract.balanceOf(addr5.address, 0)).to.equal(2)
+    })
+
+    it(`Should allow regenerating multiple tokens at once`, async () => {
+      await contract.connect(vv).generate(constants.AddressZero, vv.address, 19, "", { value: PRICE })
+
+      await contract.connect(vv).generateMany(
+        [constants.AddressZero, constants.AddressZero],
+        [addr5.address, addr5.address],
+        [9, 10],
+        [2, 2],
+        { value: PRICE.mul(4) }
+      )
+
+      await expect(contract.connect(addr5).regenerateMany(
+        [9, 10],
+        [2, 3],
+        [vv.address],
+        [19],
+        [5],
+      )).to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
+
+      await expect(contract.connect(addr5).regenerateMany(
+        [9, 10],
+        [2, 3],
+        [vv.address],
+        [19],
+        [4],
+      )).to.be.revertedWith(`Invalid input`)
+
+      await expect(contract.connect(addr5).regenerateMany(
+        [9, 10],
+        [2, 2],
+        [vv.address],
+        [19],
+        [5],
+      )).to.be.revertedWith(`Invalid input`)
+
+      await expect(await contract.connect(addr5).regenerateMany(
+        [9, 10],
+        [2, 2],
+        [vv.address],
+        [19],
+        [4],
+      ))
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, addr5.address, constants.AddressZero, 9, 2)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, addr5.address, constants.AddressZero, 10, 2)
+        .to.emit(contract, 'TransferSingle')
+        .withArgs(addr5.address, constants.AddressZero, addr5.address, 19, 4)
+
+      expect(await contract.balanceOf(addr5.address, 9)).to.equal(0)
+      expect(await contract.balanceOf(addr5.address, 10)).to.equal(0)
+      expect(await contract.balanceOf(addr5.address, 19)).to.equal(4)
     })
 
   })
