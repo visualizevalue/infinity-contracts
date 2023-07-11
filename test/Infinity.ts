@@ -188,6 +188,9 @@ describe('Infinity', () => {
         .withArgs(addr5.address, addr5.address, constants.AddressZero, 8, 2)
         .to.emit(contract, 'TransferSingle')
         .withArgs(addr5.address, constants.AddressZero, addr5.address, 0, 2)
+
+      expect(await contract.balanceOf(addr5.address, 8)).to.equal(0)
+      expect(await contract.balanceOf(addr5.address, 0)).to.equal(2)
     })
 
     it(`Shouldn't allow people to create genesis tokens`, async () => {
