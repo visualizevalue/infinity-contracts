@@ -72,7 +72,7 @@ library InfiniteMetadata {
 
     /// @dev Get the value for the 'Band' attribute.
     function band(Token memory data) public pure returns (string memory) {
-        return data.continuous ? 'Continuous' : 'Cut';
+        return (data.continuous || data.alloy < 2) ? 'Continuous' : 'Cut';
     }
 
     /// @dev Get the value for the 'Gradient' attribute.
