@@ -356,11 +356,11 @@ describe('Infinity', () => {
 
   })
 
-  describe.only(`Rendering`, () => {
+  describe.skip(`Rendering`, () => {
     it(`Renders token SVGs`, async () => {
       let id = 0;
 
-      while (id < 20) {
+      while (id < 100) {
         const svg = await contract.svg(id)
 
         fs.writeFileSync(`test/dist/${id}.svg`, svg)
@@ -371,7 +371,7 @@ describe('Infinity', () => {
       }
     })
 
-    it.skip(`Renders Black Check SVGs`, async () => {
+    it(`Renders Black Check SVGs`, async () => {
       let id = 0;
 
       while (id < 25_000) {
@@ -385,7 +385,7 @@ describe('Infinity', () => {
       }
     })
 
-    it.skip(`Renders token metadata`, async () => {
+    it(`Renders token metadata`, async () => {
       let id = 0;
 
       while (id < 50) {
