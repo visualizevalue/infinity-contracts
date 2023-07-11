@@ -57,26 +57,27 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
-    /// @param source The address of an existing owner of the token. 0x0 for new mints.
+    /// @param sources The address of an existing owner of all tokens. 0x0 for new mints.
     /// @param recipients The addresses that should receive the token.
     /// @param tokenIdsOrOffsets The tokenIDs to mint, or random offsets to prevent in-block duplicates.
     /// @param amounts The number of tokens to send to each recipient.
     function generateMany(
-        address source,
+        address[] calldata sources,
         address[] calldata recipients,
         uint[] calldata tokenIdsOrOffsets,
         uint[] calldata amounts
     ) public payable {
         require(
             recipients.length == tokenIdsOrOffsets.length &&
-            recipients.length == amounts.length,
+            recipients.length == amounts.length &&
+            recipients.length == sources.length,
             "Invalid input"
         );
 
         _checkDeposit(_totalAmount(amounts));
 
         for (uint i = 0; i < recipients.length; i++) {
-            _mint(recipients[i], _validateId(tokenIdsOrOffsets[i], source), amounts[i], "");
+            _mint(recipients[i], _validateId(tokenIdsOrOffsets[i], sources[i]), amounts[i], "");
         }
     }
 

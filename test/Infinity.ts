@@ -114,7 +114,7 @@ describe('Infinity', () => {
 
     it(`Shouldn't allow minting batches with an invalid deposit`, async () => {
       await expect(contract.generateMany(
-        constants.AddressZero,
+        [constants.AddressZero, constants.AddressZero],
         [addr1.address, addr2.address],
         [2, 2],
         [10, 1],
@@ -125,7 +125,7 @@ describe('Infinity', () => {
 
     it(`Should allow minting and transferring batches`, async () => {
       const tx = await contract.generateMany(
-        constants.AddressZero,
+        [constants.AddressZero, constants.AddressZero, constants.AddressZero],
         [addr4.address, addr4.address, addr5.address],
         [1, 2, 2],
         [10, 10, 1],
@@ -214,7 +214,7 @@ describe('Infinity', () => {
         .withArgs(vv.address, constants.AddressZero, owner.address, 2, 1)
 
       await expect(contract.connect(vv).generateMany(
-        constants.AddressZero,
+        [constants.AddressZero, constants.AddressZero, constants.AddressZero, constants.AddressZero],
         [owner.address, addr1.address, addr2.address, addr3.address],
         [1, 2, 3, 4],
         [1, 1, 1, 1],
@@ -264,7 +264,7 @@ describe('Infinity', () => {
 
     it(`Should allow withdrawing funds for many tokens`, async () => {
       await contract.connect(vv).generateMany(
-        constants.AddressZero,
+        [constants.AddressZero, constants.AddressZero, constants.AddressZero, constants.AddressZero],
         [addr4.address, addr4.address, addr5.address, addr5.address],
         [TOKEN, TOKEN + 1, TOKEN, TOKEN + 1],
         [10, 10, 10, 10],
