@@ -256,7 +256,7 @@ describe('Infinity', () => {
 
     it(`Should allow withdrawing funds with specified token amount`, async () => {
       await contract.connect(vv).generate(constants.AddressZero, addr2.address, TOKEN, '', { value: PRICE.mul(10) })
-      await expect(contract.connect(addr2).degenerate(TOKEN, 50)).to.be.revertedWith(`Can't burn more infinities than owned.`)
+      await expect(contract.connect(addr2).degenerate(TOKEN, 50)).to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
 
       expect(await contract.connect(addr2).degenerate(TOKEN, 5))
         .to.changeEtherBalance(addr2, PRICE.mul(5))

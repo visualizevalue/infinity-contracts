@@ -87,14 +87,39 @@ contract Infinity is ERC1155 {
     /// @param source The address of an existing owner of the new token. 0x0 for new generations.
     /// @param tokenIdOrOffset The token ID to mint, or a random offset to prevent in-block duplicates.
     function regenerate(uint id, uint amount, address source, uint tokenIdOrOffset) public {
-        // Check whether we own at least {amount} of token {id}
-        _checkOwnership(id, amount);
-
         // Execute burn
         _burn(msg.sender, id, amount);
 
         // Mint a new token
         _mint(msg.sender, _validateId(tokenIdOrOffset, source), amount, "");
+    }
+
+    /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
+    /// @param ids The existing token IDs that should be destroyed in the process.
+    /// @param amounts The number of tokens per id to burn / recreate.
+    /// @param sources The addresses of existing owners of new tokens. 0x0 for new mints.
+    /// @param recipients The addresses that should receive the new tokens.
+    /// @param tokenIdsOrOffsets The tokenIDs to mint, or random offsets to prevent in-block duplicates.
+    function regenerateMany(
+        uint[] calldata ids,
+        uint[] calldata amounts,
+        address[] calldata sources,
+        address[] calldata recipients,
+        uint[] calldata tokenIdsOrOffsets
+    ) public payable {
+        require(
+            ids.length == amounts.length &&
+            ids.length == sources.length &&
+            ids.length == recipients.length &&
+            ids.length == tokenIdsOrOffsets.length,
+            "Invalid input"
+        );
+
+        for (uint i = 0; i < recipients.length; i++) {
+            _burn(msg.sender, ids[i], amounts[i]);
+
+            _mint(recipients[i], _validateId(tokenIdsOrOffsets[i], sources[i]), amounts[i], "");
+        }
     }
 
     /// @notice Destroy the token to withdraw its desposited ETH.
@@ -104,9 +129,6 @@ contract Infinity is ERC1155 {
         uint id,
         uint amount
     ) public {
-        // Check whether we own at least {amount} of token {id}
-        _checkOwnership(id, amount);
-
         // Execute burn
         _burn(msg.sender, id, amount);
 
@@ -122,11 +144,6 @@ contract Infinity is ERC1155 {
         uint[] memory amounts
     ) public {
         require(ids.length == amounts.length, "Invalid input.");
-
-        // Check ownership for each token
-        for (uint i = 0; i < ids.length; i++) {
-            _checkOwnership(ids[i], amounts[i]);
-        }
 
         // Execute burn
         _burnBatch(msg.sender, ids, amounts);
@@ -186,11 +203,6 @@ contract Infinity is ERC1155 {
     /// @dev Make a random generative token ID.
     function _randomId() internal view returns (uint) {
         return _randomId(0);
-    }
-
-    /// @dev Check whether the {msg.sender} owns at least {amount} of token {id}
-    function _checkOwnership(uint id, uint amount) internal view {
-        require(balanceOf(msg.sender, id) >= amount, "Can't burn more infinities than owned.");
     }
 
     /// @dev Check whether the deposited Ether is a correct {price} multipe of the token {amount}
