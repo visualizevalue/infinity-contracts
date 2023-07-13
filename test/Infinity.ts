@@ -234,6 +234,8 @@ describe('Infinity', () => {
         { value: PRICE.mul(2) }
       )
 
+      await expect(contract.connect(addr4).regenerate(7, 1, vv.address, 0))
+        .to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
       await expect(contract.connect(addr5).regenerate(7, 5, vv.address, 0))
         .to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
 
@@ -394,6 +396,20 @@ describe('Infinity', () => {
         fs.writeFileSync(`test/dist/${id}.json`, JSON.stringify(metadata, null, 4))
 
         console.log(`Saved metadata for ${id}`)
+
+        id++
+      }
+    })
+
+    it(`Renders token data`, async () => {
+      let id = 0;
+
+      while (id < 3) {
+        const data = await contract.data(id)
+
+        fs.writeFileSync(`test/dist/data-${id}.json`, JSON.stringify(data, null, 4))
+
+        console.log(`Saved data for ${id}`)
 
         id++
       }

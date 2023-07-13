@@ -166,6 +166,12 @@ contract Infinity is ERC1155 {
         return InfiniteMetadata.tokenURI(InfiniteGenerator.tokenData(tokenId));
     }
 
+    /// @notice Return token data for a given ID.
+    /// @param tokenId The token ID to render.
+    function data(uint tokenId) public pure returns (Token memory) {
+        return InfiniteGenerator.tokenData(tokenId);
+    }
+
     /// @notice Supply is (in)finite: (2^256 - 1)^2.
     function totalSupply() public pure returns (uint) { return type(uint).max; }
     function totalSupply(uint) public pure returns (uint) { return type(uint).max; }
