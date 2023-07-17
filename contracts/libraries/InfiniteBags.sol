@@ -20,7 +20,6 @@ struct Token {
     bool continuous;
     bool mapColors;
     bool light;
-    uint[64] formMap;
     Symbol[64] symbols;
 }
 
