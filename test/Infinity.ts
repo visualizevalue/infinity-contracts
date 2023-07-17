@@ -401,20 +401,6 @@ describe('Infinity', () => {
       }
     })
 
-    it(`Renders token data`, async () => {
-      let id = 0;
-
-      while (id < 3) {
-        const data = await contract.data(id)
-
-        fs.writeFileSync(`test/dist/data-${id}.json`, JSON.stringify(data, null, 4))
-
-        console.log(`Saved data for ${id}`)
-
-        id++
-      }
-    })
-
     it(`Renders to PNGs`, async () => {
       await render('test/dist')
     })
