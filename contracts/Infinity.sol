@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+import "./libraries/InfiniteArt.sol";
 import "./libraries/InfiniteBags.sol";
 import "./libraries/InfiniteGenerator.sol";
-import "./libraries/InfiniteArt.sol";
 import "./libraries/InfiniteMetadata.sol";
 
 import "./standards/ERC1155.sol";
