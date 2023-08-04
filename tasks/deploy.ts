@@ -7,3 +7,14 @@ task('deploy', 'Deploys the contracts', async (_, hre) => {
 
   console.log(`Deployed: ${infinity.address}`)
 })
+
+task('verify', 'Verifies the contract')
+  .addParam('address', 'the contract address')
+  .setAction(async ({ address }, hre) => {
+  await hre.run("verify:verify", {
+    address,
+    constructorArguments: [
+      GENESIS_RECIPIENTS,
+    ],
+  })
+})
