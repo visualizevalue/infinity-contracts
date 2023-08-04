@@ -8,13 +8,14 @@ import { arrayify, parseEther } from 'ethers/lib/utils'
 import { impersonate } from './../helpers/impersonate'
 import { deployInfinityWithLibraries } from '../helpers/deploy'
 import { decodeBase64URI } from '../helpers/decode-uri'
-import { VV } from '../helpers/constants'
+import { VV, JALIL } from '../helpers/constants'
 import { render } from '../helpers/render-pngs'
+import GENESIS_RECIPIENTS from '../GENESIS_0_RECIPIENTS.json'
 
 const PRICE = parseEther('0.008')
 
 export const deployContract = async () => {
-  const { infinity: contract } = await deployInfinityWithLibraries(ethers)
+  const { infinity: contract } = await deployInfinityWithLibraries(ethers, [VV, JALIL])
 
   const [ owner, addr1, addr2, addr3, addr4, addr5 ] = await ethers.getSigners()
   const vv = await impersonate(VV, hre)
@@ -54,6 +55,17 @@ describe('Infinity', () => {
 
   it(`Should set the right price`, async () => {
     expect(await contract.price()).to.equal(PRICE)
+  })
+
+  it(`Should allow deploying with genesis token recipients`, async () => {
+    expect(await contract.balanceOf(VV, 0)).to.equal(1)
+    expect(await contract.balanceOf(JALIL, 0)).to.equal(1)
+  })
+
+  it.only(`Should deploy with genesis live token recipients (80)`, async () => {
+    const { infinity: contract } = await deployInfinityWithLibraries(ethers, GENESIS_RECIPIENTS)
+
+    expect(await contract.balanceOf(JALIL, 0)).to.equal(1)
   })
 
   describe(`Generating`, () => {

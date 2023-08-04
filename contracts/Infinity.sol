@@ -26,7 +26,16 @@ contract Infinity is ERC1155 {
     address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
 
     /// @dev Instanciate the contract...
-    constructor() ERC1155() {}
+    constructor(address[] memory genesisRecipients) ERC1155() payable {
+        _checkDeposit(genesisRecipients.length);
+
+        uint count = genesisRecipients.length;
+        for (uint i = 0; i < count;) {
+            _mint(genesisRecipients[i], 0, 1, "");
+
+            unchecked { ++i; }
+        }
+    }
 
     /// @notice Deposit ether, receive random infinities
     receive() external payable {

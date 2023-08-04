@@ -1,4 +1,8 @@
-export const deployInfinityWithLibraries = async (ethers) => {
+import { parseEther } from "ethers/lib/utils"
+
+const PRICE = parseEther('0.008')
+
+export const deployInfinityWithLibraries = async (ethers, genesisRecipients: string[] = []) => {
   const Utilities = await ethers.getContractFactory('Utilities')
   const utilities = await Utilities.deploy()
   await utilities.deployed()
@@ -40,7 +44,7 @@ export const deployInfinityWithLibraries = async (ethers) => {
     }
   })
 
-  const infinity = await Infinity.deploy()
+  const infinity = await Infinity.deploy(genesisRecipients, { value: PRICE.mul(genesisRecipients.length) })
   await infinity.deployed()
   console.log(`     Deployed Infinity at ${infinity.address}`)
 
