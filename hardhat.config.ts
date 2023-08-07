@@ -1,16 +1,17 @@
 import * as dotenv from 'dotenv'
 
 import { HardhatUserConfig } from 'hardhat/config'
-import '@nomiclabs/hardhat-etherscan'
+import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
-import '@openzeppelin/hardhat-upgrades'
 import '@typechain/hardhat'
 import 'hardhat-gas-reporter'
 import 'hardhat-contract-sizer'
 import 'solidity-coverage'
 
+import 'hardhat-deploy'
+import 'hardhat-deploy-ethers'
+
 import './tasks/accounts'
-import './tasks/deploy'
 
 dotenv.config()
 
@@ -33,12 +34,19 @@ const config: HardhatUserConfig = {
       },
     },
   },
+  namedAccounts: {
+    deployer: {
+        default: 0, // first account as deployer
+        // "localhost": '0xC9979381750d5325378CBE36177E7aB037D87CE1',
+        // "goerli": '0xC9979381750d5325378CBE36177E7aB037D87CE1',
+    },
+  },
   networks: {
-    // mainnet: {
-    //   url: process.env.MAINNET_URL || '',
-    //   accounts:
-    //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    // },
+    mainnet: {
+      url: process.env.MAINNET_URL || '',
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     goerli: {
       url: process.env.GOERLI_URL || '',
       accounts:
