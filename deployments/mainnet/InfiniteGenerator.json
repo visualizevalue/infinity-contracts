@@ -1,0 +1,2489 @@
+{
+  "address": "0xb0047233DE84066b491f093380B8ca3CFf4f7333",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "ELEMENTS",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "SHADES",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "allColors",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint16",
+              "name": "h",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "s",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "l",
+              "type": "uint16"
+            },
+            {
+              "internalType": "string",
+              "name": "rendered",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Color[68]",
+          "name": "colors",
+          "type": "tuple[68]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getAlloy",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getBand",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getColorMap",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getColorOptions",
+      "outputs": [
+        {
+          "internalType": "uint256[68]",
+          "name": "options",
+          "type": "uint256[68]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getColors",
+      "outputs": [
+        {
+          "internalType": "uint256[64]",
+          "name": "colorIndexes",
+          "type": "uint256[64]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint16",
+              "name": "h",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "s",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "l",
+              "type": "uint16"
+            },
+            {
+              "internalType": "string",
+              "name": "rendered",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Color[64]",
+          "name": "colors",
+          "type": "tuple[64]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getContinuous",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        }
+      ],
+      "name": "getFormIdx",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getGradient",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        }
+      ],
+      "name": "getGradientColor",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getGrid",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "i",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRandomColor",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "getSymbols",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "form",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint16",
+              "name": "formWidth",
+              "type": "uint16"
+            },
+            {
+              "internalType": "bool",
+              "name": "isInfinity",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "rotation",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "stroke",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "center",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "scale",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "width",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "x",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "y",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "colorIdx",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint16",
+                  "name": "h",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "s",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "l",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rendered",
+                  "type": "string"
+                }
+              ],
+              "internalType": "struct Color",
+              "name": "color",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct Symbol[64]",
+          "name": "symbols",
+          "type": "tuple[64]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[64]",
+          "name": "map",
+          "type": "uint256[64]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "key",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "setGetMap",
+      "outputs": [
+        {
+          "internalType": "uint256[64]",
+          "name": "",
+          "type": "uint256[64]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "n",
+          "type": "uint256"
+        }
+      ],
+      "name": "str",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "background",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "gridColor",
+              "type": "string"
+            },
+            {
+              "internalType": "uint8",
+              "name": "alloy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "grid",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "count",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "band",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "gradient",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "continuous",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "mapColors",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "light",
+              "type": "bool"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "form",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "formWidth",
+                  "type": "uint16"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isInfinity",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "rotation",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "stroke",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "center",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "scale",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "width",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "x",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "y",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "colorIdx",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint16",
+                      "name": "h",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "s",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "l",
+                      "type": "uint16"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "rendered",
+                      "type": "string"
+                    }
+                  ],
+                  "internalType": "struct Color",
+                  "name": "color",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct Symbol[64]",
+              "name": "symbols",
+              "type": "tuple[64]"
+            }
+          ],
+          "internalType": "struct Token",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xb22de24521fb69f9395b895ce7218c4d51d81b967e7a11aa79a3910ff689c98b",
+  "receipt": {
+    "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+    "from": "0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a",
+    "contractAddress": null,
+    "transactionIndex": 149,
+    "gasUsed": "2518135",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x912d6e3c8a70fef2d7dfb8221f5ac36e325da235f1eb3114985721a163175440",
+    "transactionHash": "0xb22de24521fb69f9395b895ce7218c4d51d81b967e7a11aa79a3910ff689c98b",
+    "logs": [],
+    "blockNumber": 17866314,
+    "cumulativeGasUsed": "15310401",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "c3f378ba41e05b92972639af2d777060",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ELEMENTS\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SHADES\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"allColors\",\"outputs\":[{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color[68]\",\"name\":\"colors\",\"type\":\"tuple[68]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getAlloy\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getBand\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getColorMap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getColorOptions\",\"outputs\":[{\"internalType\":\"uint256[68]\",\"name\":\"options\",\"type\":\"uint256[68]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getColors\",\"outputs\":[{\"internalType\":\"uint256[64]\",\"name\":\"colorIndexes\",\"type\":\"uint256[64]\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color[64]\",\"name\":\"colors\",\"type\":\"tuple[64]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getContinuous\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"i\",\"type\":\"uint256\"}],\"name\":\"getFormIdx\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getGradient\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"i\",\"type\":\"uint256\"}],\"name\":\"getGradientColor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getGrid\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"i\",\"type\":\"uint256\"}],\"name\":\"getRandomColor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"name\":\"getSymbols\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[64]\",\"name\":\"map\",\"type\":\"uint256[64]\"},{\"internalType\":\"uint256\",\"name\":\"key\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"setGetMap\",\"outputs\":[{\"internalType\":\"uint256[64]\",\"name\":\"\",\"type\":\"uint256[64]\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"n\",\"type\":\"uint256\"}],\"name\":\"str\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenData\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"seed\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"background\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"gridColor\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"alloy\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"grid\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"count\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"band\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"gradient\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"continuous\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"mapColors\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"light\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"form\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"formWidth\",\"type\":\"uint16\"},{\"internalType\":\"bool\",\"name\":\"isInfinity\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"rotation\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"stroke\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"center\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"scale\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"width\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"x\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"y\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"colorIdx\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint16\",\"name\":\"h\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"s\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"l\",\"type\":\"uint16\"},{\"internalType\":\"string\",\"name\":\"rendered\",\"type\":\"string\"}],\"internalType\":\"struct Color\",\"name\":\"color\",\"type\":\"tuple\"}],\"internalType\":\"struct Symbol[64]\",\"name\":\"symbols\",\"type\":\"tuple[64]\"}],\"internalType\":\"struct Token\",\"name\":\"data\",\"type\":\"tuple\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"VisualizeValue\",\"kind\":\"dev\",\"methods\":{\"allColors()\":{\"details\":\"Get all colors available to choose from.\"},\"getAlloy(Token)\":{\"details\":\"Get the number of distinct elements used. 0 for Isolates.\"},\"getBand(Token)\":{\"details\":\"Define the color band size for a token.\"},\"getColorMap(Token)\":{\"details\":\"Whether to map symbols to colors.\"},\"getColorOptions(Token)\":{\"details\":\"Get the colors to choose from for a given token.\"},\"getColors(Token)\":{\"details\":\"Get the color variations for a specific token. Compute gradients / skittles.\"},\"getContinuous(Token)\":{\"details\":\"Whether color banding is continuous or random. 50/50.\"},\"getFormIdx(Token,uint256)\":{\"details\":\"Get shape of a given symbol of a token.\"},\"getGradient(Token)\":{\"details\":\"Choose a gradient for the token.\"},\"getGradientColor(Token,uint256)\":{\"details\":\"Compute the gradient colors for a gradient token.\"},\"getGrid(Token)\":{\"details\":\"Define the grid for a token.\"},\"getRandomColor(Token,uint256)\":{\"details\":\"Compute colors for a skittle tokens.\"},\"getSymbols(Token)\":{\"details\":\"Get the symbols for all slots on the grid.\"},\"setGetMap(uint256[64],uint256,uint256)\":{\"details\":\"Helper to keep track of a key value store in memory.\"},\"str(uint256)\":{\"details\":\"Uint to string helper.\"},\"tokenData(uint256)\":{\"details\":\"Collect relevant rendering data for easy access across functions.\"}},\"stateVariables\":{\"ELEMENTS\":{\"details\":\"16 distinct colors + void.\"},\"SHADES\":{\"details\":\"Number of shades for each color.\"}},\"title\":\"InfiniteGenerator\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Gathers the data to render Infinity visuals.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/libraries/InfiniteGenerator.sol\":\"InfiniteGenerator\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"contracts/libraries/InfiniteBags.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\n/**\\n@title  InfiniteBags\\n@author VisualizeValue\\n@notice Bags to hold infinity token data. Imo pretty funny...\\n*/\\n\\n/// @dev Bag holding computed token data.\\nstruct Token {\\n    uint seed;\\n    string background;\\n    string gridColor;\\n    uint8 alloy;\\n    uint8 grid;\\n    uint8 count;\\n    uint8 band;\\n    uint8 gradient;\\n    bool continuous;\\n    bool mapColors;\\n    bool light;\\n    Symbol[64] symbols;\\n}\\n\\n/// @dev Bag holding computed symbol data.\\nstruct Symbol {\\n    uint form;\\n    uint16 formWidth;\\n    bool isInfinity;\\n    string rotation;\\n    string stroke;\\n    string center;\\n    string scale;\\n    string width;\\n    string x;\\n    string y;\\n    uint colorIdx;\\n    Color color;\\n}\\n\\n/// @dev Bag holding color data.\\nstruct Color {\\n    uint16 h;\\n    uint16 s;\\n    uint16 l;\\n    string rendered;\\n}\\n\",\"keccak256\":\"0x9851c0b999d3fcda7c07d9ec496c1902ff46a2334ec29fe50c37b1ffbb0b72c1\",\"license\":\"MIT\"},\"contracts/libraries/InfiniteGenerator.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport \\\"./InfiniteBags.sol\\\";\\nimport \\\"./Utilities.sol\\\";\\n\\n/**\\n@title  InfiniteGenerator\\n@author VisualizeValue\\n@notice Gathers the data to render Infinity visuals.\\n*/\\nlibrary InfiniteGenerator {\\n\\n    /// @dev 16 distinct colors + void.\\n    uint8 public constant ELEMENTS = 17;\\n\\n    /// @dev Number of shades for each color.\\n    uint8 public constant SHADES = 4;\\n\\n    /// @dev Collect relevant rendering data for easy access across functions.\\n    function tokenData(uint tokenId) public pure returns (Token memory data) {\\n        data.seed        = tokenId;\\n        data.light       = tokenId % 4096 == 0 ? true : false;\\n        data.background  = data.light == true ? '#FFFFFF' : '#111111';\\n        data.gridColor   = data.light == true ? '#F5F5F5' : '#19181B';\\n        data.grid        = getGrid(data);\\n        data.count       = data.grid ** 2;\\n        data.alloy       = getAlloy(data);\\n        data.band        = getBand(data);\\n        data.continuous  = getContinuous(data);\\n        data.gradient    = getGradient(data);\\n        data.mapColors   = getColorMap(data);\\n        data.symbols     = getSymbols(data);\\n    }\\n\\n    /// @dev Define the grid for a token.\\n    function getGrid(Token memory data) public pure returns (uint8) {\\n        if (data.seed == 0) return 1; // Genesis token override.\\n\\n        uint n = Utilities.random(data.seed, 'grid', 160);\\n\\n        return n <  1 ? 1\\n             : n <  8 ? 2\\n             : n < 32 ? 4\\n                      : 8;\\n    }\\n\\n    /// @dev Define the color band size for a token.\\n    function getBand(Token memory data) public pure returns (uint8) {\\n        // Four times the number of used elements, min 1.\\n        return Utilities.max(data.alloy * SHADES, 1);\\n    }\\n\\n    /// @dev Whether to map symbols to colors.\\n    function getColorMap(Token memory data) public pure returns (bool) {\\n        // 20% for gradients; 8% for skittles.\\n        return data.gradient > 0\\n            ? Utilities.random(data.seed, 'color_map', 100) < 20\\n            : Utilities.random(data.seed, 'color_map', 100) < 8;\\n    }\\n\\n    /// @dev Whether color banding is continuous or random. 50/50.\\n    function getContinuous(Token memory data) public pure returns (bool) {\\n        return Utilities.random(data.seed, 'continuous', 2) < 1;\\n    }\\n\\n    /// @dev Get the number of distinct elements used. 0 for Isolates.\\n    function getAlloy(Token memory data) public pure returns (uint8) {\\n        if (data.grid == 1) return 0;\\n\\n        uint8 n = uint8(Utilities.random(data.seed, 'alloy', 100));\\n\\n        return n >= 56 ? 4 + n % (ELEMENTS - 4) // Complete\\n             : n >= 24 ? 2                     // Compound\\n             : n >=  4 ? 1                    // Composite\\n                       : 0;                  // Isolate\\n    }\\n\\n    /// @dev Choose a gradient for the token.\\n    function getGradient(Token memory data) public pure returns (uint8) {\\n        if (data.grid == 1 || data.alloy == 0) return 0; // No gradients for 1x1 or isolate tokens\\n        if (Utilities.random(data.seed, 'gradient', 10) < 8) return 0; // 80% have no gradient\\n\\n        uint8 options = data.grid == 2 ? 2 : 7;\\n        uint8[7] memory GRADIENTS = data.grid == 2 ? [1, 2, 0, 0, 0, 0, 0]\\n                                  : data.grid == 4 ? [1, 2, 3, 4, 5, 8, 10]\\n                                                   : [1, 2, 4, 7, 8, 9, 16];\\n\\n        return GRADIENTS[Utilities.random(data.seed, 'select_gradient', options)];\\n    }\\n\\n    /// @dev Get the symbols for all slots on the grid.\\n    function getSymbols(Token memory data) public pure returns (Symbol[64] memory symbols) {\\n        uint8[7] memory forms          = [1, 2, 3, 4, 5, 8, 9]; // Seven distinct symbols.\\n        uint8[7] memory rotationCounts = [2, 4, 4, 2, 2, 0, 0]; // How often we rotate.\\n\\n        (uint[64] memory colorIndexes, Color[64] memory colors) = getColors(data);\\n        uint[64] memory formColorMap;\\n\\n        for (uint i = 0; i < data.count; i++) {\\n            symbols[i].colorIdx = colorIndexes[i];\\n            symbols[i].color = colors[i];\\n\\n            uint formIdx = getFormIdx(data, i);\\n            uint form = forms[formIdx];\\n            if (data.mapColors) {\\n                (formColorMap, form) = setGetMap(formColorMap, symbols[i].colorIdx, form);\\n            }\\n            symbols[i].form = form;\\n\\n            symbols[i].isInfinity = symbols[i].form % 2 == 0;\\n            symbols[i].formWidth = symbols[i].isInfinity ? 400 : 200;\\n\\n            uint rotationIncrement = symbols[i].isInfinity ? 45 : 90;\\n            uint rotations = rotationCounts[formIdx] > 0\\n                ? Utilities.random(\\n                    data.seed,\\n                    string.concat('rotation', str(i)),\\n                    rotationCounts[formIdx]\\n                )\\n                : 0;\\n            symbols[i].rotation = str(rotations * rotationIncrement);\\n        }\\n    }\\n\\n    /// @dev Get shape of a given symbol of a token.\\n    function getFormIdx(Token memory data, uint i) public pure returns (uint) {\\n        if (data.seed == 0) return 5; // Genesis token is an infinity flower.\\n\\n        uint random = Utilities.random(data.seed, string.concat('form', str(i)), 10);\\n        if (random == 0) return 0; // 10% Single Loops\\n\\n        uint8[3] memory common = [1, 3, 5]; // Infinities\\n        uint8[3] memory uncommon = [2, 4, 6]; // Loops\\n\\n        uint idx = Utilities.random(data.seed, string.concat('form-idx', str(i)), 3);\\n        return random < 8 ? common[idx] : uncommon[idx];\\n    }\\n\\n    /// @dev Get all colors available to choose from.\\n    function allColors() public pure returns (Color[68] memory colors) {\\n        // One \\\"Void\\\" color with 4 shades.\\n        uint8[4] memory voidLums = [16, 32, 80, 96];\\n        for (uint i = 0; i < SHADES; i++) {\\n            colors[i].h = 270;\\n            colors[i].s = 8;\\n            colors[i].l = voidLums[i];\\n        }\\n\\n        // 16 distinct colors with 4 shades each.\\n        uint8 count = 4*4;\\n        uint16 startHue = 256;\\n        uint8[4] memory lums = [56, 60, 64, 72];\\n        for (uint8 i = 0; i < 16; i++) {\\n            uint16 hue = (startHue + 360 * i / count) % 360;\\n\\n            for(uint8 e = 0; e < 4; e++) {\\n                uint8 idx = 4+i*4+e;\\n                colors[idx].h = hue;\\n                colors[idx].s = 88;\\n                colors[idx].l = lums[e];\\n            }\\n        }\\n    }\\n\\n    /// @dev Get the color variations for a specific token. Compute gradients / skittles.\\n    function getColors(Token memory data) public pure returns (\\n        uint[64] memory colorIndexes,\\n        Color[64] memory colors\\n    ) {\\n        Color[68] memory all = allColors();\\n        uint[68] memory options = getColorOptions(data);\\n        bool reverse = Utilities.random(data.seed, 'reverse', 2) > 0;\\n\\n        for (uint i = 0; i < data.count; i++) {\\n            colorIndexes[i] = (\\n                data.gradient > 0\\n                    ? getGradientColor(data, i)\\n                    : getRandomColor(data, i)\\n            ) % 68;\\n\\n            uint idx = reverse ? data.count - 1 - i : i;\\n\\n            colors[idx] = all[options[colorIndexes[i]]];\\n\\n            // Paradoxical, i know. Opepen your eyes. All one. Common fate.\\n            if (data.light) colors[idx].rendered = '#080808';\\n        }\\n    }\\n\\n    /// @dev Get the colors to choose from for a given token.\\n    function getColorOptions(Token memory data) public pure returns (uint[68] memory options) {\\n        uint count = Utilities.max(1, data.alloy);\\n        for (uint element = 0; element < count; element++) {\\n            uint idx = element * SHADES;\\n\\n            uint chosen = data.continuous && element > 0\\n                // Increment previous by one for a continuous band.\\n                ? (options[idx - 1] / SHADES + 1) % ELEMENTS\\n                // Random selection for hard shifts in color.\\n                : Utilities.random(data.seed, string.concat('element', str(element)), ELEMENTS);\\n\\n            uint chosenIdx = chosen * SHADES;\\n\\n            for (uint shade = 0; shade < SHADES; shade++) {\\n                options[idx + shade] = chosenIdx + shade;\\n            }\\n        }\\n    }\\n\\n    /// @dev Compute the gradient colors for a gradient token.\\n    function getGradientColor(Token memory data, uint i) public pure returns (uint) {\\n        uint offset;\\n        if (data.gradient == 3 || data.gradient == 7) {\\n            // Fix angled gradient y-shift.\\n            offset = data.grid + 1;\\n        }\\n\\n        return ((offset + i) * data.gradient * data.band / data.count) % data.band;\\n    }\\n\\n    /// @dev Compute colors for a skittle tokens.\\n    function getRandomColor(Token memory data, uint i) public pure returns (uint) {\\n        uint8 max = Utilities.max(SHADES, data.band);\\n        string memory key = data.alloy == 0 ? '0' : str(i);\\n        return Utilities.random(data.seed, string.concat('random_color_', key), max);\\n    }\\n\\n    /// @dev Helper to keep track of a key value store in memory.\\n    function setGetMap(\\n        uint[64] memory map, uint key, uint value\\n    ) public pure returns (uint[64] memory, uint) {\\n        uint k = key % 64;\\n\\n        if (map[k] == 0) {\\n            map[k] = value;\\n        }\\n\\n        return (map, map[k]);\\n    }\\n\\n    /// @dev Uint to string helper.\\n    function str(uint n) public pure returns (string memory) {\\n        return Utilities.uint2str(n);\\n    }\\n}\\n\",\"keccak256\":\"0x68430f463036d97d635dab2f3def9861099246cefa2489e664bf80c0c9044794\",\"license\":\"MIT\"},\"contracts/libraries/Utilities.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.17;\\n\\nlibrary Utilities {\\n    /// @dev Zero-index based pseudorandom number based on one input and max bound\\n    function random(uint256 input, uint256 _max) public pure returns (uint256) {\\n        return (uint256(keccak256(abi.encodePacked(input))) % _max);\\n    }\\n\\n    /// @dev Zero-index based salted pseudorandom number based on two inputs and max bound\\n    function random(uint256 input, string memory salt, uint256 _max) public pure returns (uint256) {\\n        return (uint256(keccak256(abi.encodePacked(input, salt))) % _max);\\n    }\\n\\n    /// @dev Convert an integer to a string\\n    function uint2str(uint256 _i) public pure returns (string memory _uintAsString) {\\n        if (_i == 0) {\\n            return \\\"0\\\";\\n        }\\n        uint256 j = _i;\\n        uint256 len;\\n        while (j != 0) {\\n            ++len;\\n            j /= 10;\\n        }\\n        bytes memory bstr = new bytes(len);\\n        uint256 k = len;\\n        while (_i != 0) {\\n            k = k - 1;\\n            uint8 temp = (48 + uint8(_i - (_i / 10) * 10));\\n            bytes1 b1 = bytes1(temp);\\n            bstr[k] = b1;\\n            _i /= 10;\\n        }\\n        return string(bstr);\\n    }\\n\\n    /// @dev Get the smallest non zero number\\n    function minGt0(uint8 one, uint8 two) public pure returns (uint8) {\\n        return one > two\\n            ? two > 0\\n                ? two\\n                : one\\n            : one;\\n    }\\n\\n    /// @dev Get the smaller number\\n    function min(uint8 one, uint8 two) public pure returns (uint8) {\\n        return one < two ? one : two;\\n    }\\n\\n    /// @dev Get the larger number\\n    function max(uint8 one, uint8 two) public pure returns (uint8) {\\n        return one > two ? one : two;\\n    }\\n\\n    /// @dev Get the average between two numbers\\n    function avg(uint8 one, uint8 two) public pure returns (uint8 result) {\\n        unchecked {\\n            result = (one >> 1) + (two >> 1) + (one & two & 1);\\n        }\\n    }\\n\\n    /// @dev Get the days since another date (input is seconds)\\n    function day(uint256 from, uint256 to) public pure returns (uint24) {\\n        return uint24((to - from) / 24 hours + 1);\\n    }\\n}\\n\",\"keccak256\":\"0x529f3946295d83e9961a487a953572220c07f1ab38c53619a5342a3bca957b42\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x612c89610035600b8282823980515f1a60731461002957634e487b7160e01b5f525f60045260245ffd5b305f52607381538281f3fe730000000000000000000000000000000000000000301460806040526004361061013a575f3560e01c806372511838116100b8578063b4b5b48f11610088578063de17d8541161006e578063de17d854146102cc578063e1785c1c146102df578063e6193353146102f2575f80fd5b8063b4b5b48f14610299578063bc4ee12f146102b9575f80fd5b80637251183814610224578063784a7c0a146102445780637e6891bd14610265578063aa28ff2c14610278575f80fd5b80633943d8861161010d578063446ffcf5116100f3578063446ffcf5146101dc5780635b2794bb146101ef57806361c8e6f61461020f575f80fd5b80633943d886146101b45780633d2e8668146101bc575f80fd5b80630c2d27721461013e5780631d31b3e71461016657806320ea794e1461018057806327a3189b146101a1575b5f80fd5b61015161014c366004612220565b610305565b60405190151581526020015b60405180910390f35b61016e601181565b60405160ff909116815260200161015d565b61019361018e366004612252565b61046e565b60405190815260200161015d565b61016e6101af366004612220565b6105ef565b61016e600481565b6101cf6101ca366004612220565b610721565b60405161015d9190612294565b61016e6101ea366004612220565b610942565b6102026101fd366004612220565b6109ed565b60405161015d919061249b565b610217610d68565b60405161015d91906124ad565b6102376102323660046124fa565b610f9a565b60405161015d9190612511565b610257610252366004612523565b61102a565b60405161015d9291906125b7565b610151610273366004612220565b61109c565b61028b610286366004612220565b611117565b60405161015d9291906125d4565b6102ac6102a73660046124fa565b611351565b60405161015d9190612636565b6101936102c7366004612252565b611514565b6101936102da366004612252565b6115a4565b61016e6102ed366004612220565b61179e565b61016e610300366004612220565b611a4d565b5f808260e0015160ff16116103c057815160405163d83f75b560e01b8152600891739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139163d83f75b59161037b91606490600401918252606060208301819052600990830152680636f6c6f725f6d61760bc1b6080830152604082015260a00190565b602060405180830381865af4158015610396573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906103ba919061273e565b10610468565b815160405163d83f75b560e01b8152601491739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139163d83f75b59161042791606490600401918252606060208301819052600990830152680636f6c6f725f6d61760bc1b6080830152604082015260a00190565b602060405180830381865af4158015610442573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610466919061273e565b105b92915050565b60c08201516040516363d6415960e01b815260048082015260ff90911660248201525f908190739a4DCF3Fd4174F8F170F9b31eAf16001529ae613906363d6415990604401602060405180830381865af41580156104ce573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906104f29190612755565b90505f846060015160ff165f146105115761050c84610f9a565b610548565b6040518060400160405280600181526020017f30000000000000000000000000000000000000000000000000000000000000008152505b9050739a4DCF3Fd4174F8F170F9b31eAf16001529ae61363d83f75b5865f0151836040516020016105799190612770565b604051602081830303815290604052856040518463ffffffff1660e01b81526004016105a7939291906127b4565b602060405180830381865af41580156105c2573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906105e6919061273e565b95945050505050565b5f816080015160ff1660010361060657505f919050565b815160405163d83f75b560e01b81525f91739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139163d83f75b591610680916064906004019182526060602083018190526005908301527f616c6c6f790000000000000000000000000000000000000000000000000000006080830152604082015260a00190565b602060405180830381865af415801561069b573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906106bf919061273e565b905060388160ff1610156106f95760188160ff1610156106f25760048160ff1610156106eb575f61071a565b600161071a565b600261071a565b610705600460116127f3565b61070f9082612820565b61071a906004612841565b9392505050565b610729611b49565b60608201516040516363d6415960e01b81526001600482015260ff90911660248201525f90739a4DCF3Fd4174F8F170F9b31eAf16001529ae613906363d6415990604401602060405180830381865af4158015610788573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906107ac9190612755565b60ff1690505f5b8181101561093b575f6107c760048361285a565b90505f85610100015180156107db57505f83115b61088957739a4DCF3Fd4174F8F170F9b31eAf16001529ae61363d83f75b5875f015161080686610f9a565b6040516020016108169190612871565b60405160208183030381529060405260116040518463ffffffff1660e01b8152600401610845939291906127b4565b602060405180830381865af4158015610860573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610884919061273e565b6108cd565b60116004866108996001866128b5565b604481106108a9576108a96128c8565b60200201516108b891906128dc565b6108c39060016128ef565b6108cd9190612902565b90505f6108db60048361285a565b90505f5b6004811015610924576108f281836128ef565b876108fd83876128ef565b6044811061090d5761090d6128c8565b60200201528061091c81612915565b9150506108df565b50505050808061093390612915565b9150506107b3565b5050919050565b5f739a4DCF3Fd4174F8F170F9b31eAf16001529ae6136363d641596004846060015161096e919061292d565b6040517fffffffff0000000000000000000000000000000000000000000000000000000060e084901b16815260ff909116600482015260016024820152604401602060405180830381865af41580156109c9573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906104689190612755565b6109f5611b68565b6040805160e080820183526001825260026020808401829052600384860152600460608086018290526005608080880191909152600860a080890191909152600960c0808a019190915289519788018a528688529487018490529786019290925284018390528301919091525f9382018490528101839052909180610a7986611117565b91509150610a85611b96565b5f5b8760a0015160ff16811015610d5d57838160408110610aa857610aa86128c8565b6020020151878260408110610abf57610abf6128c8565b60200201516101400152828160408110610adb57610adb6128c8565b6020020151878260408110610af257610af26128c8565b602002015161016001525f610b0789836115a4565b90505f878260078110610b1c57610b1c6128c8565b602002015160ff16905089610120015115610b5d57610b57848a8560408110610b4757610b476128c8565b602002015161014001518361102a565b90945090505b80898460408110610b7057610b706128c8565b6020020151526002898460408110610b8a57610b8a6128c8565b602002015151610b9a9190612902565b15898460408110610bad57610bad6128c8565b6020020151901515604091820152899084908110610bcd57610bcd6128c8565b602002015160400151610be15760c8610be5565b6101905b898460408110610bf757610bf76128c8565b6020908102919091015161ffff9092169101525f898460408110610c1d57610c1d6128c8565b602002015160400151610c3157605a610c34565b602d5b60ff1690505f80898560078110610c4d57610c4d6128c8565b602002015160ff1611610c60575f610d1a565b739a4DCF3Fd4174F8F170F9b31eAf16001529ae61363d83f75b58d5f0151610c8788610f9a565b604051602001610c979190612950565b6040516020818303038152906040528c8860078110610cb857610cb86128c8565b60200201516040518463ffffffff1660e01b8152600401610cdb939291906127b4565b602060405180830381865af4158015610cf6573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610d1a919061273e565b9050610d29610232838361285a565b8b8660408110610d3b57610d3b6128c8565b60200201516060015250839250610d559150829050612915565b915050610a87565b505050505050919050565b610d70611bb5565b60408051608081018252601081526020808201526050918101919091526060808201525f5b6004811015610e365761010e838260448110610db357610db36128c8565b602002015161ffff90911690526008838260448110610dd457610dd46128c8565b6020908102919091015161ffff909216910152818160048110610df957610df96128c8565b602002015160ff16838260448110610e1357610e136128c8565b602002015161ffff90911660409091015280610e2e81612915565b915050610d95565b506040805160808101825260388152603c60208201528082019190915260486060820152601090610100905f5b60108160ff161015610f92575f6101688560ff168360ff16610168610e889190612994565b610e9291906129ba565b610e9c90866129da565b610ea691906129f5565b90505f5b60048160ff161015610f7d575f81610ec385600461292d565b610ece906004612841565b610ed89190612841565b905082898260ff1660448110610ef057610ef06128c8565b602002015161ffff909116905260588960ff831660448110610f1457610f146128c8565b6020908102919091015161ffff9092169101528460ff831660048110610f3c57610f3c6128c8565b602002015160ff16898260ff1660448110610f5957610f596128c8565b602002015161ffff9091166040909101525080610f7581612a15565b915050610eaa565b50508080610f8a90612a15565b915050610e63565b505050505090565b6040517ff76f950e00000000000000000000000000000000000000000000000000000000815260048101829052606090739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063f76f950e906024015f60405180830381865af4158015611003573d5f803e3d5ffd5b505050506040513d5f823e601f3d908101601f191682016040526104689190810190612a33565b611032611b96565b5f8061103f604086612902565b9050858160408110611053576110536128c8565b60200201515f036110775783868260408110611071576110716128c8565b60200201525b8586826040811061108a5761108a6128c8565b60200201519250925050935093915050565b805160405163d83f75b560e01b8152600481019190915260606024820152600a60648201527f636f6e74696e756f7573000000000000000000000000000000000000000000006084820152600260448201525f90600190739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063d83f75b59060a401610427565b61111f611b96565b611127611bf9565b5f611130610d68565b90505f61113c85610721565b855160405163d83f75b560e01b8152600481019190915260606024820152600760648201527f72657665727365000000000000000000000000000000000000000000000000006084820152600260448201529091505f908190739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063d83f75b59060a401602060405180830381865af41580156111cf573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906111f3919061273e565b1190505f5b8660a0015160ff168110156113485760445f8860e0015160ff161161122657611221888361046e565b611230565b6112308883611514565b61123a9190612902565b86826040811061124c5761124c6128c8565b60200201525f8261125d578161127c565b8160018960a0015161126f91906127f3565b60ff1661127c91906128b5565b90508484888460408110611292576112926128c8565b6020020151604481106112a7576112a76128c8565b6020020151604481106112bc576112bc6128c8565b60200201518682604081106112d3576112d36128c8565b602002015261014088015115611335576040518060400160405280600781526020017f233038303830380000000000000000000000000000000000000000000000000081525086826040811061132b5761132b6128c8565b6020020151606001525b508061134081612915565b9150506111f8565b50505050915091565b611359611c34565b81815261136861100083612902565b15611373575f611376565b60015b151561014082018190526001146113c2576040518060400160405280600781526020017f23313131313131000000000000000000000000000000000000000000000000008152506113f9565b6040518060400160405280600781526020017f23464646464646000000000000000000000000000000000000000000000000008152505b60208201526101408101511515600114611448576040518060400160405280600781526020017f233139313831420000000000000000000000000000000000000000000000000081525061147f565b6040518060400160405280600781526020017f23463546354635000000000000000000000000000000000000000000000000008152505b604082015261148d81611a4d565b60ff16608082018190526114a390600290612b9f565b60ff1660a08201526114b4816105ef565b60ff1660608201526114c581610942565b60ff1660c08201526114d68161109c565b15156101008201526114e78161179e565b60ff1660e08201526114f881610305565b1515610120820152611509816109ed565b610160820152919050565b5f808360e0015160ff166003148061153357508360e0015160ff166007145b1561154e576080840151611548906001612841565b60ff1690505b60c084015160a085015160e086015160ff928316929182169183911661157487866128ef565b61157e919061285a565b611588919061285a565b61159291906128dc565b61159c9190612902565b949350505050565b81515f9081036115b657506005610468565b5f739a4DCF3Fd4174F8F170F9b31eAf16001529ae61363d83f75b5855f01516115de86610f9a565b6040516020016115ee9190612bb0565b604051602081830303815290604052600a6040518463ffffffff1660e01b815260040161161d93929190612bf4565b602060405180830381865af4158015611638573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061165c919061273e565b9050805f0361166e575f915050610468565b6040805160608082018352600182526003602080840191909152600583850152835191820184526002825260049082015260069281019290925285519091905f90739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063d83f75b5906116d489610f9a565b6040516020016116e49190612c1c565b60405160208183030381529060405260036040518463ffffffff1660e01b815260040161171393929190612bf4565b602060405180830381865af415801561172e573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611752919061273e565b9050600884106117785781816003811061176e5761176e6128c8565b6020020151611790565b82816003811061178a5761178a6128c8565b60200201515b60ff16979650505050505050565b5f816080015160ff16600114806117ba5750606082015160ff16155b156117c657505f919050565b815160405163d83f75b560e01b81526004810191909152606060248201526008606482018190527f6772616469656e740000000000000000000000000000000000000000000000006084830152600a604483015290739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063d83f75b59060a401602060405180830381865af4158015611855573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611879919061273e565b101561188657505f919050565b5f826080015160ff1660021461189d5760076118a0565b60025b90505f836080015160ff1660021461193f57836080015160ff16600414611900576040805160e08101825260018152600260208201526004918101919091526007606082015260086080820152600960a0820152601060c0820152611979565b6040805160e08101825260018152600260208201526003918101919091526004606082015260056080820152600860a0820152600a60c0820152611979565b6040805160e08101825260018152600260208201525f918101829052606081018290526080810182905260a0810182905260c08101919091525b845160405163d83f75b560e01b8152600481019190915260606024820152600f60648201527f73656c6563745f6772616469656e740000000000000000000000000000000000608482015260ff841660448201529091508190739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139063d83f75b59060a401602060405180830381865af4158015611a0c573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611a30919061273e565b60078110611a4057611a406128c8565b6020020151949350505050565b80515f908103611a5f57506001919050565b815160405163d83f75b560e01b81525f91739a4DCF3Fd4174F8F170F9b31eAf16001529ae6139163d83f75b591611ad99160a0906004019182526060602083018190526004908301527f67726964000000000000000000000000000000000000000000000000000000006080830152604082015260a00190565b602060405180830381865af4158015611af4573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611b18919061273e565b905060018110611b4057600881106106f25760208110611b3957600861071a565b600461071a565b60019392505050565b6040518061088001604052806044906020820280368337509192915050565b6040518061080001604052806040905b611b80611c9f565b815260200190600190039081611b785790505090565b6040518061080001604052806040906020820280368337509192915050565b6040518061088001604052806044905b604080516080810182525f80825260208083018290529282015260608082015282525f19909201910181611bc55790505090565b6040805161088081019091525f6108008201818152610820830182905261084083019190915260606108608301528152603f60208201611bc5565b60408051610180810182525f8082526060602083018190529282018390529181018290526080810182905260a0810182905260c0810182905260e08101829052610100810182905261012081018290526101408101919091526101608101611c9a611b68565b905290565b6040518061018001604052805f81526020015f61ffff1681526020015f15158152602001606081526020016060815260200160608152602001606081526020016060815260200160608152602001606081526020015f8152602001611c9a60405180608001604052805f61ffff1681526020015f61ffff1681526020015f61ffff168152602001606081525090565b634e487b7160e01b5f52604160045260245ffd5b604051610180810167ffffffffffffffff81118282101715611d6657611d66611d2e565b60405290565b604051610800810167ffffffffffffffff81118282101715611d6657611d66611d2e565b604051601f8201601f1916810167ffffffffffffffff81118282101715611db957611db9611d2e565b604052919050565b5f67ffffffffffffffff821115611dda57611dda611d2e565b50601f01601f191660200190565b5f82601f830112611df7575f80fd5b8135611e0a611e0582611dc1565b611d90565b818152846020838601011115611e1e575f80fd5b816020850160208301375f918101602001919091529392505050565b60ff81168114611e48575f80fd5b50565b8035611e5681611e3a565b919050565b80358015158114611e56575f80fd5b803561ffff81168114611e56575f80fd5b5f60808284031215611e8b575f80fd5b6040516080810167ffffffffffffffff8282108183111715611eaf57611eaf611d2e565b81604052829350611ebf85611e6a565b8352611ecd60208601611e6a565b6020840152611ede60408601611e6a565b60408401526060850135915080821115611ef6575f80fd5b50611f0385828601611de8565b6060830152505092915050565b5f82601f830112611f1f575f80fd5b611f27611d6c565b80610800840185811115611f39575f80fd5b845b818110156120e857803567ffffffffffffffff80821115611f5b575f8081fd5b90870190610180828a031215611f70575f8081fd5b611f78611d42565b823581526020611f89818501611e6a565b818301526040611f9a818601611e5b565b9083015260608481013584811115611fb1575f8081fd5b611fbd8d828801611de8565b82850152505060808085013584811115611fd6575f8081fd5b611fe28d828801611de8565b82850152505060a08085013584811115611ffb575f8081fd5b6120078d828801611de8565b82850152505060c08085013584811115612020575f8081fd5b61202c8d828801611de8565b82850152505060e08085013584811115612045575f8081fd5b6120518d828801611de8565b828501525050610100808501358481111561206b575f8081fd5b6120778d828801611de8565b8285015250506101208085013584811115612091575f8081fd5b61209d8d828801611de8565b82850152505061014080850135818401525061016080850135848111156120c3575f8081fd5b6120cf8d828801611e7b565b9184019190915250908752909501945050602001611f3b565b509095945050505050565b5f6101808284031215612104575f80fd5b61210c611d42565b905081358152602082013567ffffffffffffffff8082111561212c575f80fd5b61213885838601611de8565b60208401526040840135915080821115612150575f80fd5b61215c85838601611de8565b604084015261216d60608501611e4b565b606084015261217e60808501611e4b565b608084015261218f60a08501611e4b565b60a08401526121a060c08501611e4b565b60c08401526121b160e08501611e4b565b60e084015261010091506121c6828501611e5b565b8284015261012091506121da828501611e5b565b8284015261014091506121ee828501611e5b565b8284015261016091508184013581811115612207575f80fd5b61221386828701611f10565b8385015250505092915050565b5f60208284031215612230575f80fd5b813567ffffffffffffffff811115612246575f80fd5b61159c848285016120f3565b5f8060408385031215612263575f80fd5b823567ffffffffffffffff811115612279575f80fd5b612285858286016120f3565b95602094909401359450505050565b610880810181835f5b60448110156122bc57815183526020928301929091019060010161229d565b50505092915050565b5f5b838110156122df5781810151838201526020016122c7565b50505f910152565b5f81518084526122fe8160208601602086016122c5565b601f01601f19169290920160200192915050565b5f61ffff8083511684528060208401511660208501528060408401511660408501525060608201516080606085015261159c60808501826122e7565b5f826108008101835f5b604080821061236757506120e8565b848403885282516101808151865260208083015161238a8289018261ffff169052565b50828401518015158886015250606093508383015182858901526123b0838901826122e7565b9450506080915081830151878503838901526123cc85826122e7565b94505060a0915081830151878503838901526123e885826122e7565b94505060c09150818301518785038389015261240485826122e7565b94505060e09150818301518785038389015261242085826122e7565b9450506101009150818301518785038389015261243d85826122e7565b9450506101209150818301518785038389015261245a85826122e7565b61014085810151908a015261016094850151898203868b015290955093925061248590508484612312565b9a81019a96509490940193505050600101612358565b602081525f61071a602083018461234e565b60208082525f906108a0830183820185845b60448110156124ee57601f198785030183526124dc848351612312565b935091840191908401906001016124bf565b50919695505050505050565b5f6020828403121561250a575f80fd5b5035919050565b602081525f61071a60208301846122e7565b5f805f6108408486031215612536575f80fd5b84601f850112612544575f80fd5b61254c611d6c565b8061080086018781111561255e575f80fd5b865b81811015612578578035845260209384019301612560565b509097903596506108209590950135949350505050565b805f5b60408110156125b1578151845260209384019390910190600101612592565b50505050565b61082081016125c6828561258f565b826108008301529392505050565b5f6108208083016125e5848761258f565b6108008401919091526110208301845f5b604081101561262a5761081f19868403018452612614838351612312565b60209485019490935091909101906001016125f6565b50909695505050505050565b60208152815160208201525f602083015161018080604085015261265e6101a08501836122e7565b91506040850151601f198086850301606087015261267c84836122e7565b935060608701519150612694608087018360ff169052565b608087015160ff811660a0880152915060a087015160ff811660c0880152915060c087015160ff811660e0880152915060e087015191506101006126dc8188018460ff169052565b87015191506101206126f18782018415159052565b87015191506101406127068782018415159052565b870151915061016061271b8782018415159052565b870151868503909101838701529050612734838261234e565b9695505050505050565b5f6020828403121561274e575f80fd5b5051919050565b5f60208284031215612765575f80fd5b815161071a81611e3a565b7f72616e646f6d5f636f6c6f725f0000000000000000000000000000000000000081525f82516127a781600d8501602087016122c5565b91909101600d0192915050565b838152606060208201525f6127cc60608301856122e7565b905060ff83166040830152949350505050565b634e487b7160e01b5f52601160045260245ffd5b60ff8281168282160390811115610468576104686127df565b634e487b7160e01b5f52601260045260245ffd5b5f60ff8316806128325761283261280c565b8060ff84160691505092915050565b60ff8181168382160190811115610468576104686127df565b8082028115828204841417610468576104686127df565b7f656c656d656e740000000000000000000000000000000000000000000000000081525f82516128a88160078501602087016122c5565b9190910160070192915050565b81810381811115610468576104686127df565b634e487b7160e01b5f52603260045260245ffd5b5f826128ea576128ea61280c565b500490565b80820180821115610468576104686127df565b5f826129105761291061280c565b500690565b5f60018201612926576129266127df565b5060010190565b60ff8181168382160290811690818114612949576129496127df565b5092915050565b7f726f746174696f6e00000000000000000000000000000000000000000000000081525f82516129878160088501602087016122c5565b9190910160080192915050565b61ffff8181168382160280821691908281146129b2576129b26127df565b505092915050565b5f61ffff808416806129ce576129ce61280c565b92169190910492915050565b61ffff818116838216019080821115612949576129496127df565b5f61ffff80841680612a0957612a0961280c565b92169190910692915050565b5f60ff821660ff8103612a2a57612a2a6127df565b60010192915050565b5f60208284031215612a43575f80fd5b815167ffffffffffffffff811115612a59575f80fd5b8201601f81018413612a69575f80fd5b8051612a77611e0582611dc1565b818152856020838501011115612a8b575f80fd5b6105e68260208301602086016122c5565b600181815b80851115612ad6578160ff04821115612abc57612abc6127df565b80851615612ac957918102915b93841c9390800290612aa1565b509250929050565b5f82612aec57506001610468565b81612af857505f610468565b8160018114612b0e5760028114612b1857612b46565b6001915050610468565b60ff841115612b2957612b296127df565b6001841b915060ff821115612b4057612b406127df565b50610468565b5060208310610133831016604e8410600b8410161715612b7a575081810a60ff811115612b7557612b756127df565b610468565b612b848383612a9c565b8060ff04821115612b9757612b976127df565b029392505050565b5f61071a60ff841660ff8416612ade565b7f666f726d0000000000000000000000000000000000000000000000000000000081525f8251612be78160048501602087016122c5565b9190910160040192915050565b838152606060208201525f612c0c60608301856122e7565b9050826040830152949350505050565b7f666f726d2d69647800000000000000000000000000000000000000000000000081525f82516129878160088501602087016122c556fea26469706673582212200a5572018db584672b1a89fc3791f728c2bedd5e1b17b40ac987a062fb6401d664736f6c63430008140033",
+  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040526004361061013a575f3560e01c806372511838116100b8578063b4b5b48f11610088578063de17d8541161006e578063de17d854146102cc578063e1785c1c146102df578063e6193353146102f2575f80fd5b8063b4b5b48f14610299578063bc4ee12f146102b9575f80fd5b80637251183814610224578063784a7c0a146102445780637e6891bd14610265578063aa28ff2c14610278575f80fd5b80633943d8861161010d578063446ffcf5116100f3578063446ffcf5146101dc5780635b2794bb146101ef57806361c8e6f61461020f575f80fd5b80633943d886146101b45780633d2e8668146101bc575f80fd5b80630c2d27721461013e5780631d31b3e71461016657806320ea794e1461018057806327a3189b146101a1575b5f80fd5b61015161014c366004612220565b610305565b60405190151581526020015b60405180910390f35b61016e601181565b60405160ff909116815260200161015d565b61019361018e366004612252565b61046e565b60405190815260200161015d565b61016e6101af366004612220565b6105ef565b61016e600481565b6101cf6101ca366004612220565b610721565b60405161015d9190612294565b61016e6101ea366004612220565b610942565b6102026101fd366004612220565b6109ed565b60405161015d919061249b565b610217610d68565b60405161015d91906124ad565b6102376102323660046124fa565b610f9a565b60405161015d9190612511565b610257610252366004612523565b61102a565b60405161015d9291906125b7565b610151610273366004612220565b61109c565b61028b610286366004612220565b611117565b60405161015d9291906125d4565b6102ac6102a73660046124fa565b611351565b60405161015d9190612636565b6101936102c7366004612252565b611514565b6101936102da366004612252565b6115a4565b61016e6102ed366004612220565b61179e565b61016e610300366004612220565b611a4d565b5f808260e0015160ff16116103c057815160405163d83f75b560e01b815260089173__$bd654521c54dee0917bb5ce7a9c0751ede$__9163d83f75b59161037b91606490600401918252606060208301819052600990830152680636f6c6f725f6d61760bc1b6080830152604082015260a00190565b602060405180830381865af4158015610396573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906103ba919061273e565b10610468565b815160405163d83f75b560e01b815260149173__$bd654521c54dee0917bb5ce7a9c0751ede$__9163d83f75b59161042791606490600401918252606060208301819052600990830152680636f6c6f725f6d61760bc1b6080830152604082015260a00190565b602060405180830381865af4158015610442573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610466919061273e565b105b92915050565b60c08201516040516363d6415960e01b815260048082015260ff90911660248201525f90819073__$bd654521c54dee0917bb5ce7a9c0751ede$__906363d6415990604401602060405180830381865af41580156104ce573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906104f29190612755565b90505f846060015160ff165f146105115761050c84610f9a565b610548565b6040518060400160405280600181526020017f30000000000000000000000000000000000000000000000000000000000000008152505b905073__$bd654521c54dee0917bb5ce7a9c0751ede$__63d83f75b5865f0151836040516020016105799190612770565b604051602081830303815290604052856040518463ffffffff1660e01b81526004016105a7939291906127b4565b602060405180830381865af41580156105c2573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906105e6919061273e565b95945050505050565b5f816080015160ff1660010361060657505f919050565b815160405163d83f75b560e01b81525f9173__$bd654521c54dee0917bb5ce7a9c0751ede$__9163d83f75b591610680916064906004019182526060602083018190526005908301527f616c6c6f790000000000000000000000000000000000000000000000000000006080830152604082015260a00190565b602060405180830381865af415801561069b573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906106bf919061273e565b905060388160ff1610156106f95760188160ff1610156106f25760048160ff1610156106eb575f61071a565b600161071a565b600261071a565b610705600460116127f3565b61070f9082612820565b61071a906004612841565b9392505050565b610729611b49565b60608201516040516363d6415960e01b81526001600482015260ff90911660248201525f9073__$bd654521c54dee0917bb5ce7a9c0751ede$__906363d6415990604401602060405180830381865af4158015610788573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906107ac9190612755565b60ff1690505f5b8181101561093b575f6107c760048361285a565b90505f85610100015180156107db57505f83115b6108895773__$bd654521c54dee0917bb5ce7a9c0751ede$__63d83f75b5875f015161080686610f9a565b6040516020016108169190612871565b60405160208183030381529060405260116040518463ffffffff1660e01b8152600401610845939291906127b4565b602060405180830381865af4158015610860573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610884919061273e565b6108cd565b60116004866108996001866128b5565b604481106108a9576108a96128c8565b60200201516108b891906128dc565b6108c39060016128ef565b6108cd9190612902565b90505f6108db60048361285a565b90505f5b6004811015610924576108f281836128ef565b876108fd83876128ef565b6044811061090d5761090d6128c8565b60200201528061091c81612915565b9150506108df565b50505050808061093390612915565b9150506107b3565b5050919050565b5f73__$bd654521c54dee0917bb5ce7a9c0751ede$__6363d641596004846060015161096e919061292d565b6040517fffffffff0000000000000000000000000000000000000000000000000000000060e084901b16815260ff909116600482015260016024820152604401602060405180830381865af41580156109c9573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906104689190612755565b6109f5611b68565b6040805160e080820183526001825260026020808401829052600384860152600460608086018290526005608080880191909152600860a080890191909152600960c0808a019190915289519788018a528688529487018490529786019290925284018390528301919091525f9382018490528101839052909180610a7986611117565b91509150610a85611b96565b5f5b8760a0015160ff16811015610d5d57838160408110610aa857610aa86128c8565b6020020151878260408110610abf57610abf6128c8565b60200201516101400152828160408110610adb57610adb6128c8565b6020020151878260408110610af257610af26128c8565b602002015161016001525f610b0789836115a4565b90505f878260078110610b1c57610b1c6128c8565b602002015160ff16905089610120015115610b5d57610b57848a8560408110610b4757610b476128c8565b602002015161014001518361102a565b90945090505b80898460408110610b7057610b706128c8565b6020020151526002898460408110610b8a57610b8a6128c8565b602002015151610b9a9190612902565b15898460408110610bad57610bad6128c8565b6020020151901515604091820152899084908110610bcd57610bcd6128c8565b602002015160400151610be15760c8610be5565b6101905b898460408110610bf757610bf76128c8565b6020908102919091015161ffff9092169101525f898460408110610c1d57610c1d6128c8565b602002015160400151610c3157605a610c34565b602d5b60ff1690505f80898560078110610c4d57610c4d6128c8565b602002015160ff1611610c60575f610d1a565b73__$bd654521c54dee0917bb5ce7a9c0751ede$__63d83f75b58d5f0151610c8788610f9a565b604051602001610c979190612950565b6040516020818303038152906040528c8860078110610cb857610cb86128c8565b60200201516040518463ffffffff1660e01b8152600401610cdb939291906127b4565b602060405180830381865af4158015610cf6573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190610d1a919061273e565b9050610d29610232838361285a565b8b8660408110610d3b57610d3b6128c8565b60200201516060015250839250610d559150829050612915565b915050610a87565b505050505050919050565b610d70611bb5565b60408051608081018252601081526020808201526050918101919091526060808201525f5b6004811015610e365761010e838260448110610db357610db36128c8565b602002015161ffff90911690526008838260448110610dd457610dd46128c8565b6020908102919091015161ffff909216910152818160048110610df957610df96128c8565b602002015160ff16838260448110610e1357610e136128c8565b602002015161ffff90911660409091015280610e2e81612915565b915050610d95565b506040805160808101825260388152603c60208201528082019190915260486060820152601090610100905f5b60108160ff161015610f92575f6101688560ff168360ff16610168610e889190612994565b610e9291906129ba565b610e9c90866129da565b610ea691906129f5565b90505f5b60048160ff161015610f7d575f81610ec385600461292d565b610ece906004612841565b610ed89190612841565b905082898260ff1660448110610ef057610ef06128c8565b602002015161ffff909116905260588960ff831660448110610f1457610f146128c8565b6020908102919091015161ffff9092169101528460ff831660048110610f3c57610f3c6128c8565b602002015160ff16898260ff1660448110610f5957610f596128c8565b602002015161ffff9091166040909101525080610f7581612a15565b915050610eaa565b50508080610f8a90612a15565b915050610e63565b505050505090565b6040517ff76f950e0000000000000000000000000000000000000000000000000000000081526004810182905260609073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063f76f950e906024015f60405180830381865af4158015611003573d5f803e3d5ffd5b505050506040513d5f823e601f3d908101601f191682016040526104689190810190612a33565b611032611b96565b5f8061103f604086612902565b9050858160408110611053576110536128c8565b60200201515f036110775783868260408110611071576110716128c8565b60200201525b8586826040811061108a5761108a6128c8565b60200201519250925050935093915050565b805160405163d83f75b560e01b8152600481019190915260606024820152600a60648201527f636f6e74696e756f7573000000000000000000000000000000000000000000006084820152600260448201525f9060019073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063d83f75b59060a401610427565b61111f611b96565b611127611bf9565b5f611130610d68565b90505f61113c85610721565b855160405163d83f75b560e01b8152600481019190915260606024820152600760648201527f72657665727365000000000000000000000000000000000000000000000000006084820152600260448201529091505f90819073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063d83f75b59060a401602060405180830381865af41580156111cf573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906111f3919061273e565b1190505f5b8660a0015160ff168110156113485760445f8860e0015160ff161161122657611221888361046e565b611230565b6112308883611514565b61123a9190612902565b86826040811061124c5761124c6128c8565b60200201525f8261125d578161127c565b8160018960a0015161126f91906127f3565b60ff1661127c91906128b5565b90508484888460408110611292576112926128c8565b6020020151604481106112a7576112a76128c8565b6020020151604481106112bc576112bc6128c8565b60200201518682604081106112d3576112d36128c8565b602002015261014088015115611335576040518060400160405280600781526020017f233038303830380000000000000000000000000000000000000000000000000081525086826040811061132b5761132b6128c8565b6020020151606001525b508061134081612915565b9150506111f8565b50505050915091565b611359611c34565b81815261136861100083612902565b15611373575f611376565b60015b151561014082018190526001146113c2576040518060400160405280600781526020017f23313131313131000000000000000000000000000000000000000000000000008152506113f9565b6040518060400160405280600781526020017f23464646464646000000000000000000000000000000000000000000000000008152505b60208201526101408101511515600114611448576040518060400160405280600781526020017f233139313831420000000000000000000000000000000000000000000000000081525061147f565b6040518060400160405280600781526020017f23463546354635000000000000000000000000000000000000000000000000008152505b604082015261148d81611a4d565b60ff16608082018190526114a390600290612b9f565b60ff1660a08201526114b4816105ef565b60ff1660608201526114c581610942565b60ff1660c08201526114d68161109c565b15156101008201526114e78161179e565b60ff1660e08201526114f881610305565b1515610120820152611509816109ed565b610160820152919050565b5f808360e0015160ff166003148061153357508360e0015160ff166007145b1561154e576080840151611548906001612841565b60ff1690505b60c084015160a085015160e086015160ff928316929182169183911661157487866128ef565b61157e919061285a565b611588919061285a565b61159291906128dc565b61159c9190612902565b949350505050565b81515f9081036115b657506005610468565b5f73__$bd654521c54dee0917bb5ce7a9c0751ede$__63d83f75b5855f01516115de86610f9a565b6040516020016115ee9190612bb0565b604051602081830303815290604052600a6040518463ffffffff1660e01b815260040161161d93929190612bf4565b602060405180830381865af4158015611638573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061165c919061273e565b9050805f0361166e575f915050610468565b6040805160608082018352600182526003602080840191909152600583850152835191820184526002825260049082015260069281019290925285519091905f9073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063d83f75b5906116d489610f9a565b6040516020016116e49190612c1c565b60405160208183030381529060405260036040518463ffffffff1660e01b815260040161171393929190612bf4565b602060405180830381865af415801561172e573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611752919061273e565b9050600884106117785781816003811061176e5761176e6128c8565b6020020151611790565b82816003811061178a5761178a6128c8565b60200201515b60ff16979650505050505050565b5f816080015160ff16600114806117ba5750606082015160ff16155b156117c657505f919050565b815160405163d83f75b560e01b81526004810191909152606060248201526008606482018190527f6772616469656e740000000000000000000000000000000000000000000000006084830152600a60448301529073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063d83f75b59060a401602060405180830381865af4158015611855573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611879919061273e565b101561188657505f919050565b5f826080015160ff1660021461189d5760076118a0565b60025b90505f836080015160ff1660021461193f57836080015160ff16600414611900576040805160e08101825260018152600260208201526004918101919091526007606082015260086080820152600960a0820152601060c0820152611979565b6040805160e08101825260018152600260208201526003918101919091526004606082015260056080820152600860a0820152600a60c0820152611979565b6040805160e08101825260018152600260208201525f918101829052606081018290526080810182905260a0810182905260c08101919091525b845160405163d83f75b560e01b8152600481019190915260606024820152600f60648201527f73656c6563745f6772616469656e740000000000000000000000000000000000608482015260ff84166044820152909150819073__$bd654521c54dee0917bb5ce7a9c0751ede$__9063d83f75b59060a401602060405180830381865af4158015611a0c573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611a30919061273e565b60078110611a4057611a406128c8565b6020020151949350505050565b80515f908103611a5f57506001919050565b815160405163d83f75b560e01b81525f9173__$bd654521c54dee0917bb5ce7a9c0751ede$__9163d83f75b591611ad99160a0906004019182526060602083018190526004908301527f67726964000000000000000000000000000000000000000000000000000000006080830152604082015260a00190565b602060405180830381865af4158015611af4573d5f803e3d5ffd5b505050506040513d601f19601f82011682018060405250810190611b18919061273e565b905060018110611b4057600881106106f25760208110611b3957600861071a565b600461071a565b60019392505050565b6040518061088001604052806044906020820280368337509192915050565b6040518061080001604052806040905b611b80611c9f565b815260200190600190039081611b785790505090565b6040518061080001604052806040906020820280368337509192915050565b6040518061088001604052806044905b604080516080810182525f80825260208083018290529282015260608082015282525f19909201910181611bc55790505090565b6040805161088081019091525f6108008201818152610820830182905261084083019190915260606108608301528152603f60208201611bc5565b60408051610180810182525f8082526060602083018190529282018390529181018290526080810182905260a0810182905260c0810182905260e08101829052610100810182905261012081018290526101408101919091526101608101611c9a611b68565b905290565b6040518061018001604052805f81526020015f61ffff1681526020015f15158152602001606081526020016060815260200160608152602001606081526020016060815260200160608152602001606081526020015f8152602001611c9a60405180608001604052805f61ffff1681526020015f61ffff1681526020015f61ffff168152602001606081525090565b634e487b7160e01b5f52604160045260245ffd5b604051610180810167ffffffffffffffff81118282101715611d6657611d66611d2e565b60405290565b604051610800810167ffffffffffffffff81118282101715611d6657611d66611d2e565b604051601f8201601f1916810167ffffffffffffffff81118282101715611db957611db9611d2e565b604052919050565b5f67ffffffffffffffff821115611dda57611dda611d2e565b50601f01601f191660200190565b5f82601f830112611df7575f80fd5b8135611e0a611e0582611dc1565b611d90565b818152846020838601011115611e1e575f80fd5b816020850160208301375f918101602001919091529392505050565b60ff81168114611e48575f80fd5b50565b8035611e5681611e3a565b919050565b80358015158114611e56575f80fd5b803561ffff81168114611e56575f80fd5b5f60808284031215611e8b575f80fd5b6040516080810167ffffffffffffffff8282108183111715611eaf57611eaf611d2e565b81604052829350611ebf85611e6a565b8352611ecd60208601611e6a565b6020840152611ede60408601611e6a565b60408401526060850135915080821115611ef6575f80fd5b50611f0385828601611de8565b6060830152505092915050565b5f82601f830112611f1f575f80fd5b611f27611d6c565b80610800840185811115611f39575f80fd5b845b818110156120e857803567ffffffffffffffff80821115611f5b575f8081fd5b90870190610180828a031215611f70575f8081fd5b611f78611d42565b823581526020611f89818501611e6a565b818301526040611f9a818601611e5b565b9083015260608481013584811115611fb1575f8081fd5b611fbd8d828801611de8565b82850152505060808085013584811115611fd6575f8081fd5b611fe28d828801611de8565b82850152505060a08085013584811115611ffb575f8081fd5b6120078d828801611de8565b82850152505060c08085013584811115612020575f8081fd5b61202c8d828801611de8565b82850152505060e08085013584811115612045575f8081fd5b6120518d828801611de8565b828501525050610100808501358481111561206b575f8081fd5b6120778d828801611de8565b8285015250506101208085013584811115612091575f8081fd5b61209d8d828801611de8565b82850152505061014080850135818401525061016080850135848111156120c3575f8081fd5b6120cf8d828801611e7b565b9184019190915250908752909501945050602001611f3b565b509095945050505050565b5f6101808284031215612104575f80fd5b61210c611d42565b905081358152602082013567ffffffffffffffff8082111561212c575f80fd5b61213885838601611de8565b60208401526040840135915080821115612150575f80fd5b61215c85838601611de8565b604084015261216d60608501611e4b565b606084015261217e60808501611e4b565b608084015261218f60a08501611e4b565b60a08401526121a060c08501611e4b565b60c08401526121b160e08501611e4b565b60e084015261010091506121c6828501611e5b565b8284015261012091506121da828501611e5b565b8284015261014091506121ee828501611e5b565b8284015261016091508184013581811115612207575f80fd5b61221386828701611f10565b8385015250505092915050565b5f60208284031215612230575f80fd5b813567ffffffffffffffff811115612246575f80fd5b61159c848285016120f3565b5f8060408385031215612263575f80fd5b823567ffffffffffffffff811115612279575f80fd5b612285858286016120f3565b95602094909401359450505050565b610880810181835f5b60448110156122bc57815183526020928301929091019060010161229d565b50505092915050565b5f5b838110156122df5781810151838201526020016122c7565b50505f910152565b5f81518084526122fe8160208601602086016122c5565b601f01601f19169290920160200192915050565b5f61ffff8083511684528060208401511660208501528060408401511660408501525060608201516080606085015261159c60808501826122e7565b5f826108008101835f5b604080821061236757506120e8565b848403885282516101808151865260208083015161238a8289018261ffff169052565b50828401518015158886015250606093508383015182858901526123b0838901826122e7565b9450506080915081830151878503838901526123cc85826122e7565b94505060a0915081830151878503838901526123e885826122e7565b94505060c09150818301518785038389015261240485826122e7565b94505060e09150818301518785038389015261242085826122e7565b9450506101009150818301518785038389015261243d85826122e7565b9450506101209150818301518785038389015261245a85826122e7565b61014085810151908a015261016094850151898203868b015290955093925061248590508484612312565b9a81019a96509490940193505050600101612358565b602081525f61071a602083018461234e565b60208082525f906108a0830183820185845b60448110156124ee57601f198785030183526124dc848351612312565b935091840191908401906001016124bf565b50919695505050505050565b5f6020828403121561250a575f80fd5b5035919050565b602081525f61071a60208301846122e7565b5f805f6108408486031215612536575f80fd5b84601f850112612544575f80fd5b61254c611d6c565b8061080086018781111561255e575f80fd5b865b81811015612578578035845260209384019301612560565b509097903596506108209590950135949350505050565b805f5b60408110156125b1578151845260209384019390910190600101612592565b50505050565b61082081016125c6828561258f565b826108008301529392505050565b5f6108208083016125e5848761258f565b6108008401919091526110208301845f5b604081101561262a5761081f19868403018452612614838351612312565b60209485019490935091909101906001016125f6565b50909695505050505050565b60208152815160208201525f602083015161018080604085015261265e6101a08501836122e7565b91506040850151601f198086850301606087015261267c84836122e7565b935060608701519150612694608087018360ff169052565b608087015160ff811660a0880152915060a087015160ff811660c0880152915060c087015160ff811660e0880152915060e087015191506101006126dc8188018460ff169052565b87015191506101206126f18782018415159052565b87015191506101406127068782018415159052565b870151915061016061271b8782018415159052565b870151868503909101838701529050612734838261234e565b9695505050505050565b5f6020828403121561274e575f80fd5b5051919050565b5f60208284031215612765575f80fd5b815161071a81611e3a565b7f72616e646f6d5f636f6c6f725f0000000000000000000000000000000000000081525f82516127a781600d8501602087016122c5565b91909101600d0192915050565b838152606060208201525f6127cc60608301856122e7565b905060ff83166040830152949350505050565b634e487b7160e01b5f52601160045260245ffd5b60ff8281168282160390811115610468576104686127df565b634e487b7160e01b5f52601260045260245ffd5b5f60ff8316806128325761283261280c565b8060ff84160691505092915050565b60ff8181168382160190811115610468576104686127df565b8082028115828204841417610468576104686127df565b7f656c656d656e740000000000000000000000000000000000000000000000000081525f82516128a88160078501602087016122c5565b9190910160070192915050565b81810381811115610468576104686127df565b634e487b7160e01b5f52603260045260245ffd5b5f826128ea576128ea61280c565b500490565b80820180821115610468576104686127df565b5f826129105761291061280c565b500690565b5f60018201612926576129266127df565b5060010190565b60ff8181168382160290811690818114612949576129496127df565b5092915050565b7f726f746174696f6e00000000000000000000000000000000000000000000000081525f82516129878160088501602087016122c5565b9190910160080192915050565b61ffff8181168382160280821691908281146129b2576129b26127df565b505092915050565b5f61ffff808416806129ce576129ce61280c565b92169190910492915050565b61ffff818116838216019080821115612949576129496127df565b5f61ffff80841680612a0957612a0961280c565b92169190910692915050565b5f60ff821660ff8103612a2a57612a2a6127df565b60010192915050565b5f60208284031215612a43575f80fd5b815167ffffffffffffffff811115612a59575f80fd5b8201601f81018413612a69575f80fd5b8051612a77611e0582611dc1565b818152856020838501011115612a8b575f80fd5b6105e68260208301602086016122c5565b600181815b80851115612ad6578160ff04821115612abc57612abc6127df565b80851615612ac957918102915b93841c9390800290612aa1565b509250929050565b5f82612aec57506001610468565b81612af857505f610468565b8160018114612b0e5760028114612b1857612b46565b6001915050610468565b60ff841115612b2957612b296127df565b6001841b915060ff821115612b4057612b406127df565b50610468565b5060208310610133831016604e8410600b8410161715612b7a575081810a60ff811115612b7557612b756127df565b610468565b612b848383612a9c565b8060ff04821115612b9757612b976127df565b029392505050565b5f61071a60ff841660ff8416612ade565b7f666f726d0000000000000000000000000000000000000000000000000000000081525f8251612be78160048501602087016122c5565b9190910160040192915050565b838152606060208201525f612c0c60608301856122e7565b9050826040830152949350505050565b7f666f726d2d69647800000000000000000000000000000000000000000000000081525f82516129878160088501602087016122c556fea26469706673582212200a5572018db584672b1a89fc3791f728c2bedd5e1b17b40ac987a062fb6401d664736f6c63430008140033",
+  "libraries": {
+    "Utilities": "0x9a4DCF3Fd4174F8F170F9b31eAf16001529ae613"
+  },
+  "devdoc": {
+    "author": "VisualizeValue",
+    "kind": "dev",
+    "methods": {
+      "allColors()": {
+        "details": "Get all colors available to choose from."
+      },
+      "getAlloy(Token)": {
+        "details": "Get the number of distinct elements used. 0 for Isolates."
+      },
+      "getBand(Token)": {
+        "details": "Define the color band size for a token."
+      },
+      "getColorMap(Token)": {
+        "details": "Whether to map symbols to colors."
+      },
+      "getColorOptions(Token)": {
+        "details": "Get the colors to choose from for a given token."
+      },
+      "getColors(Token)": {
+        "details": "Get the color variations for a specific token. Compute gradients / skittles."
+      },
+      "getContinuous(Token)": {
+        "details": "Whether color banding is continuous or random. 50/50."
+      },
+      "getFormIdx(Token,uint256)": {
+        "details": "Get shape of a given symbol of a token."
+      },
+      "getGradient(Token)": {
+        "details": "Choose a gradient for the token."
+      },
+      "getGradientColor(Token,uint256)": {
+        "details": "Compute the gradient colors for a gradient token."
+      },
+      "getGrid(Token)": {
+        "details": "Define the grid for a token."
+      },
+      "getRandomColor(Token,uint256)": {
+        "details": "Compute colors for a skittle tokens."
+      },
+      "getSymbols(Token)": {
+        "details": "Get the symbols for all slots on the grid."
+      },
+      "setGetMap(uint256[64],uint256,uint256)": {
+        "details": "Helper to keep track of a key value store in memory."
+      },
+      "str(uint256)": {
+        "details": "Uint to string helper."
+      },
+      "tokenData(uint256)": {
+        "details": "Collect relevant rendering data for easy access across functions."
+      }
+    },
+    "stateVariables": {
+      "ELEMENTS": {
+        "details": "16 distinct colors + void."
+      },
+      "SHADES": {
+        "details": "Number of shades for each color."
+      }
+    },
+    "title": "InfiniteGenerator",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Gathers the data to render Infinity visuals.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
