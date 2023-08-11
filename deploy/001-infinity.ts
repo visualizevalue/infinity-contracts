@@ -1,8 +1,7 @@
 import {HardhatRuntimeEnvironment} from 'hardhat/types';
 import {DeployFunction} from 'hardhat-deploy/types';
 import GENESIS_RECIPIENTS from '../GENESIS_0_RECIPIENTS.json'
-
-import { parseEther } from "ethers/lib/utils"
+import { parseEther } from 'ethers';
 
 const PRICE = parseEther('0.008')
 
@@ -55,7 +54,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   const { address: infinity } = await deploy('Infinity', {
-    value: PRICE.mul(GENESIS_RECIPIENTS.length),
+    value: (PRICE * BigInt(GENESIS_RECIPIENTS.length)).toString(),
     from: deployer,
     args: [GENESIS_RECIPIENTS],
     libraries: {

@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/BatchSend.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n/// @title Batch send Ether to multiple addresses.\n/// @author jalil.eth & backseats.eth\ncontract BatchSend {\n\n    /// @dev Inform DAPPs of a failed transfer recipient.\n    event FailedTransfer(address indexed recipient, uint256 amount);\n\n    /// @dev Error for bad input.\n    error ArrayLengthMismatch();\n\n    /// @notice Send ether to many addresses.\n    /// @param recipients The addresses that should receive funds.\n    /// @param amounts How much wei to send to each address.\n    function send(\n        address[] calldata recipients,\n        uint256[] calldata amounts\n    ) public payable {\n        uint256 count = recipients.length;\n        if (count != amounts.length) revert ArrayLengthMismatch();\n\n        uint256 failedAmount;\n        for (uint i; i < count;) {\n            (bool success,) = payable(recipients[i]).call{value: amounts[i]}(\"\");\n\n            // Keep track of failed transfers\n            if (!success) {\n                failedAmount += amounts[i];\n\n                emit FailedTransfer(recipients[i], amounts[i]);\n            }\n\n            unchecked { ++i; }\n        }\n\n        // If anything failed to send, refund the msg.sender\n        if (failedAmount > 0) payable(msg.sender).transfer(failedAmount);\n    }\n}\n\n// LGTM\n\n// <3 ty\n\n// anytime man\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 1000
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
