@@ -24,7 +24,6 @@ task('refund-test', 'Refund token holdings and gas spent')
 
   await contract.send(addresses, amounts, {
     value,
-    // maxFeePerGas: 20000000000 // 20 gwei
   })
 
 })
@@ -83,7 +82,6 @@ task('refund', 'Refund token holdings and gas spent')
 
     await contract.send(addresses, amounts, {
       value,
-      // maxFeePerGas: 20000000000 // 20 gwei
     })
   }
 

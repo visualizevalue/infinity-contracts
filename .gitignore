@@ -3,7 +3,6 @@ node_modules
 .env
 coverage
 coverage.json
-typechain
 
 test/dist/*.svg
 test/dist/*.png
@@ -13,6 +12,7 @@ test/dist/*.json
 #Hardhat files
 cache
 artifacts
+typechain-types
 
 # OpenZeppelin
 .openzeppelin/dev-*.json

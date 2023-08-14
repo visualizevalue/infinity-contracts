@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv'
 
-import { HardhatUserConfig } from 'hardhat/config'
-import '@nomiclabs/hardhat-ethers'
-import '@nomiclabs/hardhat-waffle'
-import '@nomiclabs/hardhat-etherscan'
 import '@typechain/hardhat'
+import '@nomicfoundation/hardhat-ethers'
+import '@nomicfoundation/hardhat-chai-matchers'
+import '@nomiclabs/hardhat-etherscan'
+
 import 'hardhat-gas-reporter'
 import 'hardhat-contract-sizer'
 import 'solidity-coverage'
@@ -12,7 +12,6 @@ import 'solidity-coverage'
 import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
 
-// import './tasks/accounts'
 import './tasks/verify'
 import './tasks/refunds'
 
@@ -27,7 +26,7 @@ const HARDHAT_NETWORK_CONFIG = {
   allowUnlimitedContractSize: true,
 }
 
-const config: HardhatUserConfig = {
+const config = {
   solidity: {
     version: "0.8.20",
     settings: {
@@ -40,8 +39,6 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
         default: 0, // first account as deployer
-        // "localhost": '0xC9979381750d5325378CBE36177E7aB037D87CE1',
-        // "goerli": '0xC9979381750d5325378CBE36177E7aB037D87CE1',
     },
   },
   networks: {
