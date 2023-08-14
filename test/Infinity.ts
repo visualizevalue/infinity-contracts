@@ -294,25 +294,11 @@ describe('Infinity', () => {
       await expect(contract.connect(addr5).regenerateMany(
         [9, 10],
         [2, 3],
-        [5],
       )).to.be.revertedWith(`ERC1155: burn amount exceeds balance`)
-
-      await expect(contract.connect(addr5).regenerateMany(
-        [9, 10],
-        [2, 3],
-        [4],
-      )).to.be.revertedWithCustomError(contract, `InvalidInput()`)
-
-      await expect(contract.connect(addr5).regenerateMany(
-        [9, 10],
-        [2, 2],
-        [5],
-      )).to.be.revertedWithCustomError(contract, `InvalidInput()`)
 
       await expect(await contract.connect(addr5).regenerateMany(
         [9, 10],
         [2, 2],
-        [4, 0],
       ))
         .to.emit(contract, 'TransferSingle')
         .withArgs(addr5.address, addr5.address, ZeroAddress, 9, 2)
@@ -324,6 +310,14 @@ describe('Infinity', () => {
       expect(await contract.balanceOf(addr5.address, 10)).to.equal(0)
       // TODO: Check new token balance
     })
+
+    // Exploit test
+    // it.only(`Should not allow regenerating tokens for free`, async () => {
+    //   await expect(contract.regenerateMany(
+    //     [1],
+    //     [0, 1000]
+    //   )).to.be.reverted
+    // })
 
   })
 

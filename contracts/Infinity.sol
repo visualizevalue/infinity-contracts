@@ -141,18 +141,14 @@ contract Infinity is ERC1155 {
 
     /// @notice Create multiple new infinity check tokens and deposit 0.008 ETH in each.
     /// @param ids The existing token IDs that should be destroyed in the process.
-    /// @param degenerateAmounts The number of tokens per id to burn.
-    /// @param amounts The number of tokens per id recreate.
+    /// @param amounts The number of tokens to recreate per id.
     function regenerateMany(
         uint[] calldata ids,
-        uint[] calldata degenerateAmounts,
         uint[] calldata amounts
     ) public payable {
-        if (_totalAmount(degenerateAmounts) != _totalAmount(amounts)) revert InvalidInput();
-
         uint count = ids.length;
         for (uint i = 0; i < count;) {
-            _burn(msg.sender, ids[i], degenerateAmounts[i]);
+            _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
 
             unchecked { ++i; }
@@ -166,8 +162,6 @@ contract Infinity is ERC1155 {
         uint[] memory ids,
         uint[] memory amounts
     ) public {
-        if (ids.length != amounts.length) revert InvalidInput();
-
         // Execute burn
         _burnBatch(msg.sender, ids, amounts);
 
