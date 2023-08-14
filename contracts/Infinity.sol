@@ -8,9 +8,15 @@ import "./libraries/InfiniteMetadata.sol";
 
 import "./standards/ERC1155.sol";
 
+// Contributors:
+//
+// - jalil.eth
+// - backseats.eth
+// - akuti.eth
+// - mousedev.eth
+// - Akshat Mittal <hi@akshatmittal.com>
+//
 /// @title Infinity token contract.
-/// @notice Imo notable.
-/// @author Visualize Value
 contract Infinity is ERC1155 {
 
     /// @notice The name of the collection.
