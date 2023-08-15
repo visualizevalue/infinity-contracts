@@ -9,6 +9,8 @@ test/dist/*.png
 test/dist/pngs/*.png
 test/dist/*.json
 
+deployments/localhost
+
 #Hardhat files
 cache
 artifacts

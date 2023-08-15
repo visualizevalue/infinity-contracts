@@ -10,7 +10,6 @@ import 'hardhat-contract-sizer'
 import 'solidity-coverage'
 
 import 'hardhat-deploy'
-import 'hardhat-deploy-ethers'
 
 import './tasks/verify'
 import './tasks/refunds'

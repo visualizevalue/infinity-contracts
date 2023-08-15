@@ -1,27 +1,26 @@
 import fs from 'fs'
 import { expect } from 'chai'
-import hre, { ethers } from 'hardhat'
-import { loadFixture } from 'ethereum-waffle'
+import hre, { deployments } from 'hardhat'
 import { ZeroAddress, toBeArray, parseEther, ContractTransactionReceipt, BaseContract, LogDescription } from 'ethers'
 import { impersonate } from './../helpers/impersonate'
-import { deployInfinityWithLibraries } from '../helpers/deploy'
 import { decodeBase64URI } from '../helpers/decode-uri'
 import { VV, JALIL } from '../helpers/constants'
 import { render } from '../helpers/render-pngs'
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers'
 import { Infinity } from '../typechain-types'
-import GENESIS_RECIPIENTS from '../GENESIS_0_RECIPIENTS.json'
 
 const PRICE = parseEther('0.008')
 
-export const deployContract = async () => {
-  const { infinity: contract } = await deployInfinityWithLibraries(ethers, [VV, JALIL])
+export const deployContract = deployments.createFixture(async ({deployments, ethers}) => {
+  await deployments.fixture(['Infinity'])
 
+  const Infinity = await deployments.get('Infinity')
+  const contract = await ethers.getContractAt('Infinity', Infinity.address)
   const [ owner, addr1, addr2, addr3, addr4, addr5 ] = await ethers.getSigners()
   const vv = await impersonate(VV, hre)
 
   return { contract, owner, addr1, addr2, addr3, addr4, addr5, vv }
-}
+})
 
 // Helper function to get Transfer event logs from the transaction receipt
 const getLogs = (
@@ -47,12 +46,8 @@ describe('Infinity', () => {
       addr5: SignerWithAddress,
       vv: SignerWithAddress
 
-  const deploy = async () => {
-    ({ contract, owner, addr1, addr2, addr3, addr4, addr5, vv } = await loadFixture(deployContract))
-  }
-
   beforeEach(async () => {
-    await deploy()
+    ({ contract, owner, addr1, addr2, addr3, addr4, addr5, vv } = await deployContract())
   })
 
   it(`Should deploy the contract correctly`, async () => {
@@ -64,14 +59,7 @@ describe('Infinity', () => {
     expect(await contract.price()).to.equal(PRICE)
   })
 
-  it(`Should allow deploying with genesis token recipients`, async () => {
-    expect(await contract.balanceOf(VV, 0)).to.equal(1n)
-    expect(await contract.balanceOf(JALIL, 0)).to.equal(1n)
-  })
-
   it(`Should deploy with genesis live token recipients (80)`, async () => {
-    const { infinity: contract } = await deployInfinityWithLibraries(ethers, GENESIS_RECIPIENTS)
-
     expect(await contract.balanceOf(JALIL, 0)).to.equal(1n)
   })
 

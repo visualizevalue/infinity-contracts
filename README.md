@@ -1,5 +1,10 @@
 # Infinity (NFT)
 
+## setup
+
+1. run `yarn` to install project packages
+2. 
+
 ## intro
 
 > *"ages like 0.008 eth..."*
