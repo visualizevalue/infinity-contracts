@@ -1,17 +1,9 @@
 import * as dotenv from 'dotenv'
 
-import '@typechain/hardhat'
-import '@nomicfoundation/hardhat-ethers'
-import '@nomicfoundation/hardhat-chai-matchers'
-import '@nomiclabs/hardhat-etherscan'
-
-import 'hardhat-gas-reporter'
-import 'hardhat-contract-sizer'
-import 'solidity-coverage'
-
+import "@nomicfoundation/hardhat-toolbox"
+import "hardhat-contract-sizer"
 import 'hardhat-deploy'
 
-import './tasks/verify'
 import './tasks/refunds'
 
 dotenv.config()

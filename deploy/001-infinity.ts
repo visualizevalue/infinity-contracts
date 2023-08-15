@@ -1,6 +1,6 @@
 import {HardhatRuntimeEnvironment} from 'hardhat/types';
 import {DeployFunction} from 'hardhat-deploy/types';
-import GENESIS_RECIPIENTS from '../GENESIS_0_RECIPIENTS.json'
+import GENESIS_RECIPIENTS from '../data/GENESIS_0_RECIPIENTS.json'
 import { parseEther } from 'ethers';
 
 const PRICE = parseEther('0.008')
