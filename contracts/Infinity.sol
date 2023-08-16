@@ -10,11 +10,12 @@ import "./standards/ERC1155.sol";
 
 // Contributors:
 //
-// - jalil.eth
-// - backseats.eth
+// - 0xCygaar
+// - akshatmittal
 // - akuti.eth
-// - mousedev.eth
-// - Akshat Mittal <hi@akshatmittal.com>
+// - backseats.eth
+// - jalil.eth
+// - MouseDev.eth
 //
 /// @title Infinity token contract.
 contract Infinity is ERC1155 {
