@@ -3,7 +3,8 @@
 ## setup
 
 1. run `yarn` to install project packages
-2. 
+2. run any hardhat task via `npx hardhat` or `hh` (if you have the [shorthand](https://hardhat.org/hardhat-runner/docs/guides/command-line-completion) installed)
+3. e.g. run tests via `npx hardhat test`
 
 ## intro
 
