@@ -31,6 +31,21 @@ contract Infinity is ERC1155 {
     /// @dev VV creator account.
     address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
 
+    /// @dev Emitted when minting a token with a message.
+    event Message(address indexed from, address indexed to, uint256 indexed id, string message);
+
+    /// @dev Raised when the user isn't allowed to mint the given token ID.
+    error InvalidToken();
+
+    /// @dev Raised when the user provides inconsistent arguments.
+    error InvalidInput();
+
+    /// @dev Raised when the msg.value does not meet the required amount for the number of tokens minted.
+    error InvalidDesposit();
+
+    /// @dev Raised when refunding the user failed.
+    error FailedSend();
+
     /// @dev Instanciate the contract...
     constructor(address[] memory genesisRecipients) ERC1155() payable {
         _checkDeposit(genesisRecipients.length);

@@ -19,19 +19,6 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     mapping(uint256 => mapping(address => uint256)) private _balances;
 
     /**
-     * @dev Emitted when minting a token with a message.
-     */
-    event Message(address indexed from, address indexed to, uint256 indexed id, string message);
-
-    /**
-     * @dev Custom revert errors.
-     */
-    error InvalidToken();
-    error InvalidInput();
-    error InvalidDesposit();
-    error FailedSend();
-
-    /**
      * @dev See {IERC165-supportsInterface}.
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
