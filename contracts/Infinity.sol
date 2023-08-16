@@ -112,9 +112,11 @@ contract Infinity is ERC1155 {
         address[] calldata recipients,
         uint[] calldata amounts
     ) public payable {
+        uint count = recipients.length;
+
+        _validateCounts(count, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        uint count = recipients.length;
         for (uint i = 0; i < count;) {
             _mint(recipients[i], _randomId(), amounts[i], "");
 
@@ -133,9 +135,11 @@ contract Infinity is ERC1155 {
         uint[] calldata tokenIds,
         uint[] calldata amounts
     ) public payable {
+        uint count = sources.length;
+
+        _validateCounts(count, recipients.length, tokenIds.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        uint count = sources.length;
         for (uint i = 0; i < count;) {
             _validateId(tokenIds[i], sources[i]);
 
@@ -165,8 +169,8 @@ contract Infinity is ERC1155 {
     /// @param ids The tokenIDs to destroy.
     /// @param amounts The amounts to degenerate (withdraws 0.008 ETH per item).
     function degenerateMany(
-        uint[] memory ids,
-        uint[] memory amounts
+        uint[] calldata ids,
+        uint[] calldata amounts
     ) public {
         // Execute burn
         _burnBatch(msg.sender, ids, amounts);
@@ -206,8 +210,24 @@ contract Infinity is ERC1155 {
     function _validateId(uint id, address source) internal view {
         bool minted = balanceOf(source, id) > 0;
 
-        // If it's not already minted piece, or we are not VV, revert.
-        if(! minted && msg.sender != VV) revert InvalidToken();
+        // Continue if the token is already minted, or we are VV.
+        if (minted || msg.sender == VV) return;
+
+        revert InvalidToken();
+    }
+
+    /// @dev Validate that all counts are equal
+    function _validateCounts(uint a, uint b) internal pure {
+        if (a == b) return;
+
+        revert InvalidInput();
+    }
+
+    /// @dev Validate that all counts are equal
+    function _validateCounts(uint a, uint b, uint c, uint d) internal pure {
+        if (a == b && a == c && a == d) return;
+
+        revert InvalidInput();
     }
 
     /// @dev Make a random generative token ID.
@@ -221,15 +241,17 @@ contract Infinity is ERC1155 {
     }
 
     /// @dev Get the sum of all given amounts
-    function _totalAmount(uint[] memory amounts) internal pure returns (uint amount) {
-        for (uint i = 0; i < amounts.length; i++) {
+    function _totalAmount(uint[] calldata amounts) internal pure returns (uint amount) {
+        for (uint i = 0; i < amounts.length;) {
             amount += amounts[i];
+
+            unchecked { ++i; }
         }
     }
 
     /// @dev Send ETH to an address
     function _send(address to, uint value) internal {
-        (bool success, ) = payable(to).call{value: value}("");
+        (bool success, ) = to.call{value: value}("");
         require(success, "Unable to send value, recipient may have reverted");
     }
 

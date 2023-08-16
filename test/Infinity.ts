@@ -143,6 +143,40 @@ describe('Infinity', () => {
         .to.be.revertedWithCustomError(contract, `InvalidDesposit()`)
     })
 
+    it(`Shouldn't let users overpay when generating many`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [10, 1, 1],
+        { value: PRICE * BigInt(12) }
+      ))
+        .to.be.revertedWithCustomError(contract, `InvalidInput()`)
+
+      await contract.connect(vv).generateExisting(ZeroAddress, vv.address, 9, '', { value: PRICE })
+      await expect(contract.connect(addr1).generateManyExisting(
+        [ZeroAddress, ZeroAddress],
+        [addr1.address, addr2.address, addr3.address],
+        [0, 9],
+        [10, 2],
+        { value: PRICE * BigInt(12) }
+      )).to.be.revertedWithCustomError(contract, `InvalidInput()`)
+      await expect(contract.connect(addr1).generateManyExisting(
+        [ZeroAddress, ZeroAddress, ZeroAddress],
+        [addr1.address, addr2.address, addr3.address],
+        [0, 9, 0],
+        [10, 2],
+        { value: PRICE * BigInt(12) }
+      )).to.be.revertedWithCustomError(contract, `InvalidInput()`)
+    })
+
+    it(`Shouldn't let users define more recipients than amounts`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address, addr3.address],
+        [10, 1],
+        { value: PRICE * BigInt(11) }
+      ))
+        .to.be.revertedWithCustomError(contract, `InvalidInput()`)
+    })
+
     it(`Should allow minting and transferring batches`, async () => {
       const tx = await contract.generateMany(
         [addr4.address, addr4.address, addr5.address],
