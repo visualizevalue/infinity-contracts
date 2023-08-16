@@ -20,22 +20,29 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-promise": "^5.2.0",
-    "ethers": "^6.7.0",
+    "ethers": "^6.7.1",
     "hardhat": "^2.17.1",
     "hardhat-contract-sizer": "^2.10.0",
-    "hardhat-deploy": "^0.11.34",
+    "hardhat-deploy": "^0.11.36",
     "hardhat-deploy-ethers": "^0.4.1",
     "hardhat-gas-reporter": "^1.0.9",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.2",
     "prettier-plugin-solidity": "^1.1.3",
     "puppeteer": "^20.7.4",
     "puppeteer-screen-recorder": "^2.1.2",
     "solhint": "^3.4.1",
+    "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.4",
     "ts-node": "^10.9.1",
     "typechain": "^8.3.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "yarn@3.6.1",
+  "dependencies": {
+    "hardhat-sync-selectors": "^1.1.0"
   }
 }

@@ -1,23 +1,29 @@
-import * as dotenv from 'dotenv'
+import * as dotenv from "dotenv";
 
-import "@nomicfoundation/hardhat-toolbox"
-import "hardhat-contract-sizer"
-import 'hardhat-deploy'
+import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-contract-sizer";
+import "hardhat-sync-selectors";
+import "hardhat-deploy";
 
-import './tasks/refunds'
+import { type HardhatUserConfig } from "hardhat/config";
+import { type HardhatNetworkUserConfig } from "hardhat/types";
 
-dotenv.config()
+import "./tasks/refunds";
 
-const HARDHAT_NETWORK_CONFIG = {
+dotenv.config();
+
+const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
   chainId: 1337,
   forking: {
-    url: process.env.MAINNET_URL || '',
+    enabled: !!process.env.MAINNET_URL,
+    url: process.env.MAINNET_URL || "",
     blockNumber: 17593000,
   },
   allowUnlimitedContractSize: true,
-}
+  autoImpersonate: true,
+};
 
-const config = {
+const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.20",
     settings: {
@@ -29,19 +35,17 @@ const config = {
   },
   namedAccounts: {
     deployer: {
-        default: 0, // first account as deployer
+      default: 0, // first account as deployer
     },
   },
   networks: {
     mainnet: {
-      url: process.env.MAINNET_URL || '',
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.MAINNET_URL || "",
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     goerli: {
-      url: process.env.GOERLI_URL || '',
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: process.env.GOERLI_URL || "",
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     localhost: {
       ...HARDHAT_NETWORK_CONFIG,
@@ -51,17 +55,22 @@ const config = {
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-    currency: 'USD',
+    currency: "USD",
     excludeContracts: [
-      '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:ERC721Upgradeable',
-    ]
+      "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:ERC721Upgradeable",
+    ],
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: true,
+    disambiguatePaths: false,
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
   mocha: {
-    timeout: 120_000_000,
+    timeout: 0,
   },
-}
+};
 
-export default config
+export default config;

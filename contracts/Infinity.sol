@@ -18,7 +18,6 @@ import "./standards/ERC1155.sol";
 //
 /// @title Infinity token contract.
 contract Infinity is ERC1155 {
-
     /// @notice The name of the collection.
     string public name = "Infinity";
 
@@ -47,14 +46,16 @@ contract Infinity is ERC1155 {
     error FailedSend();
 
     /// @dev Instanciate the contract...
-    constructor(address[] memory genesisRecipients) ERC1155() payable {
+    constructor(address[] memory genesisRecipients) payable ERC1155() {
         _checkDeposit(genesisRecipients.length);
 
         uint count = genesisRecipients.length;
-        for (uint i = 0; i < count;) {
+        for (uint i = 0; i < count; ) {
             _mint(genesisRecipients[i], 0, 1, "");
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
     }
 
@@ -66,10 +67,7 @@ contract Infinity is ERC1155 {
     /// @notice Create a new infinity check and deposit 0.008 ETH for each token.
     /// @param recipient The address that should receive the token.
     /// @param message Mint the token with an optional message.
-    function generate(
-        address recipient,
-        string calldata message
-    ) public payable {
+    function generate(address recipient, string calldata message) public payable {
         uint tokenId = _randomId();
 
         _generateViaDeposit(recipient, tokenId);
@@ -109,10 +107,7 @@ contract Infinity is ERC1155 {
     /// @notice Destroy the token to withdraw its desposited ETH.
     /// @param id The token ID to destroy.
     /// @param amount The amount to degenerate (withdraws 0.008 ETH per item).
-    function degenerate(
-        uint id,
-        uint amount
-    ) public {
+    function degenerate(uint id, uint amount) public {
         // Execute burn
         _burn(msg.sender, id, amount);
 
@@ -123,19 +118,18 @@ contract Infinity is ERC1155 {
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
     /// @param recipients The addresses that should receive the token.
     /// @param amounts The number of tokens to send to each recipient.
-    function generateMany(
-        address[] calldata recipients,
-        uint[] calldata amounts
-    ) public payable {
+    function generateMany(address[] calldata recipients, uint[] calldata amounts) public payable {
         uint count = recipients.length;
 
         _validateCounts(count, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i = 0; i < count;) {
+        for (uint i = 0; i < count; ) {
             _mint(recipients[i], _randomId(), amounts[i], "");
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
     }
 
@@ -155,38 +149,36 @@ contract Infinity is ERC1155 {
         _validateCounts(count, recipients.length, tokenIds.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i = 0; i < count;) {
+        for (uint i = 0; i < count; ) {
             _validateId(tokenIds[i], sources[i]);
 
             _mint(recipients[i], tokenIds[i], amounts[i], "");
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
     }
 
     /// @notice Create multiple new infinity check tokens and deposit 0.008 ETH in each.
     /// @param ids The existing token IDs that should be destroyed in the process.
     /// @param amounts The number of tokens to recreate per id.
-    function regenerateMany(
-        uint[] calldata ids,
-        uint[] calldata amounts
-    ) public payable {
+    function regenerateMany(uint[] calldata ids, uint[] calldata amounts) public payable {
         uint count = ids.length;
-        for (uint i = 0; i < count;) {
+        for (uint i = 0; i < count; ) {
             _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
     }
 
     /// @notice Degenerate multiple tokens at once.
     /// @param ids The tokenIDs to destroy.
     /// @param amounts The amounts to degenerate (withdraws 0.008 ETH per item).
-    function degenerateMany(
-        uint[] calldata ids,
-        uint[] calldata amounts
-    ) public {
+    function degenerateMany(uint[] calldata ids, uint[] calldata amounts) public {
         // Execute burn
         _burnBatch(msg.sender, ids, amounts);
 
@@ -207,12 +199,17 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Supply is (in)finite: (2^256 - 1)^2.
-    function totalSupply() public pure returns (uint) { return type(uint).max; }
-    function totalSupply(uint) public pure returns (uint) { return type(uint).max; }
+    function totalSupply() public pure returns (uint) {
+        return type(uint).max;
+    }
+
+    function totalSupply(uint) public pure returns (uint) {
+        return type(uint).max;
+    }
 
     /// @dev Mint a token n times, based on the amount of ETH sent.
     function _generateViaDeposit(address recipient, uint tokenId) internal {
-        uint amount  = msg.value / price;
+        uint amount = msg.value / price;
         uint surplus = msg.value % price;
 
         if (amount == 0) revert InvalidDesposit();
@@ -257,16 +254,18 @@ contract Infinity is ERC1155 {
 
     /// @dev Get the sum of all given amounts
     function _totalAmount(uint[] calldata amounts) internal pure returns (uint amount) {
-        for (uint i = 0; i < amounts.length;) {
+        for (uint i = 0; i < amounts.length; ) {
             amount += amounts[i];
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
     }
 
     /// @dev Send ETH to an address
     function _send(address to, uint value) internal {
-        (bool success, ) = to.call{value: value}("");
+        (bool success, ) = to.call{ value: value }("");
 
         if (success) return;
 

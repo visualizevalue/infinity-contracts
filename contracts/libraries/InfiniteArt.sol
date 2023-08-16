@@ -10,9 +10,9 @@ import "./Utilities.sol";
 @notice Renders the Infinity visuals.
 */
 library InfiniteArt {
-
     /// @dev Generate the SVG code for an Infinity token.
     function renderSVG(Token memory data) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">',
                 renderStyle(data),
@@ -31,6 +31,7 @@ library InfiniteArt {
 
     /// @dev Render CSS variables.
     function renderStyle(Token memory data) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<style>',
                 ':root {',
@@ -43,6 +44,7 @@ library InfiniteArt {
 
     /// @dev Render SVG meta defenitions.
     function renderDefs() public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<defs>',
                 '<rect id="box" width="100" height="100" stroke="var(--gr)" stroke-width="3" style="paint-order: stroke;" />'
@@ -65,6 +67,7 @@ library InfiniteArt {
     function renderGrid() public pure returns (string memory) {
         string memory grid;
         for (uint256 i; i < 8; i++) {
+            // prettier-ignore
             grid = string.concat(
                 grid,
                 '<use href="#row" transform="translate(0,', str(i*100), ')" />'
@@ -78,6 +81,7 @@ library InfiniteArt {
     function renderGridRow() public pure returns (string memory) {
         string memory row;
         for (uint256 i; i < 8; i++) {
+            // prettier-ignore
             row = string.concat(
                 row,
                 '<use transform="translate(', str(i*100), ')" href="#box" />'
@@ -88,6 +92,7 @@ library InfiniteArt {
 
     /// @dev Render the noise layer.
     function renderNoise(Token memory data) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<rect mask="url(#mask)" width="800" height="800" fill="black" filter="url(#noise)" ',
                 'style="mix-blend-mode: multiply;" opacity="', data.light ? '0.248"' : '0.8"',
@@ -97,26 +102,24 @@ library InfiniteArt {
 
     /// @dev Generate SVG code for the symbols.
     function renderSymbols(Token memory data) public pure returns (string memory) {
-        uint space  = 800 / data.grid;
+        uint space = 800 / data.grid;
         uint center = space / 4;
-        uint width  = space / 2;
+        uint width = space / 2;
 
         string memory symbols;
         for (uint i = 0; i < data.count; i++) {
             Symbol memory symbol = data.symbols[i];
 
             uint baseStroke = symbol.isInfinity ? 8 : 4;
-            uint stroke = (data.grid < 8 ? baseStroke : baseStroke * 3 / 4) * data.grid / 2;
-            uint scale  = width * 1000 / symbol.formWidth;
+            uint stroke = ((data.grid < 8 ? baseStroke : (baseStroke * 3) / 4) * data.grid) / 2;
+            uint scale = (width * 1000) / symbol.formWidth;
 
-            symbol.x      = str(i % data.grid * space + center);
-            symbol.y      = str(i / data.grid * space + center);
+            symbol.x = str((i % data.grid) * space + center);
+            symbol.y = str((i / data.grid) * space + center);
             symbol.stroke = str(stroke);
             symbol.center = str(center);
-            symbol.width  = str(width);
-            symbol.scale  = scale < 1000
-                ? string.concat('0.', str(scale))
-                : str(scale / 1000);
+            symbol.width = str(width);
+            symbol.scale = scale < 1000 ? string.concat("0.", str(scale)) : str(scale / 1000);
 
             symbols = string.concat(symbols, renderSymbol(symbol));
         }
@@ -126,7 +129,7 @@ library InfiniteArt {
     /// @dev Generate SVG code for the symbols.
     function renderSymbol(Symbol memory symbol) public pure returns (string memory) {
         symbol.color.rendered = renderColor(symbol.color);
-
+        // prettier-ignore
         string memory rendered = symbol.form == 1 ? renderLoop(symbol)
                                : symbol.form == 2 ? renderInfinitySingle(symbol)
                                : symbol.form == 3 ? render90Loop(symbol)
@@ -134,7 +137,7 @@ library InfiniteArt {
                                : symbol.form == 5 ? render180Loop(symbol)
                                : symbol.form == 8 ? renderInfinityCheck(symbol)
                                                   : render360Loop(symbol);
-
+        // prettier-ignore
         return string.concat(
             '<g transform="translate(',symbol.x,',',symbol.y,') rotate(',symbol.rotation,')" ',
                 'transform-origin="',symbol.center,' ',symbol.center,'" ',
@@ -149,11 +152,12 @@ library InfiniteArt {
     function renderColor(Color memory color) public pure returns (string memory) {
         if (bytes(color.rendered).length > 0) return color.rendered;
 
-        return string.concat('hsl(', str(color.h), ' ', str(color.s), '% ', str(color.l), '%)');
+        return string.concat("hsl(", str(color.h), " ", str(color.s), "% ", str(color.l), "%)");
     }
 
     /// @dev Render a single loop symbol.
     function renderLoop(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<use href="#loop" transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '" />'
         );
@@ -161,6 +165,7 @@ library InfiniteArt {
 
     /// @dev Render two loop symbols, one rotated by 90 degrees.
     function render90Loop(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<use href="#loop" />',
@@ -171,6 +176,7 @@ library InfiniteArt {
 
     /// @dev Render two loop symbols, one rotated by 180 degrees.
     function render180Loop(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<use href="#loop" />',
@@ -181,6 +187,7 @@ library InfiniteArt {
 
     /// @dev Render four loop symbols to form a square.
     function render360Loop(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<use href="#loop" />',
@@ -193,6 +200,7 @@ library InfiniteArt {
 
     /// @dev Check: Render a single infinity.
     function renderInfinitySingle(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<g transform="translate(200,200)">'
@@ -204,6 +212,7 @@ library InfiniteArt {
 
     /// @dev Double check: Render an infinity pair.
     function renderInfinityPair(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<g transform="translate(200,200)">'
@@ -216,6 +225,7 @@ library InfiniteArt {
 
     /// @dev Quadruple check: Render an infinity check.
     function renderInfinityCheck(Symbol memory symbol) public pure returns (string memory) {
+        // prettier-ignore
         return string.concat(
             '<g transform="scale(', symbol.scale, ')" stroke="', symbol.color.rendered, '">',
                 '<g transform="translate(200,200)">'

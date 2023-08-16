@@ -10,7 +10,6 @@ import "./Utilities.sol";
 @notice Gathers the data to render Infinity visuals.
 */
 library InfiniteGenerator {
-
     /// @dev 16 distinct colors + void.
     uint8 public constant ELEMENTS = 17;
 
@@ -19,30 +18,27 @@ library InfiniteGenerator {
 
     /// @dev Collect relevant rendering data for easy access across functions.
     function tokenData(uint tokenId) public pure returns (Token memory data) {
-        data.seed        = tokenId;
-        data.light       = tokenId % 4096 == 0 ? true : false;
-        data.background  = data.light == true ? '#FFFFFF' : '#111111';
-        data.gridColor   = data.light == true ? '#F5F5F5' : '#19181B';
-        data.grid        = getGrid(data);
-        data.count       = data.grid ** 2;
-        data.alloy       = getAlloy(data);
-        data.band        = getBand(data);
-        data.continuous  = getContinuous(data);
-        data.gradient    = getGradient(data);
-        data.mapColors   = getColorMap(data);
-        data.symbols     = getSymbols(data);
+        data.seed = tokenId;
+        data.light = tokenId % 4096 == 0 ? true : false;
+        data.background = data.light == true ? "#FFFFFF" : "#111111";
+        data.gridColor = data.light == true ? "#F5F5F5" : "#19181B";
+        data.grid = getGrid(data);
+        data.count = data.grid ** 2;
+        data.alloy = getAlloy(data);
+        data.band = getBand(data);
+        data.continuous = getContinuous(data);
+        data.gradient = getGradient(data);
+        data.mapColors = getColorMap(data);
+        data.symbols = getSymbols(data);
     }
 
     /// @dev Define the grid for a token.
     function getGrid(Token memory data) public pure returns (uint8) {
         if (data.seed == 0) return 1; // Genesis token override.
 
-        uint n = Utilities.random(data.seed, 'grid', 160);
+        uint n = Utilities.random(data.seed, "grid", 160);
 
-        return n <  1 ? 1
-             : n <  8 ? 2
-             : n < 32 ? 4
-                      : 8;
+        return n < 1 ? 1 : n < 8 ? 2 : n < 32 ? 4 : 8;
     }
 
     /// @dev Define the color band size for a token.
@@ -54,44 +50,46 @@ library InfiniteGenerator {
     /// @dev Whether to map symbols to colors.
     function getColorMap(Token memory data) public pure returns (bool) {
         // 20% for gradients; 8% for skittles.
-        return data.gradient > 0
-            ? Utilities.random(data.seed, 'color_map', 100) < 20
-            : Utilities.random(data.seed, 'color_map', 100) < 8;
+        return
+            data.gradient > 0
+                ? Utilities.random(data.seed, "color_map", 100) < 20
+                : Utilities.random(data.seed, "color_map", 100) < 8;
     }
 
     /// @dev Whether color banding is continuous or random. 50/50.
     function getContinuous(Token memory data) public pure returns (bool) {
-        return Utilities.random(data.seed, 'continuous', 2) < 1;
+        return Utilities.random(data.seed, "continuous", 2) < 1;
     }
 
     /// @dev Get the number of distinct elements used. 0 for Isolates.
     function getAlloy(Token memory data) public pure returns (uint8) {
         if (data.grid == 1) return 0;
 
-        uint8 n = uint8(Utilities.random(data.seed, 'alloy', 100));
-
+        uint8 n = uint8(Utilities.random(data.seed, "alloy", 100));
+        // prettier-ignore
         return n >= 56 ? 4 + n % (ELEMENTS - 4) // Complete
              : n >= 24 ? 2                     // Compound
              : n >=  4 ? 1                    // Composite
-                       : 0;                  // Isolate
+                       : 0; // Isolate
     }
 
     /// @dev Choose a gradient for the token.
     function getGradient(Token memory data) public pure returns (uint8) {
         if (data.grid == 1 || data.alloy == 0) return 0; // No gradients for 1x1 or isolate tokens
-        if (Utilities.random(data.seed, 'gradient', 10) < 8) return 0; // 80% have no gradient
+        if (Utilities.random(data.seed, "gradient", 10) < 8) return 0; // 80% have no gradient
 
         uint8 options = data.grid == 2 ? 2 : 7;
+        // prettier-ignore
         uint8[7] memory GRADIENTS = data.grid == 2 ? [1, 2, 0, 0, 0, 0, 0]
                                   : data.grid == 4 ? [1, 2, 3, 4, 5, 8, 10]
-                                                   : [1, 2, 4, 7, 8, 9, 16];
+                                                    : [1, 2, 4, 7, 8, 9, 16];
 
-        return GRADIENTS[Utilities.random(data.seed, 'select_gradient', options)];
+        return GRADIENTS[Utilities.random(data.seed, "select_gradient", options)];
     }
 
     /// @dev Get the symbols for all slots on the grid.
     function getSymbols(Token memory data) public pure returns (Symbol[64] memory symbols) {
-        uint8[7] memory forms          = [1, 2, 3, 4, 5, 8, 9]; // Seven distinct symbols.
+        uint8[7] memory forms = [1, 2, 3, 4, 5, 8, 9]; // Seven distinct symbols.
         uint8[7] memory rotationCounts = [2, 4, 4, 2, 2, 0, 0]; // How often we rotate.
 
         (uint[64] memory colorIndexes, Color[64] memory colors) = getColors(data);
@@ -115,7 +113,7 @@ library InfiniteGenerator {
             uint rotations = rotationCounts[formIdx] > 0
                 ? Utilities.random(
                     data.seed,
-                    string.concat('rotation', str(i)),
+                    string.concat("rotation", str(i)),
                     rotationCounts[formIdx]
                 )
                 : 0;
@@ -127,13 +125,13 @@ library InfiniteGenerator {
     function getFormIdx(Token memory data, uint i) public pure returns (uint) {
         if (data.seed == 0) return 5; // Genesis token is an infinity flower.
 
-        uint random = Utilities.random(data.seed, string.concat('form', str(i)), 10);
+        uint random = Utilities.random(data.seed, string.concat("form", str(i)), 10);
         if (random == 0) return 0; // 10% Single Loops
 
         uint8[3] memory common = [1, 3, 5]; // Infinities
         uint8[3] memory uncommon = [2, 4, 6]; // Loops
 
-        uint idx = Utilities.random(data.seed, string.concat('form-idx', str(i)), 3);
+        uint idx = Utilities.random(data.seed, string.concat("form-idx", str(i)), 3);
         return random < 8 ? common[idx] : uncommon[idx];
     }
 
@@ -148,14 +146,14 @@ library InfiniteGenerator {
         }
 
         // 16 distinct colors with 4 shades each.
-        uint8 count = 4*4;
+        uint8 count = 4 * 4;
         uint16 startHue = 256;
         uint8[4] memory lums = [56, 60, 64, 72];
         for (uint8 i = 0; i < 16; i++) {
-            uint16 hue = (startHue + 360 * i / count) % 360;
+            uint16 hue = (startHue + (360 * i) / count) % 360;
 
-            for(uint8 e = 0; e < 4; e++) {
-                uint8 idx = 4+i*4+e;
+            for (uint8 e = 0; e < 4; e++) {
+                uint8 idx = 4 + i * 4 + e;
                 colors[idx].h = hue;
                 colors[idx].s = 88;
                 colors[idx].l = lums[e];
@@ -164,27 +162,24 @@ library InfiniteGenerator {
     }
 
     /// @dev Get the color variations for a specific token. Compute gradients / skittles.
-    function getColors(Token memory data) public pure returns (
-        uint[64] memory colorIndexes,
-        Color[64] memory colors
-    ) {
+    function getColors(
+        Token memory data
+    ) public pure returns (uint[64] memory colorIndexes, Color[64] memory colors) {
         Color[68] memory all = allColors();
         uint[68] memory options = getColorOptions(data);
-        bool reverse = Utilities.random(data.seed, 'reverse', 2) > 0;
+        bool reverse = Utilities.random(data.seed, "reverse", 2) > 0;
 
         for (uint i = 0; i < data.count; i++) {
-            colorIndexes[i] = (
-                data.gradient > 0
-                    ? getGradientColor(data, i)
-                    : getRandomColor(data, i)
-            ) % 68;
+            colorIndexes[i] =
+                (data.gradient > 0 ? getGradientColor(data, i) : getRandomColor(data, i)) %
+                68;
 
             uint idx = reverse ? data.count - 1 - i : i;
 
             colors[idx] = all[options[colorIndexes[i]]];
 
             // Paradoxical, i know. Opepen your eyes. All one. Common fate.
-            if (data.light) colors[idx].rendered = '#080808';
+            if (data.light) colors[idx].rendered = "#080808";
         }
     }
 
@@ -194,11 +189,9 @@ library InfiniteGenerator {
         for (uint element = 0; element < count; element++) {
             uint idx = element * SHADES;
 
-            uint chosen = data.continuous && element > 0
-                // Increment previous by one for a continuous band.
-                ? (options[idx - 1] / SHADES + 1) % ELEMENTS
-                // Random selection for hard shifts in color.
-                : Utilities.random(data.seed, string.concat('element', str(element)), ELEMENTS);
+            uint chosen = data.continuous && element > 0 // Increment previous by one for a continuous band.
+                ? (options[idx - 1] / SHADES + 1) % ELEMENTS // Random selection for hard shifts in color.
+                : Utilities.random(data.seed, string.concat("element", str(element)), ELEMENTS);
 
             uint chosenIdx = chosen * SHADES;
 
@@ -216,19 +209,21 @@ library InfiniteGenerator {
             offset = data.grid + 1;
         }
 
-        return ((offset + i) * data.gradient * data.band / data.count) % data.band;
+        return (((offset + i) * data.gradient * data.band) / data.count) % data.band;
     }
 
     /// @dev Compute colors for a skittle tokens.
     function getRandomColor(Token memory data, uint i) public pure returns (uint) {
         uint8 max = Utilities.max(SHADES, data.band);
-        string memory key = data.alloy == 0 ? '0' : str(i);
-        return Utilities.random(data.seed, string.concat('random_color_', key), max);
+        string memory key = data.alloy == 0 ? "0" : str(i);
+        return Utilities.random(data.seed, string.concat("random_color_", key), max);
     }
 
     /// @dev Helper to keep track of a key value store in memory.
     function setGetMap(
-        uint[64] memory map, uint key, uint value
+        uint[64] memory map,
+        uint key,
+        uint value
     ) public pure returns (uint[64] memory, uint) {
         uint k = key % 64;
 
