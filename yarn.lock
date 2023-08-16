@@ -4863,15 +4863,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-sync-selectors@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "hardhat-sync-selectors@npm:1.1.0"
-  peerDependencies:
-    hardhat: ^2.0.0
-  checksum: 7266a61a6a8a00d2196a26e738da2c52111fdeda6b0733ae450f880a3442848dffd68a026f8d6aca2fbd5f123380b642fb209dc410898d92eca8d22ae12b94cb
-  languageName: node
-  linkType: hard
-
 "hardhat@npm:^2.17.1":
   version: 2.17.1
   resolution: "hardhat@npm:2.17.1"
@@ -5280,7 +5271,6 @@ __metadata:
     hardhat-deploy: ^0.11.36
     hardhat-deploy-ethers: ^0.4.1
     hardhat-gas-reporter: ^1.0.9
-    hardhat-sync-selectors: ^1.1.0
     prettier: ^3.0.2
     prettier-plugin-solidity: ^1.1.3
     puppeteer: ^20.7.4

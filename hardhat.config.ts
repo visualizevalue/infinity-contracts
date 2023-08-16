@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-contract-sizer";
-import "hardhat-sync-selectors";
 import "hardhat-deploy";
 
 import { type HardhatUserConfig } from "hardhat/config";
@@ -31,6 +30,10 @@ const config: HardhatUserConfig = {
         enabled: true,
         runs: 1000,
       },
+      metadata: {
+        bytecodeHash: "none",
+      },
+      viaIR: true,
     },
   },
   namedAccounts: {

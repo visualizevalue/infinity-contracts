@@ -41,8 +41,5 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "yarn@3.6.1",
-  "dependencies": {
-    "hardhat-sync-selectors": "^1.1.0"
-  }
+  "packageManager": "yarn@3.6.1"
 }
