@@ -252,7 +252,10 @@ contract Infinity is ERC1155 {
     /// @dev Send ETH to an address
     function _send(address to, uint value) internal {
         (bool success, ) = to.call{value: value}("");
-        require(success, "Unable to send value, recipient may have reverted");
+
+        if (success) return;
+
+        revert FailedSend();
     }
 
     /// @dev Emit a mint message, if provided

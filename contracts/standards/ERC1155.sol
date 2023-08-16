@@ -29,6 +29,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     error InvalidToken();
     error InvalidInput();
     error InvalidDesposit();
+    error FailedSend();
 
     /**
      * @dev See {IERC165-supportsInterface}.
