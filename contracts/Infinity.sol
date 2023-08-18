@@ -132,6 +132,8 @@ contract Infinity is ERC1155 {
         _checkDeposit(_totalAmount(amounts));
 
         for (uint i; i < recipients.length;) {
+            _validateAmount(amounts[i]);
+
             _mint(recipients[i], _randomId(), amounts[i], "");
 
             unchecked { ++i; }
@@ -154,6 +156,7 @@ contract Infinity is ERC1155 {
 
         for (uint i; i < sources.length;) {
             _validateId(ids[i], sources[i]);
+            _validateAmount(amounts[i]);
 
             _mint(recipients[i], ids[i], amounts[i], "");
 
@@ -171,6 +174,8 @@ contract Infinity is ERC1155 {
         _validateCounts(ids.length, amounts.length);
 
         for (uint i; i < ids.length;) {
+            _validateAmount(amounts[i]);
+
             _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
 
@@ -242,6 +247,13 @@ contract Infinity is ERC1155 {
     /// @dev Validate that all four counts are equal.
     function _validateCounts(uint a, uint b, uint c, uint d) internal pure {
         if (a == b && a == c && a == d) return;
+
+        revert InvalidInput();
+    }
+
+    /// @dev Validate that at least one token is interacted with.
+    function _validateAmount(uint amount) internal pure {
+        if (amount > 0) return;
 
         revert InvalidInput();
     }
