@@ -49,3 +49,9 @@ infinities are to be collected, not traded on marketplaces. there is zero cost b
 
 programmability still exists, by utilizing the onReceive hooks outlined in the [EIP](https://eips.ethereum.org/EIPS/eip-1155) (contracts can run arbitrary logic when being sent infinity tokens).
 
+
+## deployment
+
+- salt: `0x5d41dbb04825b039a98d9169dbfc569f510c6e25f4995cb6822e4015f13fd716`; final address: `0x000D39614481839520901aF2eC5bB81F87888888`
+- salt: `0x3997c69a39dd451b5503e35287918552c9384b529b80b77476919bfe2def4f36`; final address: `0x0000943A32B3902d5e6C9aF906009c0024148888`
+

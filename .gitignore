@@ -9,6 +9,7 @@ test/dist/*.png
 test/dist/pngs/*.png
 test/dist/*.json
 
+deployments/hardhat
 deployments/localhost
 
 #Hardhat files

@@ -5,6 +5,7 @@ import "hardhat-contract-sizer"
 import 'hardhat-deploy'
 
 import './tasks/refunds'
+import './tasks/find-seed'
 
 dotenv.config()
 

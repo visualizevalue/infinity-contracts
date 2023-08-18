@@ -5,8 +5,11 @@ import { parseEther } from 'ethers';
 
 const PRICE = parseEther('0.008')
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-	const {deployments, getNamedAccounts} = hre;
+export const deployWithLibraries = async (
+  hre: HardhatRuntimeEnvironment,
+  salt: string = '0x3997c69a39dd451b5503e35287918552c9384b529b80b77476919bfe2def4f36'
+) => {
+  const {deployments, getNamedAccounts} = hre;
 	const {deploy} = deployments;
 
 	const {deployer} = await getNamedAccounts();
@@ -16,7 +19,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 		args: [],
 		log: true,
 		autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    deterministicDeployment: '0x01',
+    deterministicDeployment: '0x00',
 	});
 
   const { address: infiniteGeneratorAddress } = await deploy('InfiniteGenerator', {
@@ -27,7 +30,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     },
     log: true,
     autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    deterministicDeployment: '0x01',
+    deterministicDeployment: '0x00',
   })
 
   const { address: infiniteArtAddress } = await deploy('InfiniteArt', {
@@ -38,7 +41,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     },
     log: true,
     autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    deterministicDeployment: '0x01',
+    deterministicDeployment: '0x00',
   })
 
   const { address: infiniteMetadataAddress } = await deploy('InfiniteMetadata', {
@@ -50,10 +53,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     },
     log: true,
     autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    deterministicDeployment: '0x01',
+    deterministicDeployment: '0x00',
   })
 
-  await deploy('Infinity', {
+  const { address: infinityAddress } = await deploy('Infinity', {
     value: (PRICE * BigInt(GENESIS_RECIPIENTS.length)).toString(),
     from: deployer,
     args: [GENESIS_RECIPIENTS],
@@ -64,9 +67,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     },
     log: true,
     autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    deterministicDeployment: `0x0461`,
+    deterministicDeployment: salt,
   })
 
+  return {
+    utilitiesAddress,
+    infiniteGeneratorAddress,
+    infiniteArtAddress,
+    infiniteMetadataAddress,
+    infinityAddress,
+  }
+}
+
+const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  await deployWithLibraries(hre)
 };
 
 export default func;
