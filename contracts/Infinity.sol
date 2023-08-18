@@ -168,6 +168,8 @@ contract Infinity is ERC1155 {
         uint[] calldata ids,
         uint[] calldata amounts
     ) public payable {
+        _validateCounts(ids.length, amounts.length);
+
         for (uint i; i < ids.length;) {
             _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
