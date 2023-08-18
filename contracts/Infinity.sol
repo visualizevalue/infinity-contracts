@@ -52,8 +52,7 @@ contract Infinity is ERC1155 {
     constructor(address[] memory genesisRecipients) ERC1155() payable {
         _checkDeposit(genesisRecipients.length);
 
-        uint count = genesisRecipients.length;
-        for (uint i; i < count;) {
+        for (uint i; i < genesisRecipients.length;) {
             _mint(genesisRecipients[i], 0, 1, "");
 
             unchecked { ++i; }
@@ -129,12 +128,10 @@ contract Infinity is ERC1155 {
         address[] calldata recipients,
         uint[] calldata amounts
     ) public payable {
-        uint count = recipients.length;
-
-        _validateCounts(count, amounts.length);
+        _validateCounts(recipients.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i; i < count;) {
+        for (uint i; i < recipients.length;) {
             _mint(recipients[i], _randomId(), amounts[i], "");
 
             unchecked { ++i; }
@@ -152,12 +149,10 @@ contract Infinity is ERC1155 {
         uint[] calldata ids,
         uint[] calldata amounts
     ) public payable {
-        uint count = sources.length;
-
-        _validateCounts(count, recipients.length, ids.length, amounts.length);
+        _validateCounts(sources.length, recipients.length, ids.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i; i < count;) {
+        for (uint i; i < sources.length;) {
             _validateId(ids[i], sources[i]);
 
             _mint(recipients[i], ids[i], amounts[i], "");
@@ -173,8 +168,7 @@ contract Infinity is ERC1155 {
         uint[] calldata ids,
         uint[] calldata amounts
     ) public payable {
-        uint count = ids.length;
-        for (uint i; i < count;) {
+        for (uint i; i < ids.length;) {
             _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
 
@@ -268,7 +262,7 @@ contract Infinity is ERC1155 {
 
     /// @dev Send ETH to an address
     function _send(address to, uint value) internal {
-        (bool success, ) = to.call{value: value}("");
+        (bool success,) = to.call{ value: value }("");
 
         if (success) return;
 
