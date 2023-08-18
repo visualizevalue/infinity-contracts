@@ -185,6 +185,9 @@ contract Infinity is ERC1155 {
         uint[] calldata ids,
         uint[] calldata amounts
     ) public {
+        // Ensure sound input
+        _validateCounts(ids.length, amounts.length);
+
         // Execute burn
         _burnBatch(msg.sender, ids, amounts);
 
