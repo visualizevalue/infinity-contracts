@@ -16,6 +16,7 @@ import "./standards/ERC1155.sol";
 // - backseats.eth
 // - jalil.eth
 // - MouseDev.eth
+// - tomhirst.eth
 //
 /// @title Infinity token contract.
 contract Infinity is ERC1155 {
@@ -52,7 +53,7 @@ contract Infinity is ERC1155 {
         _checkDeposit(genesisRecipients.length);
 
         uint count = genesisRecipients.length;
-        for (uint i = 0; i < count;) {
+        for (uint i; i < count;) {
             _mint(genesisRecipients[i], 0, 1, "");
 
             unchecked { ++i; }
@@ -133,7 +134,7 @@ contract Infinity is ERC1155 {
         _validateCounts(count, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i = 0; i < count;) {
+        for (uint i; i < count;) {
             _mint(recipients[i], _randomId(), amounts[i], "");
 
             unchecked { ++i; }
@@ -156,7 +157,7 @@ contract Infinity is ERC1155 {
         _validateCounts(count, recipients.length, tokenIds.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i = 0; i < count;) {
+        for (uint i; i < count;) {
             _validateId(tokenIds[i], sources[i]);
 
             _mint(recipients[i], tokenIds[i], amounts[i], "");
@@ -173,7 +174,7 @@ contract Infinity is ERC1155 {
         uint[] calldata amounts
     ) public payable {
         uint count = ids.length;
-        for (uint i = 0; i < count;) {
+        for (uint i; i < count;) {
             _burn(msg.sender, ids[i], amounts[i]);
             _mint(msg.sender, _randomId(), amounts[i], "");
 
@@ -258,7 +259,7 @@ contract Infinity is ERC1155 {
 
     /// @dev Get the sum of all given amounts
     function _totalAmount(uint[] calldata amounts) internal pure returns (uint amount) {
-        for (uint i = 0; i < amounts.length;) {
+        for (uint i; i < amounts.length;) {
             amount += amounts[i];
 
             unchecked { ++i; }
