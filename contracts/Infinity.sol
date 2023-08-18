@@ -22,13 +22,13 @@ import "./standards/ERC1155.sol";
 contract Infinity is ERC1155 {
 
     /// @notice The name of the collection.
-    string public name = "Infinity";
+    string public constant name = "Infinity";
 
     /// @notice The symbol of the collection.
-    string public symbol = unicode"∞";
+    string public constant symbol = unicode"∞";
 
     /// @notice The price of an infinity token.
-    uint public price = 0.008 ether;
+    uint public constant PRICE = 0.008 ether;
 
     /// @dev VV creator account.
     address private constant VV = 0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a;
@@ -119,7 +119,7 @@ contract Infinity is ERC1155 {
         _burn(msg.sender, id, amount);
 
         // Withdraw funds
-        _send(msg.sender, amount * price);
+        _send(msg.sender, amount * PRICE);
     }
 
     /// @notice Create multiple infinity check tokens and deposit 0.008 ETH in each.
@@ -193,7 +193,7 @@ contract Infinity is ERC1155 {
         _burnBatch(msg.sender, ids, amounts);
 
         // Withdraw funds
-        _send(msg.sender, _totalAmount(amounts) * price);
+        _send(msg.sender, _totalAmount(amounts) * PRICE);
     }
 
     /// @notice Render SVG of the token.
@@ -214,8 +214,8 @@ contract Infinity is ERC1155 {
 
     /// @dev Mint a token n times, based on the amount of ETH sent.
     function _generateViaDeposit(address recipient, uint id) internal {
-        uint amount  = msg.value / price;
-        uint surplus = msg.value % price;
+        uint amount  = msg.value / PRICE;
+        uint surplus = msg.value % PRICE;
 
         if (amount == 0) revert InvalidDesposit();
 
@@ -252,9 +252,9 @@ contract Infinity is ERC1155 {
         return uint(keccak256(abi.encodePacked(block.prevrandao, msg.sender, gasleft())));
     }
 
-    /// @dev Check whether the deposited Ether is a correct {price} multipe of the token {amount}
+    /// @dev Check whether the deposited Ether is a correct {PRICE} multipe of the token {amount}
     function _checkDeposit(uint amount) internal {
-        if (msg.value != amount * price) revert InvalidDesposit();
+        if (msg.value != amount * PRICE) revert InvalidDesposit();
     }
 
     /// @dev Get the sum of all given amounts

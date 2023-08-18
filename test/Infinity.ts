@@ -56,7 +56,7 @@ describe('Infinity', () => {
   })
 
   it(`Should set the right price`, async () => {
-    expect(await contract.price()).to.equal(PRICE)
+    expect(await contract.PRICE()).to.equal(PRICE)
   })
 
   it(`Should deploy with genesis live token recipients (80)`, async () => {
