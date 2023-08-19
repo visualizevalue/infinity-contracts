@@ -14,6 +14,7 @@ import "./standards/ERC1155.sol";
 // - akshatmittal
 // - akuti.eth
 // - backseats.eth
+// - digitaloil.eth
 // - jalil.eth
 // - MouseDev.eth
 // - tomhirst.eth
@@ -224,7 +225,7 @@ contract Infinity is ERC1155 {
         if (amount == 0) revert InvalidDesposit();
 
         _mint(recipient, id, amount, "");
-        _send(recipient, surplus);
+        _send(msg.sender, surplus);
     }
 
     /// @dev Make sure the token exists or VV is the minter.
