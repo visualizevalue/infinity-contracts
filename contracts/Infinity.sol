@@ -10,6 +10,7 @@ import "./standards/ERC1155.sol";
 
 // Contributors:
 //
+// - 0x0000G
 // - 0xCygaar
 // - akshatmittal
 // - akuti.eth

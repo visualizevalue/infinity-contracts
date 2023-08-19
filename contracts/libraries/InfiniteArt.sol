@@ -17,7 +17,7 @@ library InfiniteArt {
             '<svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">',
                 renderStyle(data),
                 renderDefs(),
-                '<rect width="800" height="800" fill="var(--bg)" />',
+                '<rect width="800" height="800" fill="var(--infinity-background)" />',
                 '<g transform="scale(0.95)" transform-origin="center">',
                     renderGrid(),
                 '</g>',
@@ -34,8 +34,8 @@ library InfiniteArt {
         return string.concat(
             '<style>',
                 ':root {',
-                    '--bg: ', data.background, ';',
-                    '--gr: ', data.gridColor, ';',
+                    '--infinity-background: ', data.background, ';',
+                    '--infinity-grid: ', data.gridColor, ';',
                 '}',
             '</style>'
         );
@@ -45,7 +45,7 @@ library InfiniteArt {
     function renderDefs() public pure returns (string memory) {
         return string.concat(
             '<defs>',
-                '<rect id="box" width="100" height="100" stroke="var(--gr)" stroke-width="3" style="paint-order: stroke;" />'
+                '<rect id="box" width="100" height="100" stroke="var(--infinity-grid)" stroke-width="3" style="paint-order: stroke;" />'
                 '<g id="row">', renderGridRow(), '</g>',
                 '<mask id="mask"><rect width="800" height="800" fill="white"/></mask>',
                 '<path id="loop" d="M 100 0 A 100 100, 0, 1, 1, 0 100 L 0 0 Z"/>',
