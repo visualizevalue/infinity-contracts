@@ -174,7 +174,7 @@ contract Infinity is ERC1155 {
     function regenerateMany(
         uint[] calldata ids,
         uint[] calldata amounts
-    ) external payable {
+    ) external {
         _validateCounts(ids.length, amounts.length);
 
         for (uint i; i < ids.length;) {
