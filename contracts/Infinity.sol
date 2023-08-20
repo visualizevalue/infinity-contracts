@@ -168,9 +168,9 @@ contract Infinity is ERC1155 {
         }
     }
 
-    /// @notice Create multiple new infinity check tokens and deposit 0.008 ETH in each.
+    /// @notice Swap multiple inifinity tokens for new ones.
     /// @param ids The existing tokens that should be destroyed in the process.
-    /// @param amounts The number of tokens to recreate per id.
+    /// @param amounts The number of tokens to recreate per token.
     function regenerateMany(
         uint[] calldata ids,
         uint[] calldata amounts
