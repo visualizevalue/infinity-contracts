@@ -55,7 +55,7 @@ contract Infinity is ERC1155 {
     constructor(address[] memory genesisRecipients) ERC1155() payable {
         _checkDeposit(genesisRecipients.length);
 
-        for (uint i; i < genesisRecipients.length;) {
+        for (uint i = 0; i < genesisRecipients.length;) {
             _mint(genesisRecipients[i], 0, 1, "");
 
             unchecked { ++i; }
@@ -134,7 +134,7 @@ contract Infinity is ERC1155 {
         _validateCounts(recipients.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i; i < recipients.length;) {
+        for (uint i = 0; i < recipients.length;) {
             _validateAmount(amounts[i]);
 
             _mint(recipients[i], _randomId(), amounts[i], "");
@@ -157,7 +157,7 @@ contract Infinity is ERC1155 {
         _validateCounts(sources.length, recipients.length, ids.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
-        for (uint i; i < sources.length;) {
+        for (uint i = 0; i < sources.length;) {
             _validateId(ids[i], sources[i]);
             _validateAmount(amounts[i]);
 
@@ -176,7 +176,7 @@ contract Infinity is ERC1155 {
     ) external {
         _validateCounts(ids.length, amounts.length);
 
-        for (uint i; i < ids.length;) {
+        for (uint i = 0; i < ids.length;) {
             _validateAmount(amounts[i]);
 
             _burn(msg.sender, ids[i], amounts[i]);
@@ -273,7 +273,7 @@ contract Infinity is ERC1155 {
 
     /// @dev Get the sum of all given amounts
     function _totalAmount(uint[] calldata amounts) internal pure returns (uint amount) {
-        for (uint i; i < amounts.length;) {
+        for (uint i = 0; i < amounts.length;) {
             amount += amounts[i];
 
             unchecked { ++i; }
