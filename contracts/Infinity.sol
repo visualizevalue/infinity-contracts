@@ -232,33 +232,24 @@ contract Infinity is ERC1155 {
 
     /// @dev Make sure the token exists or VV is the minter.
     function _validateId(uint id, address source) internal view {
-        bool minted = balanceOf(source, id) > 0;
-
-        // Continue if the token is already minted, or we are VV.
-        if (minted || msg.sender == VV) return;
+        if (balanceOf(source, id) > 0 || msg.sender == VV) return;
 
         revert InvalidToken();
     }
 
     /// @dev Validate that both counts are equal.
     function _validateCounts(uint a, uint b) internal pure {
-        if (a == b) return;
-
-        revert InvalidInput();
+        if (a != b) revert InvalidInput();
     }
 
     /// @dev Validate that all four counts are equal.
     function _validateCounts(uint a, uint b, uint c, uint d) internal pure {
-        if (a == b && a == c && a == d) return;
-
-        revert InvalidInput();
+        if (a != b || a != c || a != d) revert InvalidInput();
     }
 
     /// @dev Validate that at least one token is interacted with.
     function _validateAmount(uint amount) internal pure {
-        if (amount > 0) return;
-
-        revert InvalidInput();
+        if (amount == 0) revert InvalidInput();
     }
 
     /// @dev Make a random generative token.
@@ -284,9 +275,7 @@ contract Infinity is ERC1155 {
     function _send(address to, uint value) internal {
         (bool success,) = to.call{ value: value }("");
 
-        if (success) return;
-
-        revert FailedSend();
+        if (! success) revert FailedSend();
     }
 
     /// @dev Emit a mint message, if provided
