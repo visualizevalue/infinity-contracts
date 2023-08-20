@@ -10,12 +10,14 @@ import "./standards/ERC1155.sol";
 
 // Contributors:
 //
-// - 0x0000G
 // - 0xCygaar
+// - 0xG
 // - akshatmittal
 // - akuti.eth
 // - backseats.eth
 // - digitaloil.eth
+// - FrankNFT.eth
+// - haltakov.eth
 // - jalil.eth
 // - MouseDev.eth
 // - tomhirst.eth
@@ -72,7 +74,7 @@ contract Infinity is ERC1155 {
     function generate(
         address recipient,
         string calldata message
-    ) public payable {
+    ) external payable {
         uint id = _randomId();
 
         _generateViaDeposit(recipient, id);
@@ -90,7 +92,7 @@ contract Infinity is ERC1155 {
         address recipient,
         uint id,
         string calldata message
-    ) public payable {
+    ) external payable {
         _validateId(id, source);
 
         _generateViaDeposit(recipient, id);
@@ -101,7 +103,7 @@ contract Infinity is ERC1155 {
     /// @notice Swap an inifinity token for a new one.
     /// @param id The token to burn.
     /// @param amount The token amount to burn / recreate.
-    function regenerate(uint id, uint amount) public {
+    function regenerate(uint id, uint amount) external {
         // Execute burn
         _burn(msg.sender, id, amount);
 
@@ -115,7 +117,7 @@ contract Infinity is ERC1155 {
     function degenerate(
         uint id,
         uint amount
-    ) public {
+    ) external {
         // Execute burn
         _burn(msg.sender, id, amount);
 
@@ -129,7 +131,7 @@ contract Infinity is ERC1155 {
     function generateMany(
         address[] calldata recipients,
         uint[] calldata amounts
-    ) public payable {
+    ) external payable {
         _validateCounts(recipients.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
@@ -152,7 +154,7 @@ contract Infinity is ERC1155 {
         address[] calldata recipients,
         uint[] calldata ids,
         uint[] calldata amounts
-    ) public payable {
+    ) external payable {
         _validateCounts(sources.length, recipients.length, ids.length, amounts.length);
         _checkDeposit(_totalAmount(amounts));
 
@@ -172,7 +174,7 @@ contract Infinity is ERC1155 {
     function regenerateMany(
         uint[] calldata ids,
         uint[] calldata amounts
-    ) public payable {
+    ) external payable {
         _validateCounts(ids.length, amounts.length);
 
         for (uint i; i < ids.length;) {
@@ -191,7 +193,7 @@ contract Infinity is ERC1155 {
     function degenerateMany(
         uint[] calldata ids,
         uint[] calldata amounts
-    ) public {
+    ) external {
         // Ensure sound input
         _validateCounts(ids.length, amounts.length);
 
@@ -204,7 +206,7 @@ contract Infinity is ERC1155 {
 
     /// @notice Render SVG of the token.
     /// @param id The token to render.
-    function svg(uint id) public pure returns (string memory) {
+    function svg(uint id) external pure returns (string memory) {
         return InfiniteArt.renderSVG(InfiniteGenerator.tokenData(id));
     }
 
@@ -215,8 +217,8 @@ contract Infinity is ERC1155 {
     }
 
     /// @notice Supply is (in)finite: (2^256 - 1)^2.
-    function totalSupply() public pure returns (uint) { return type(uint).max; }
-    function totalSupply(uint) public pure returns (uint) { return type(uint).max; }
+    function totalSupply() external pure returns (uint) { return type(uint).max; }
+    function totalSupply(uint) external pure returns (uint) { return type(uint).max; }
 
     /// @dev Mint a token n times, based on the amount of ETH sent.
     function _generateViaDeposit(address recipient, uint id) internal {
