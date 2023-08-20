@@ -50,8 +50,56 @@ infinities are to be collected, not traded on marketplaces. there is zero cost b
 programmability still exists, by utilizing the onReceive hooks outlined in the [EIP](https://eips.ethereum.org/EIPS/eip-1155) (contracts can run arbitrary logic when being sent infinity tokens).
 
 
-## deployment (bytecode state of `7e4e389...f722ba`)
+## deployment (bytecode state of `7e4e389...f722ba`) (out of date)
 
 - salt: `0x5d41dbb04825b039a98d9169dbfc569f510c6e25f4995cb6822e4015f13fd716`; final address: `0x000D39614481839520901aF2eC5bB81F87888888`
 - salt: `0x3997c69a39dd451b5503e35287918552c9384b529b80b77476919bfe2def4f36`; final address: `0x0000943A32B3902d5e6C9aF906009c0024148888`
 
+## TODO's
+
+### Add more test cases:
+
+- [ ] ether receive hook
+	- [ ] mint x tokens of the same tokenId when sending the amount for x
+	- [ ] mint no token when sending too little
+	- [ ] refund remaining after minting/not minting tokens
+	- [ ] fails if remaining cannot be sent
+- [ ] generate
+	- [ ] only emit messag when message is given
+	- [ ] fails if recipient is zero address
+	- [ ] test of receive hook
+- [ ] generateExisting
+	- [ ] fails if source address does not have any token with tokenId
+	- [ ] works for non existing tokenIds if VV
+	- [ ] tests of generate
+- [ ] regenerate
+	- [ ] fails if sender does not have amount of tokenId
+	- [ ] fails if tokenId does not exist (should be the same reason as above)
+	- [ ] mint the same amount of tokens burned of a random id
+- [ ] degenerate
+	- [ ] fails if sender does not have amount of tokenId
+	- [ ] fails if tokenId does not exist (should be the same reason as above)
+	- [ ] refunds correct amount if sender did have amount of tokenId
+	- [ ] fails if refund cannot be sent
+- [ ] generateMany
+	- [ ] fails if recipients and amounts have different length
+	- [ ] fails if not sending the exact amount for nr tokens minted
+	- [ ] mint amount of different random tokenIds to given recipients
+	- [ ] fails if any recipient is zero address
+	- [ ] fails if any amount is zero (I think this currently does not fail and would emit a zero amount Transfer event)
+- [ ] generateManyExisting
+	- [ ] fails if arguments have different lengths
+	- [ ] fails if not sending the exact amount for nr tokens minted
+	- [ ] fails if any source address does not have any token with tokenId
+	- [ ] works for non existing tokenIds if VV
+	- [ ] fails if any recipient is zero address
+	- [ ] fails if any amount is zero (I think this currently does not fail and would emit a zero amount Transfer event)
+	- [ ] mint amount of existing tokenIds to given recipients
+- [ ] regenerateMany
+	- [ ] fails if arguments have different lengths (currently does not)
+	- [ ] fails if sender does not have amount of any tokenId
+	- [ ] mint and burn the same amount of tokens
+- [ ] degenerateMany
+	- [ ] fails if arguments have different lengths
+	- [ ] fails if refund cannot be sent
+	- [ ] refunds correct value if all tokens could be burnt
