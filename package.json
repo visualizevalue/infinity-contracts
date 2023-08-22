@@ -7,14 +7,18 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@nomiclabs/hardhat-truffle5": "^2.0.7",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/test-helpers": "^0.5.16",
     "@typechain/ethers-v6": "^0.4.3",
     "@typechain/hardhat": "^8.0.3",
     "@types/mocha": "^10.0.1",
+    "@types/node": "^20.5.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "chai": "^4.3.7",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.3.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^16.0.3",
@@ -37,5 +41,6 @@
     "ts-node": "^10.9.1",
     "typechain": "^8.3.1",
     "typescript": "^4.9.5"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

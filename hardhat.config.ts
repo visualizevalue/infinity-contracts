@@ -1,13 +1,18 @@
-import * as dotenv from 'dotenv'
+import 'dotenv/config'
 
-import "@nomicfoundation/hardhat-toolbox"
-import "hardhat-contract-sizer"
+import '@nomiclabs/hardhat-truffle5'
+import '@nomicfoundation/hardhat-toolbox'
+import 'hardhat-contract-sizer'
 import 'hardhat-deploy'
 
 import './tasks/refunds'
 import './tasks/find-seed'
 
-dotenv.config()
+import './tasks/hardhat/env-artifacts'
+import './tasks/hardhat/env-contract'
+import './tasks/hardhat/ignore-unreachable-warnings'
+import './tasks/hardhat/skip-foundry-tests'
+import './tasks/hardhat/task-test-get-files'
 
 const HARDHAT_NETWORK_CONFIG = {
   chainId: 1337,
