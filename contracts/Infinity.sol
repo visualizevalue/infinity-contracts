@@ -11,6 +11,7 @@ import "./standards/ERC1155.sol";
 //
 // - 0xCygaar
 // - 0xG
+// - 0xQuit
 // - akshatmittal
 // - akuti.eth
 // - backseats.eth
