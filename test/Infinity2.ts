@@ -9,6 +9,7 @@ import { VV, JALIL } from '../helpers/constants'
 import { render } from '../helpers/render-pngs'
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers'
 import { Infinity, ReceiveBlock } from '../typechain-types'
+import { token } from '../typechain-types/@openzeppelin/contracts'
 
 const PRICE = parseEther('0.008')
 
@@ -23,8 +24,9 @@ export const deployContract = deployments.createFixture(async ({deployments, eth
 
   const [ owner, addr1, addr2, addr3, addr4, addr5 ] = await ethers.getSigners()
   const vv = await impersonate(VV, hre)
+  const jalil = await impersonate(JALIL, hre)
 
-  return { contract, owner, addr1, addr2, addr3, addr4, addr5, vv, receiveBlockContract }
+  return { contract, owner, addr1, addr2, addr3, addr4, addr5, vv, jalil, receiveBlockContract }
 })
 
 // Helper function to get Transfer event logs from the transaction receipt
@@ -50,10 +52,11 @@ describe.only('Infinity', () => {
       addr3: SignerWithAddress,
       addr4: SignerWithAddress,
       addr5: SignerWithAddress,
+      jalil: SignerWithAddress,
       vv: SignerWithAddress
 
   beforeEach(async () => {
-    ({ contract, owner, addr1, addr2, addr3, addr4, addr5, vv, receiveBlockContract } = await deployContract())
+    ({ contract, owner, addr1, addr2, addr3, addr4, addr5, vv, jalil, receiveBlockContract } = await deployContract())
   })
 
   context.skip('Deployment', () => {
@@ -121,6 +124,73 @@ describe.only('Infinity', () => {
     it(`fails if source address does not have any token with tokenId`, async () => {
       await expect(contract.generateExisting(JALIL, addr1.address, 123, '', { value: PRICE }))
         .to.revertedWithCustomError(contract, 'InvalidToken()')
+    })
+
+    it(`works for non existing tokenIds if VV`, async () => {
+      await expect(contract.connect(vv).generateExisting(ZeroAddress, addr1.address, 123, '', { value: PRICE }))
+        .to.emit(contract, 'TransferSingle')
+    })
+  })
+
+  context('Regenerate', () => {
+    it(`fails if sender does not have amount of tokenId`, async () => {
+      await expect(contract.connect(jalil).regenerate(0, 2))
+        .to.revertedWith('ERC1155: burn amount exceeds balance')
+
+      await expect(contract.connect(jalil).regenerate(0, 1))
+        .not.to.be.reverted
+    })
+
+    it(`fails if tokenId does not exist (should be the same reason as above)`, async () => {
+      await expect(contract.connect(jalil).regenerate(123, 1))
+        .to.revertedWith('ERC1155: burn amount exceeds balance')
+    })
+
+    it(`mint the same amount of tokens burned of a random id`, async () => {
+      const createTx = await jalil.sendTransaction({ to: await contract.getAddress(), value: PRICE*5n })
+      const createReceipt = await createTx.wait()
+      const createLog = getLogs(contract, createReceipt as ContractTransactionReceipt)[0]
+      const tokenId = createLog.args.id
+
+      const regenerateTx = await contract.connect(jalil).regenerate(tokenId, 5n)
+      const regenerateReceipt = await regenerateTx.wait()
+      const regenerateLog = getLogs(contract, regenerateReceipt as ContractTransactionReceipt)
+
+      const newTokenId = regenerateLog[1].args.id
+      expect(regenerateLog[0].args).to.deep.equal([
+        jalil.address,
+        jalil.address,
+        ZeroAddress,
+        tokenId,
+        5n
+      ])
+      expect(regenerateLog[1].args).to.deep.equal([
+        jalil.address,
+        ZeroAddress,
+        jalil.address,
+        newTokenId,
+        5n
+      ])
+    })
+  })
+
+  context.only('Degenerate', () => {
+    it(`fails if sender does not have amount of tokenId`, async () => {
+      await expect(contract.connect(jalil).degenerate(0, 2))
+        .to.revertedWith('ERC1155: burn amount exceeds balance')
+
+      await expect(contract.connect(jalil).degenerate(0, 1))
+        .not.to.be.reverted
+    })
+
+    it(`fails if tokenId does not exist (should be the same reason as above)`, async () => {
+      await expect(contract.connect(jalil).degenerate(123, 1))
+        .to.revertedWith('ERC1155: burn amount exceeds balance')
+    })
+
+    it(`refunds correct amount if sender did have amount of tokenId`, async () => {
+      await expect(contract.connect(jalil).degenerate(0, 1))
+        .to.changeEtherBalance(jalil, PRICE)
     })
   })
 

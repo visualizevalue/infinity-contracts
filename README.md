@@ -68,19 +68,18 @@ programmability still exists, by utilizing the onReceive hooks outlined in the [
 	- [x] only emit message when message is given
 	- [x] fails if recipient is zero address
 	- [x] ~~test of receive hook~~ (in ERC1155 tests)
-- [ ] generateExisting
-	- [ ] fails if source address does not have any token with tokenId
-	- [ ] works for non existing tokenIds if VV
-	- [ ] tests of generate
-- [ ] regenerate
-	- [ ] fails if sender does not have amount of tokenId
-	- [ ] fails if tokenId does not exist (should be the same reason as above)
-	- [ ] mint the same amount of tokens burned of a random id
-- [ ] degenerate
-	- [ ] fails if sender does not have amount of tokenId
-	- [ ] fails if tokenId does not exist (should be the same reason as above)
-	- [ ] refunds correct amount if sender did have amount of tokenId
-	- [ ] fails if refund cannot be sent
+- [x] generateExisting
+	- [x] fails if source address does not have any token with tokenId
+	- [x] works for non existing tokenIds if VV
+- [x] regenerate
+	- [x] fails if sender does not have amount of tokenId
+	- [x] fails if tokenId does not exist (should be the same reason as above)
+	- [x] mint the same amount of tokens burned of a random id
+- [x] degenerate
+	- [x] fails if sender does not have amount of tokenId
+	- [x] fails if tokenId does not exist (should be the same reason as above)
+	- [x] refunds correct amount if sender did have amount of tokenId
+	- [x] ~~fails if refund cannot be sent~~ (redundant)
 - [ ] generateMany
 	- [ ] fails if recipients and amounts have different length
 	- [ ] fails if not sending the exact amount for nr tokens minted
