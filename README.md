@@ -59,15 +59,15 @@ programmability still exists, by utilizing the onReceive hooks outlined in the [
 
 ### Add more test cases:
 
-- [ ] ether receive hook
-	- [ ] mint x tokens of the same tokenId when sending the amount for x
-	- [ ] mint no token when sending too little
-	- [ ] refund remaining after minting/not minting tokens
-	- [ ] fails if remaining cannot be sent
-- [ ] generate
-	- [ ] only emit messag when message is given
-	- [ ] fails if recipient is zero address
-	- [ ] test of receive hook
+- [x] ether receive hook
+	- [x] mint x tokens of the same tokenId when sending the amount for x
+	- [x] mint no token when sending too little
+	- [x] refund remaining after minting/not minting tokens
+	- [x] fails if remaining cannot be sent
+- [x] generate
+	- [x] only emit message when message is given
+	- [x] fails if recipient is zero address
+	- [x] ~~test of receive hook~~ (in ERC1155 tests)
 - [ ] generateExisting
 	- [ ] fails if source address does not have any token with tokenId
 	- [ ] works for non existing tokenIds if VV

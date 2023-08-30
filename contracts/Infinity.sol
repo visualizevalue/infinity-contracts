@@ -47,7 +47,7 @@ contract Infinity is ERC1155 {
     error InvalidInput();
 
     /// @dev Raised when the msg.value does not meet the required amount for the number of tokens minted.
-    error InvalidDesposit();
+    error InvalidDeposit();
 
     /// @dev Raised when refunding the user failed.
     error FailedSend();
@@ -225,7 +225,7 @@ contract Infinity is ERC1155 {
         uint amount  = msg.value / PRICE;
         uint surplus = msg.value % PRICE;
 
-        if (amount == 0) revert InvalidDesposit();
+        if (amount == 0) revert InvalidDeposit();
 
         _mint(recipient, id, amount, "");
         _send(msg.sender, surplus);
@@ -260,7 +260,7 @@ contract Infinity is ERC1155 {
 
     /// @dev Check whether the deposited Ether is a correct {PRICE} multipe of the token {amount}
     function _checkDeposit(uint amount) internal {
-        if (msg.value != amount * PRICE) revert InvalidDesposit();
+        if (msg.value != amount * PRICE) revert InvalidDeposit();
     }
 
     /// @dev Get the sum of all given amounts
