@@ -1,15 +1,11 @@
-import fs from 'fs'
 import { expect } from 'chai'
 import hre, { deployments } from 'hardhat'
 import '@nomicfoundation/hardhat-chai-matchers'
-import { ZeroAddress, toBeArray, parseEther, ContractTransactionReceipt, BaseContract, LogDescription } from 'ethers'
+import { ZeroAddress, parseEther, ContractTransactionReceipt, BaseContract, LogDescription } from 'ethers'
 import { impersonate } from './../helpers/impersonate'
-import { decodeBase64URI } from '../helpers/decode-uri'
 import { VV, JALIL } from '../helpers/constants'
-import { render } from '../helpers/render-pngs'
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers'
 import { Infinity, ReceiveBlock } from '../typechain-types'
-import { token } from '../typechain-types/@openzeppelin/contracts'
 
 const PRICE = parseEther('0.008')
 
@@ -43,7 +39,7 @@ const getLogs = (
     .map(log => contract.interface.parseLog(log as unknown as ({ topics: string[]; data: string; })) as LogDescription)
 }
 
-describe.only('Infinity', () => {
+describe('Infinity', () => {
   let contract: Infinity,
       receiveBlockContract: ReceiveBlock,
       owner: SignerWithAddress,
@@ -422,7 +418,7 @@ describe.only('Infinity', () => {
     })
   })
 
-  context.only('DegenerateMany', () => {
+  context('DegenerateMany', () => {
     let tokenIds: bigint[] = []
 
     beforeEach(async () => {

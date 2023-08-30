@@ -140,7 +140,7 @@ describe('Infinity', () => {
         [10, 1],
         { value: PRICE * BigInt(1) }
       ))
-        .to.be.revertedWithCustomError(contract, `InvalidDesposit()`)
+        .to.be.revertedWithCustomError(contract, `InvalidDeposit()`)
     })
 
     it(`Shouldn't let users overpay when generating many`, async () => {
