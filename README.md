@@ -81,11 +81,11 @@ programmability still exists, by utilizing the onReceive hooks outlined in the [
 	- [x] refunds correct amount if sender did have amount of tokenId
 	- [x] ~~fails if refund cannot be sent~~ (redundant)
 - [ ] generateMany
-	- [ ] fails if recipients and amounts have different length
-	- [ ] fails if not sending the exact amount for nr tokens minted
-	- [ ] mint amount of different random tokenIds to given recipients
-	- [ ] fails if any recipient is zero address
-	- [ ] fails if any amount is zero (I think this currently does not fail and would emit a zero amount Transfer event)
+	- [x] fails if recipients and amounts have different length
+	- [x] fails if not sending the exact amount for nr tokens minted
+	- [x] mint amount of different random tokenIds to given recipients
+	- [x] fails if any recipient is zero address
+	- [x] fails if any amount is zero
 - [ ] generateManyExisting
 	- [ ] fails if arguments have different lengths
 	- [ ] fails if not sending the exact amount for nr tokens minted

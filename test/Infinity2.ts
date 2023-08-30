@@ -174,7 +174,7 @@ describe.only('Infinity', () => {
     })
   })
 
-  context.only('Degenerate', () => {
+  context('Degenerate', () => {
     it(`fails if sender does not have amount of tokenId`, async () => {
       await expect(contract.connect(jalil).degenerate(0, 2))
         .to.revertedWith('ERC1155: burn amount exceeds balance')
@@ -191,6 +191,67 @@ describe.only('Infinity', () => {
     it(`refunds correct amount if sender did have amount of tokenId`, async () => {
       await expect(contract.connect(jalil).degenerate(0, 1))
         .to.changeEtherBalance(jalil, PRICE)
+    })
+  })
+
+  context('GenerateMany', () => {
+    it(`fails if recipients and amounts have different length`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 2n, 3n],
+        { value: PRICE*3n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address, addr3.address],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 2n, 3n],
+        { value: PRICE*6n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+    })
+
+    it(`fails if not sending the exact amount for nr tokens minted`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 2n],
+        { value: PRICE*4n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidDeposit')
+
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).not.to.be.reverted
+    })
+
+    it(`mint amount of different random tokenIds to given recipients`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.emit(contract, 'TransferSingle')
+        .to.emit(contract, 'TransferSingle')
+    })
+
+    it(`fails if any recipient is zero address`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, ZeroAddress],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.be.revertedWith('ERC1155: mint to the zero address')
+    })
+
+    it(`fails if any amount is zero`, async () => {
+      await expect(contract.generateMany(
+        [addr1.address, addr2.address],
+        [1n, 0n],
+        { value: PRICE }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
     })
   })
 
