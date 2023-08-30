@@ -255,4 +255,206 @@ describe.only('Infinity', () => {
     })
   })
 
+  context('GenerateManyExisting', () => {
+    it(`fails if arguments have different lengths`, async () => {
+      await expect(contract.generateManyExisting(
+        [jalil.address, jalil.address],
+        [addr1.address, addr2.address],
+        [0n, 0n],
+        [1n, 2n, 3n],
+        { value: PRICE*3n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+
+      await expect(contract.generateManyExisting(
+        [jalil.address, jalil.address],
+        [addr1.address, addr2.address, addr3.address],
+        [0n, 0n],
+        [1n, 2n, 3n],
+        { value: PRICE*3n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+    })
+
+    it(`fails if not sending the exact amount for nr tokens minted`, async () => {
+      await expect(contract.generateManyExisting(
+        [jalil.address, jalil.address],
+        [addr1.address, addr2.address],
+        [0n, 0n],
+        [1n, 2n],
+        { value: PRICE*4n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidDeposit')
+
+      await expect(contract.generateManyExisting(
+        [jalil.address, jalil.address],
+        [addr1.address, addr2.address],
+        [0n, 0n],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).not.to.be.reverted
+    })
+
+    it(`fails if any source address does not have any token with tokenId`, async () => {
+      await expect(contract.generateManyExisting(
+        [jalil.address, addr3.address],
+        [addr1.address, addr2.address],
+        [0n, 0n],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidToken')
+    })
+
+    it(`works for non existing tokenIds if VV`, async () => {
+      await expect(contract.connect(vv).generateManyExisting(
+        [ZeroAddress, ZeroAddress],
+        [addr1.address, addr2.address],
+        [95n, 99n],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).not.to.be.reverted
+    })
+
+    it(`fails if any recipient is zero address`, async () => {
+      await expect(contract.connect(vv).generateManyExisting(
+        [ZeroAddress, ZeroAddress],
+        [addr1.address, ZeroAddress],
+        [95n, 99n],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.be.revertedWith('ERC1155: mint to the zero address')
+    })
+
+    it(`fails if any amount is zero`, async () => {
+      await expect(contract.connect(vv).generateManyExisting(
+        [ZeroAddress, ZeroAddress],
+        [addr1.address, ZeroAddress],
+        [95n, 99n],
+        [0n, 2n],
+        { value: PRICE*2n }
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+    })
+
+    it(`mint amount of existing tokenIds to given recipients`, async () => {
+      await expect(contract.generateManyExisting(
+        [jalil.address, jalil.address],
+        [addr1.address, addr2.address],
+        [0n, 0n],
+        [1n, 2n],
+        { value: PRICE*3n }
+      )).to.emit(contract, 'TransferSingle')
+        .to.emit(contract, 'TransferSingle')
+    })
+  })
+
+  context('RegenerateMany', () => {
+    let tokenIds: bigint[] = []
+
+    beforeEach(async () => {
+      const createTx = await contract.generateMany(
+        [jalil.address, jalil.address],
+        [5n, 9n],
+        { value: PRICE*14n }
+      )
+      const createReceipt = await createTx.wait()
+      const createLog = getLogs(contract, createReceipt as ContractTransactionReceipt)
+
+      tokenIds = createLog.map(log => log.args.id)
+    })
+
+    it(`fails if arguments have different lengths`, async () => {
+      await expect(contract.connect(jalil).regenerateMany(
+        tokenIds,
+        [0n, 9n, 5n],
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+
+      await expect(contract.connect(jalil).regenerateMany(
+        [0n, ...tokenIds],
+        [9n, 5n],
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+    })
+
+    it(`fails if sender does not have amount of any tokenId`, async () => {
+      await expect(contract.connect(jalil).regenerateMany(
+        tokenIds,
+        [9n, 5n],
+      )).to.be.revertedWith('ERC1155: burn amount exceeds balance')
+
+      await expect(contract.connect(jalil).regenerateMany(
+        tokenIds,
+        [5n, 9n],
+      )).not.to.be.reverted
+    })
+
+    it(`mint and burn the same amount of tokens`, async () => {
+      const tx = await contract.connect(jalil).regenerateMany(
+        tokenIds,
+        [5n, 9n],
+      )
+      const receipt = await tx.wait()
+      const log = getLogs(contract, receipt as ContractTransactionReceipt)
+
+      expect(log[0].args).to.deep.equal([
+        jalil.address,
+        jalil.address,
+        ZeroAddress,
+        tokenIds[0],
+        5n
+      ])
+      expect(log[1].args).to.deep.equal([
+        jalil.address,
+        ZeroAddress,
+        jalil.address,
+        log[1].args.id,
+        5n
+      ])
+      expect(log[2].args).to.deep.equal([
+        jalil.address,
+        jalil.address,
+        ZeroAddress,
+        tokenIds[1],
+        9n
+      ])
+      expect(log[3].args).to.deep.equal([
+        jalil.address,
+        ZeroAddress,
+        jalil.address,
+        log[3].args.id,
+        9n
+      ])
+    })
+  })
+
+  context.only('DegenerateMany', () => {
+    let tokenIds: bigint[] = []
+
+    beforeEach(async () => {
+      const createTx = await contract.generateMany(
+        [jalil.address, jalil.address],
+        [5n, 9n],
+        { value: PRICE*14n }
+      )
+      const createReceipt = await createTx.wait()
+      const createLog = getLogs(contract, createReceipt as ContractTransactionReceipt)
+
+      tokenIds = createLog.map(log => log.args.id)
+    })
+
+    it(`fails if arguments have different lengths`, async () => {
+      await expect(contract.connect(jalil).degenerateMany(
+        tokenIds,
+        [0n, 9n, 5n],
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+
+      await expect(contract.connect(jalil).degenerateMany(
+        [0n, ...tokenIds],
+        [9n, 5n],
+      )).to.be.revertedWithCustomError(contract, 'InvalidInput')
+    })
+
+    it(`refunds correct value if all tokens could be burnt`, async () => {
+      await expect(contract.connect(jalil).degenerateMany(
+        tokenIds,
+        [5n, 9n],
+      )).to.changeEtherBalance(jalil, PRICE * 14n)
+    })
+  })
+
 })

@@ -80,25 +80,25 @@ programmability still exists, by utilizing the onReceive hooks outlined in the [
 	- [x] fails if tokenId does not exist (should be the same reason as above)
 	- [x] refunds correct amount if sender did have amount of tokenId
 	- [x] ~~fails if refund cannot be sent~~ (redundant)
-- [ ] generateMany
+- [x] generateMany
 	- [x] fails if recipients and amounts have different length
 	- [x] fails if not sending the exact amount for nr tokens minted
 	- [x] mint amount of different random tokenIds to given recipients
 	- [x] fails if any recipient is zero address
 	- [x] fails if any amount is zero
-- [ ] generateManyExisting
-	- [ ] fails if arguments have different lengths
-	- [ ] fails if not sending the exact amount for nr tokens minted
-	- [ ] fails if any source address does not have any token with tokenId
-	- [ ] works for non existing tokenIds if VV
-	- [ ] fails if any recipient is zero address
-	- [ ] fails if any amount is zero (I think this currently does not fail and would emit a zero amount Transfer event)
-	- [ ] mint amount of existing tokenIds to given recipients
-- [ ] regenerateMany
-	- [ ] fails if arguments have different lengths (currently does not)
-	- [ ] fails if sender does not have amount of any tokenId
-	- [ ] mint and burn the same amount of tokens
-- [ ] degenerateMany
-	- [ ] fails if arguments have different lengths
-	- [ ] fails if refund cannot be sent
-	- [ ] refunds correct value if all tokens could be burnt
+- [x] generateManyExisting
+	- [x] fails if arguments have different lengths
+	- [x] fails if not sending the exact amount for nr tokens minted
+	- [x] fails if any source address does not have any token with tokenId
+	- [x] works for non existing tokenIds if VV
+	- [x] fails if any recipient is zero address
+	- [x] fails if any amount is zero
+	- [x] mint amount of existing tokenIds to given recipients
+- [x] regenerateMany
+	- [x] fails if arguments have different lengths (currently does not)
+	- [x] fails if sender does not have amount of any tokenId
+	- [x] mint and burn the same amount of tokens
+- [x] degenerateMany
+	- [x] fails if arguments have different lengths
+	- [x] refunds correct value if all tokens could be burnt
+	- [x] ~~fails if refund cannot be sent~~ (redundant)
