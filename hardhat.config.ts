@@ -5,6 +5,7 @@ import "hardhat-contract-sizer"
 import 'hardhat-deploy'
 
 import './tasks/refunds'
+import './tasks/airdrop'
 import './tasks/find-seed'
 
 dotenv.config()
@@ -30,7 +31,10 @@ const config = {
   },
   namedAccounts: {
     deployer: {
-        default: 0, // first account as deployer
+      default: 0, // first account as deployer
+    },
+    vv: {
+      default: '0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a'
     },
   },
   networks: {
