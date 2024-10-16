@@ -89,7 +89,7 @@ library InfiniteMetadata {
         return data.mapColors ? 'Mapped' : 'Random';
     }
 
-    /// @dev Generate the SVG snipped for a single attribute.
+    /// @dev Generate the JSON snippet for a single attribute.
     /// @param traitType The `trait_type` for this trait.
     /// @param traitValue The `value` for this trait.
     /// @param append Helper to append a comma.
